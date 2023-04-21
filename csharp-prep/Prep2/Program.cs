@@ -12,9 +12,9 @@ class Program
         Console.Write("Enter your grade percentage: ");
         string valueFromUser = Console.ReadLine();
 
-        int percentageGrade = int.Parse(valueFromUser);
+        float percentageGrade = float.Parse(valueFromUser);
 
-        int reminder = percentageGrade % 10;
+        float reminder = percentageGrade % 10;
 
         if (percentageGrade > 60 && percentageGrade < 93)
         {
