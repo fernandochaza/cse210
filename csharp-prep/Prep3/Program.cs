@@ -5,37 +5,48 @@ class Program
     static void Main(string[] args)
     {
 
-        string result;
-        int guessAttempt = 0;
+        string keepPlaying = "yes";
 
         Random randomGenerator = new Random();
-        int magicNumber = randomGenerator.Next(1, 101);
+        int magicNumber = 0;
         
-        do
+        while (keepPlaying == "yes")
         {
-            guessAttempt = guessAttempt + 1;
-            
-            Console.Write("What is your guess? ");
-            string getGuessValue = Console.ReadLine();
-            int guessValue = int.Parse(getGuessValue);
+            bool win = false;
+            int guessAttempt = 0;
+            magicNumber = randomGenerator.Next(1, 101);
 
-            if (guessValue > magicNumber)
+            do
             {
-                result = "Lower";
-            }
-            else if (guessValue < magicNumber)
-            {
-                 result = "Higher";
-            }
-            else
-            {
-                result = "You guessed it!";
-            }
 
-            Console.WriteLine($"{result}");
-        } while (result != "You guessed it!");
+                guessAttempt = guessAttempt + 1;
+                
+                Console.Write("What is your guess? ");
+                string getGuessValue = Console.ReadLine();
+                int guessValue = int.Parse(getGuessValue);
 
-        Console.WriteLine($"Attempts made: {guessAttempt}");
+                if (guessValue > magicNumber)
+                {
+                    Console.WriteLine("Lower");
+                }
+                else if (guessValue < magicNumber)
+                {
+                    Console.WriteLine("Higher");
+                }
+                else
+                {
+                    win = true;
+                    Console.WriteLine("You guessed it!");
+                    Console.WriteLine($"Attempts made: {guessAttempt}");
+                }
+
+
+            } while (win == false);
+
+            Console.WriteLine("Do you want to play again? (yes/no)");
+            keepPlaying = Console.ReadLine();
+        }
+
 
     }
 }
