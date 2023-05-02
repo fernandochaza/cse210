@@ -21,7 +21,7 @@ class Program
         myResume._name = "Fernando Chazarreta";
         myResume._jobs.Add(job1);
         myResume._jobs.Add(job2);
-        Console.WriteLine(myResume.DisplayResume());
+        myResume.DisplayResume();
 
     }
 
