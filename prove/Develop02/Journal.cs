@@ -7,7 +7,7 @@ using System.IO;
 public class Journal
 {
     public string _name;
-    public List<Entry> = new List<Entry>();
+    public List<Entry> entries = new List<Entry>();
 
     public string LoadJournalFromFile()
     {
@@ -21,7 +21,7 @@ public class Journal
 
     public void DisplayJournal()
     {
-        
+
     }
 
 
