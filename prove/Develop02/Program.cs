@@ -26,8 +26,19 @@ public class Program
             {
                 case "1":
                     Entry newEntry = new Entry();
+                    newEntry.CreateEntry();
                     journal._entries.Add(newEntry);
                     break;
+                case "2":
+                    journal.DisplayJournal();
+                    break;
+                case "3":
+                    journal.SaveJournalToFile();
+                    break;
+                case "4":
+                    journal.LoadJournalFromFile();
+                    break;
+
             }
         } while (userChoice != "5");
 
