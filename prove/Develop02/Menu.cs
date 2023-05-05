@@ -23,6 +23,7 @@ public class Menu
         {
             _options.Add($"{option+1} - {options[option]}");
         }
+        
     }
 
     public void DisplayMenu()
@@ -33,6 +34,25 @@ public class Menu
         {
             Console.WriteLine(option);
         }
+
+        Console.Write("What would you like to do? ");
     }
+
+    // Commented. I'm not sure what to do after getting the user's input
+    // public void getInput()
+    // {
+    //     switch (Console.ReadLine())
+    //     {
+    //         case "1":
+    //             int userInput = 1;
+    //             Console.WriteLine(userInput);
+    //             break;
+            
+    //         case "2":
+    //             userInput = 2;
+    //             break;
+    //     }
+
+    // }
 
 }
