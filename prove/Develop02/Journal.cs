@@ -16,9 +16,27 @@ public class Journal
     public List<Entry> _entries = new List<Entry>();
     public string _filename;
 
-    public string LoadJournalFromFile()
+    public void LoadJournalFromFile()
     {
-        return "";
+        Console.Write("Enter the filename and extension: ");
+        _filename = Console.ReadLine();
+
+        string[] lines = System.IO.File.ReadAllLines(_filename);
+
+        foreach (string line in lines)
+        {
+            string[] parts = line.Split(",");
+            
+            DateTime _date = DateTime.Parse(parts[0]);
+            string _prompt = parts[1];
+            string _answer = parts[2];
+
+            Entry newEntry = new Entry();
+            newEntry._date = _date;
+            newEntry._prompt = _prompt;
+            newEntry._answer = _answer;
+            _entries.Add(newEntry);
+        }
     }
 
     public void SaveJournalToFile()
@@ -31,19 +49,18 @@ public class Journal
             // You can add text to the file with the WriteLine method
             foreach (Entry entry in _entries)
             {
-                outputFile.WriteLine("This will be the first line in the file.");
+                outputFile.WriteLine($"{entry.SaveEntry()}");
             }
-            
-            // You can use the $ and include variables just like with Console.WriteLine
-            string color = "Blue";
-            outputFile.WriteLine($"My favorite color is {color}");
         }
 
     }
 
     public void DisplayJournal()
     {
-
+        foreach(Entry entry in _entries)
+        {
+            Console.WriteLine(entry.ReturnEntry());
+        }
     }
 
 
