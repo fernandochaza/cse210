@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Reflection;
 // Responsibilities:
 // - Display the menu options to the user
 // - Get and manage the selected option
@@ -10,22 +12,41 @@ public class Menu
     public string _header;
     public List<string> _options = new List<string>();
 
+    public enum _menuOption
+    {
+        [Description("Create a new entry")]
+        Option1,
+        [Description("Display my journal")]
+        Option2,
+        [Description("Save today's entries")]
+        Option3,
+        [Description("Load my journal")]
+        Option4,
+        [Description("Quit")]
+        Option5
+    }
+
     /// <summary>
     /// Constructs a new instance of the Menu class.
     /// </summary>
-    /// <param name="header">The first message of the menu.</param>
-    /// <param name="options">The list of options to display.</param>
-    public Menu(string header, List<string> options)
+    public Menu()
     {
-        _header = header;
 
-        for (int option = 0; option < options.Count(); option++)
+        foreach (_menuOption option in Enum.GetValues(typeof(_menuOption)))
         {
-            _options.Add($"{option+1} - {options[option]}");
+            string description = option.GetType()
+            .GetMember(option.ToString())
+            .FirstOrDefault()
+            ?.GetCustomAttribute<DescriptionAttribute>()
+            ?.Description;
+
+            _options.Add($"{(int)option + 1} - {description}");
         }
         
     }
-
+    /// <summary>
+    /// Display the menu options
+    /// </summary>
     public void DisplayOptions()
     {
         foreach (string option in _options)
@@ -36,26 +57,13 @@ public class Menu
         Console.Write("What would you like to do? ");
     }
 
-    public void DisplayHeader()
+    /// <summary>
+    /// Displays the menu welcome message
+    /// </summary>
+    /// <param name="userName">A variable containing the name of the user</param>
+    /// <returns></returns>
+    public string ReturnHeader(string userName)
     {
-        Console.WriteLine(_header);
+        return $"Hello {userName}! Welcome to your Journal Manager";
     }
-
-    // Commented. I'm not sure what to do after getting the user's input
-    // public void getInput()
-    // {
-    //     switch (Console.ReadLine())
-    //     {
-    //         case "1":
-    //             int userInput = 1;
-    //             Console.WriteLine(userInput);
-    //             break;
-            
-    //         case "2":
-    //             userInput = 2;
-    //             break;
-    //     }
-
-    // }
-
 }
