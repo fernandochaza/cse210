@@ -1,13 +1,20 @@
+using System.IO;
+
 // Responsibilities: 
 // - Store the journal's entries
 // - Save the journal in a txt file
 // - Load a stored txt file containing Journal entries
 // - Display the journal entries to the user
-using System.IO;
+
+/// <summary>
+/// Class <c>Journal</c> get the user name, manage the journal file
+/// and display the Journal to the user
+/// </summary>
 public class Journal
 {
     public string _name;
-    public List<Entry> entries = new List<Entry>();
+    public List<Entry> _entries = new List<Entry>();
+    public string _filename;
 
     public string LoadJournalFromFile()
     {
@@ -16,6 +23,21 @@ public class Journal
 
     public void SaveJournalToFile()
     {
+        Console.Write("Enter the filename and extension: ");
+        _filename = Console.ReadLine();
+
+        using (StreamWriter outputFile = new StreamWriter(_filename))
+        {
+            // You can add text to the file with the WriteLine method
+            foreach (Entry entry in _entries)
+            {
+                outputFile.WriteLine("This will be the first line in the file.");
+            }
+            
+            // You can use the $ and include variables just like with Console.WriteLine
+            string color = "Blue";
+            outputFile.WriteLine($"My favorite color is {color}");
+        }
 
     }
 
