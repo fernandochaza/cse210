@@ -13,24 +13,29 @@ public class Entry
 
     public Entry()
     {
-        _prompt = "This is the prompt";
-        Console.Write($"{_prompt}\n> ");
-        _answer = Console.ReadLine();
+        _prompt = "";
+        _answer = "";
         _date = DateTime.Today;
     }
 
-    // public string CreateEntry()
-    // {
-    //     Console.WriteLine($"{_prompt}\n> ");
-    //     _answer = Console.ReadLine();
-    //     _date = DateTime.Today;
+    public void CreateEntry()
+    {
+        _prompt = "This is the prompt";
+        Console.WriteLine($"{_prompt}\n> ");
+        _answer = Console.ReadLine();
+        _date = DateTime.Today;
 
-    //     return ReturnEntry();
-    // }
+        // return ReturnEntry();
+    }
 
     public string ReturnEntry()
     {
         return $"Date: {_date.ToString("d")} - Prompt: {_prompt}\nMy Answer: {_answer}";
+    }
+
+    public string SaveEntry()
+    {
+        return $"{_date.ToString("d")},{_prompt},{_answer}";
     }
 
 }
