@@ -12,7 +12,7 @@ public class Menu
     public string _header;
     public List<string> _options = new List<string>();
 
-    public enum _menuOption
+    public enum MenuOption
     {
         [Description("Create a new entry")]
         Option1,
@@ -31,8 +31,7 @@ public class Menu
     /// </summary>
     public Menu()
     {
-
-        foreach (_menuOption option in Enum.GetValues(typeof(_menuOption)))
+        foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
         {
             string description = option.GetType()
             .GetMember(option.ToString())
@@ -42,8 +41,8 @@ public class Menu
 
             _options.Add($"{(int)option + 1} - {description}");
         }
-        
     }
+
     /// <summary>
     /// Display the menu options
     /// </summary>
