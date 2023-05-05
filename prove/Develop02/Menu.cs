@@ -26,16 +26,19 @@ public class Menu
         
     }
 
-    public void DisplayMenu()
+    public void DisplayOptions()
     {
-        Console.WriteLine(_header);
-        
         foreach (string option in _options)
         {
             Console.WriteLine(option);
         }
 
         Console.Write("What would you like to do? ");
+    }
+
+    public void DisplayHeader()
+    {
+        Console.WriteLine(_header);
     }
 
     // Commented. I'm not sure what to do after getting the user's input
