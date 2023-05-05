@@ -8,16 +8,29 @@ public class Entry
 {
     public string _prompt;
     public string _answer;
-    public string _date;
+    public DateTime _date;
 
-    public string CreateEntry()
+
+    public Entry()
     {
-        return "";
+        _prompt = "This is the prompt";
+        Console.Write($"{_prompt}\n> ");
+        _answer = Console.ReadLine();
+        _date = DateTime.Today;
     }
 
-    public void DisplayEntry()
-    {
+    // public string CreateEntry()
+    // {
+    //     Console.WriteLine($"{_prompt}\n> ");
+    //     _answer = Console.ReadLine();
+    //     _date = DateTime.Today;
 
+    //     return ReturnEntry();
+    // }
+
+    public string ReturnEntry()
+    {
+        return $"Date: {_date.ToString("d")} - Prompt: {_prompt}\nMy Answer: {_answer}";
     }
 
 }
