@@ -11,21 +11,12 @@ public class Entry
     public DateTime _date;
 
 
-    public Entry()
+    public Entry(string prompt)
     {
-        _prompt = "";
-        _answer = "";
-        _date = DateTime.Today;
-    }
-
-    public void CreateEntry()
-    {
-        _prompt = "This is the prompt";
-        Console.WriteLine($"{_prompt}\n> ");
+        _prompt = prompt;
+        Console.Write($"{_prompt}\n> ");
         _answer = Console.ReadLine();
         _date = DateTime.Today;
-
-        // return ReturnEntry();
     }
 
     public string ReturnEntry()
