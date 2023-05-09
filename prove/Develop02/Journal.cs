@@ -14,12 +14,11 @@ public class Journal
 {
     public string _name;
     public List<Entry> _entries = new List<Entry>();
-    public string _filename;
 
     public void LoadJournalFromFile()
     {
         Console.Write("Enter the filename and extension: ");
-        _filename = Console.ReadLine();
+        string _filename = Console.ReadLine();
 
         string[] lines = System.IO.File.ReadAllLines(_filename);
 
@@ -31,7 +30,7 @@ public class Journal
             string _prompt = parts[1];
             string _answer = parts[2];
 
-            Entry newEntry = new Entry();
+            Entry newEntry = new Entry(_prompt);
             newEntry._date = _date;
             newEntry._prompt = _prompt;
             newEntry._answer = _answer;
@@ -42,7 +41,7 @@ public class Journal
     public void SaveJournalToFile()
     {
         Console.Write("Enter the filename and extension: ");
-        _filename = Console.ReadLine();
+        string _filename = Console.ReadLine();
 
         using (StreamWriter outputFile = new StreamWriter(_filename))
         {
@@ -62,20 +61,4 @@ public class Journal
             Console.WriteLine(entry.ReturnEntry());
         }
     }
-
-
-    // {
-    //     string filename;
-    //     Console.Write("Enter the name of the file: ");
-    //     filename = Console.ReadLine();
-
-    //     string[] lines = File.ReadAllLines(filename);
-
-    //     return "";
-
-    // }
-
-        // string filename;
-        // using (StreamWriter outputFile = new StreamWriter(filename))
-        // outputFile.
-}
+};
