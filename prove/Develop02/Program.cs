@@ -5,7 +5,7 @@ public class Program
     static void Main(string[] args)
     {
 
-        string userChoice;
+        string selectedOption;
 
         // Instantiate a new Journal
         Journal journal = new Journal();
@@ -13,20 +13,24 @@ public class Program
 
         // Instantiate a new Menu
         Menu mainMenu = new Menu();
-        mainMenu.ReturnHeader(journal._name);
+
+        // Display welcome message
+        mainMenu.DisplayWelcome(journal._name);
 
         do
         {
             // Display the menu options
             mainMenu.DisplayOptions();
 
-            userChoice = Console.ReadLine();
+            // Read the user choice
+            selectedOption = Console.ReadLine();
 
-            switch (userChoice)
+            // Handle each menu option
+            switch (selectedOption)
             {
                 case "1":
-                    Entry newEntry = new Entry();
-                    newEntry.CreateEntry();
+                    string prompt = new Prompt().ReturnRandomPrompt();
+                    Entry newEntry = new Entry(prompt);
                     journal._entries.Add(newEntry);
                     break;
                 case "2":
@@ -40,7 +44,7 @@ public class Program
                     break;
 
             }
-        } while (userChoice != "5");
+        } while (selectedOption != "5");
 
     }
 }
