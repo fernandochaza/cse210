@@ -9,9 +9,7 @@ using System.Reflection;
 /// </summary>
 public class Menu
 {
-    public string _header;
     public List<string> _options = new List<string>();
-
     public enum MenuOption
     {
         [Description("Create a new entry")]
@@ -61,8 +59,8 @@ public class Menu
     /// </summary>
     /// <param name="userName">A variable containing the name of the user</param>
     /// <returns></returns>
-    public string ReturnHeader(string userName)
+    public void DisplayWelcome(string userName)
     {
-        return $"Hello {userName}! Welcome to your Journal Manager";
+        Console.WriteLine($"Hello {userName}! Welcome to your Journal Manager");
     }
 }
