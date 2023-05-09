@@ -10,7 +10,6 @@ public class Entry
     public string _answer;
     public DateTime _date;
 
-
     public Entry(string prompt)
     {
         _prompt = prompt;
@@ -28,5 +27,4 @@ public class Entry
     {
         return $"{_date.ToString("d")},{_prompt},{_answer}";
     }
-
 }
