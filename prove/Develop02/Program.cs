@@ -4,7 +4,6 @@ public class Program
 {
     static void Main(string[] args)
     {
-
         string selectedOption;
 
         // Instantiate a new Journal
@@ -42,9 +41,7 @@ public class Program
                 case "4":
                     journal.LoadJournalFromFile();
                     break;
-
             }
         } while (selectedOption != "5");
-
     }
 }
