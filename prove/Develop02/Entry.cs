@@ -9,6 +9,7 @@ public class Entry
     public string _prompt;
     public string _answer;
     public DateTime _date;
+    public DateTime _time;
 
     public void AddEntry(string prompt)
     {
@@ -16,15 +17,16 @@ public class Entry
         Console.Write($"{_prompt}\n> ");
         _answer = Console.ReadLine();
         _date = DateTime.Today;
+        _time = DateTime.Now;
     }
 
     public string ReturnEntry()
     {
-        return $"Date: {_date.ToString("d")} - Prompt: {_prompt}\nMy Answer: {_answer}";
+        return $"\nDate: {_date.ToString("d")}  Time: {_time.ToString("HH:mm")}\n- Prompt: {_prompt}\n- My Answer: {_answer}\n";
     }
 
     public string SaveEntry()
     {
-        return $"{_date.ToString("d")}|{_prompt}|{_answer}";
+        return $"{_date.ToString("d")}|{_time.ToString("HH:mm")}|{_prompt}|{_answer}";
     }
 }
