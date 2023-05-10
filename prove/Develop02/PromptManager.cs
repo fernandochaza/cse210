@@ -26,7 +26,9 @@ public class PromptManager
         foreach (string line in lines)
         {
             string[] parts = line.Split(",");
-            _prompts.Add(int.Parse(parts[0]), parts[1]);
+            int id = int.Parse(parts[0]);
+            string prompt = parts[1];
+            _prompts.Add(id, prompt);
         }
     }
 
@@ -44,8 +46,30 @@ public class PromptManager
     /// <summary>
     /// Add a custom prompt to the prompts file
     /// </summary>
-    public void AddCustomPrompt()
+    public void AddPrompt()
     {
 
+    }
+
+    /// <summary>
+    /// Remove a prompt
+    /// </summary>
+    public void RemovePrompt(int id)
+    {
+
+    }
+
+    public void DisplayPrompts()
+    {
+        string[] lines = System.IO.File.ReadAllLines("prompts.txt");
+
+        Console.WriteLine("This is the list of prompts: ");
+        foreach (string line in lines)
+        {
+            string[] parts = line.Split(',');
+            string id = parts[0];
+            string prompt = parts[1];
+            Console.WriteLine($"    ({id}) {prompt}");
+        }
     }
 }
