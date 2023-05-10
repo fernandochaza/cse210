@@ -1,4 +1,5 @@
 using System.IO;
+using System.Globalization;
 
 // Responsibilities: 
 // - Store the journal's entries
@@ -24,11 +25,13 @@ public class Journal
             string[] parts = line.Split("|");
             
             DateTime _date = DateTime.Parse(parts[0]);
-            string _prompt = parts[1];
-            string _answer = parts[2];
+            DateTime _time = DateTime.Parse(parts[1]);
+            string _prompt = parts[2];
+            string _answer = parts[3];
 
             Entry newEntry = new Entry();
             newEntry._date = _date;
+            newEntry._time = _time;
             newEntry._prompt = _prompt;
             newEntry._answer = _answer;
             _entries.Add(newEntry);
