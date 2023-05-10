@@ -25,6 +25,6 @@ public class Entry
 
     public string SaveEntry()
     {
-        return $"{_date.ToString("d")},{_prompt},{_answer}";
+        return $"{_date.ToString("d")}|{_prompt}|{_answer}";
     }
 }
