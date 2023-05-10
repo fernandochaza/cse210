@@ -46,9 +46,14 @@ public class PromptManager
     /// <summary>
     /// Add a custom prompt to the prompts file
     /// </summary>
-    public void AddPrompt()
+    public void AddPrompt(string prompt)
     {
-
+        int id = _prompts.Count() + 1;
+        _prompts.Add(id, prompt);
+        SavePrompts();
+        Console.Write("\n> Your new prompt was successfully added to the database.\n" +
+        "\nPress any key to continue...");
+        Console.ReadLine();
     }
 
     /// <summary>
@@ -59,17 +64,28 @@ public class PromptManager
 
     }
 
+    /// <summary>
+    /// Display the complete list of prompts with their IDs
+    /// </summary>
     public void DisplayPrompts()
     {
-        string[] lines = System.IO.File.ReadAllLines("prompts.txt");
-
-        Console.WriteLine("This is the list of prompts: ");
-        foreach (string line in lines)
+        Console.WriteLine("\n> This is the list of prompts: ");
+        foreach (KeyValuePair<int, string> prompt in _prompts)
         {
-            string[] parts = line.Split(',');
-            string id = parts[0];
-            string prompt = parts[1];
-            Console.WriteLine($"    ({id}) {prompt}");
+            Console.WriteLine($"    ({prompt.Key}) {prompt.Value}");
+        }
+        Console.Write("\nPress any key to continue...");
+        Console.ReadLine();
+    }
+
+    public void SavePrompts()
+    {
+        using (StreamWriter outputFile = new StreamWriter("prompts.txt"))
+        {
+            foreach (KeyValuePair<int, string> prompt in _prompts)
+                {
+                    outputFile.WriteLine($"{prompt.Key},{prompt.Value}");
+                }
         }
     }
 }
