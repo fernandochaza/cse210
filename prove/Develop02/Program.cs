@@ -13,6 +13,9 @@ public class Program
         // Instantiate a new Menu
         Menu mainMenu = new Menu();
 
+        // Load the prompt manager
+        PromptManager prompts = new PromptManager();
+
         // Display welcome message
         mainMenu.DisplayWelcome(journal._name);
 
@@ -28,7 +31,7 @@ public class Program
             switch (selectedOption)
             {
                 case "1":
-                    string prompt = new Prompt().ReturnRandomPrompt();
+                    string prompt = prompts.ReturnRandomPrompt();
                     Entry newEntry = new Entry(prompt);
                     journal._entries.Add(newEntry);
                     break;
@@ -41,7 +44,15 @@ public class Program
                 case "4":
                     journal.LoadJournalFromFile();
                     break;
+                case "5":
+                    prompts.DisplayPrompts();
+                    break;
+                case "6":
+                    Console.Write("Enter the new prompt: ");
+                    string newPrompt = Console.ReadLine();
+                    prompts.AddPrompt(newPrompt);
+                    break;
             }
-        } while (selectedOption != "5");
+        } while (selectedOption != "8");
     }
 }
