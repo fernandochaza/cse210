@@ -9,42 +9,24 @@ using System.Reflection;
 /// </summary>
 public class Menu
 {
-    public List<string> _options = new List<string>();
-    public enum MenuOption
-    {
-        [Description("Create a new entry")]
-        Option1,
-        [Description("Display my journal")]
-        Option2,
-        [Description("Save today's entries")]
-        Option3,
-        [Description("Load my journal")]
-        Option4,
-        [Description("Prompt Manager: Display all the prompts")]
-        Option5,
-        [Description("Prompt Manager: Add a prompt")]
-        Option6,
-        [Description("Prompt Manager: Remove a prompt")]
-        Option7,
-        [Description("Quit")]
-        Option8
-    }
+    private Dictionary<string, string> _options;
 
     /// <summary>
     /// Constructs a new instance of the Menu class.
     /// </summary>
     public Menu()
     {
-        foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
+        _options = new Dictionary<string, string>
         {
-            string description = option.GetType()
-            .GetMember(option.ToString())
-            .FirstOrDefault()
-            ?.GetCustomAttribute<DescriptionAttribute>()
-            ?.Description;
-
-            _options.Add($"{(int)option + 1} - {description}");
-        }
+        { "1", "Create a new entry" },
+        { "2", "Display my journal" },
+        { "3", "Save today's entries" },
+        { "4", "Load my journal" },
+        { "5", "Prompt Manager: Display all the prompts" },
+        { "6", "Prompt Manager: Add a prompt" },
+        { "7", "Prompt Manager: Remove a prompt" },
+        { "8", "Quit" },
+        };
     }
 
     /// <summary>
@@ -53,11 +35,10 @@ public class Menu
     public void DisplayOptions()
     {
         Console.WriteLine();
-        foreach (string option in _options)
+        foreach (KeyValuePair<string, string> option in _options)
         {
-            Console.WriteLine(option);
+            Console.WriteLine($"{option.Key} - {option.Value}");
         }
-
         Console.Write("What would you like to do? ");
     }
 
