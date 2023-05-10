@@ -15,12 +15,9 @@ public class Journal
     public string _name;
     public List<Entry> _entries = new List<Entry>();
 
-    public void LoadJournalFromFile()
+    public void LoadJournal()
     {
-        Console.Write("Enter the filename and extension: ");
-        string _filename = Console.ReadLine();
-
-        string[] lines = System.IO.File.ReadAllLines(_filename);
+        string[] lines = System.IO.File.ReadAllLines("journal.txt");
 
         foreach (string line in lines)
         {
@@ -38,12 +35,9 @@ public class Journal
         }
     }
 
-    public void SaveJournalToFile()
+    public void SaveJournal()
     {
-        Console.Write("Enter the filename and extension: ");
-        string _filename = Console.ReadLine();
-
-        using (StreamWriter outputFile = new StreamWriter(_filename))
+        using (StreamWriter outputFile = new StreamWriter("journal.txt"))
         {
             // You can add text to the file with the WriteLine method
             foreach (Entry entry in _entries)
@@ -51,9 +45,19 @@ public class Journal
                 outputFile.WriteLine($"{entry.SaveEntry()}");
             }
         }
-
     }
 
+    public void AddEntryToDatabase(Entry newEntry)
+    {
+        using (StreamWriter outputFile = File.AppendText("journal.txt"))
+        {
+            outputFile.WriteLine($"{newEntry.SaveEntry()}");
+        }
+        Console.WriteLine("\n--> New entry added to your Journal");
+        Console.Write("Press any key to continue...");
+        Console.ReadLine();
+    }
+    
     public void DisplayJournal()
     {
         foreach(Entry entry in _entries)
