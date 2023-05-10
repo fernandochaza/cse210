@@ -34,20 +34,15 @@ public class Program
                     string prompt = prompts.ReturnRandomPrompt();
                     Entry newEntry = new Entry(prompt);
                     journal._entries.Add(newEntry);
+                    journal.AddEntryToDatabase(newEntry);
                     break;
                 case "2":
                     journal.DisplayJournal();
                     break;
                 case "3":
-                    journal.SaveJournalToFile();
-                    break;
-                case "4":
-                    journal.LoadJournalFromFile();
-                    break;
-                case "5":
                     prompts.DisplayPrompts();
                     break;
-                case "6":
+                case "4":
                     Console.Write("Enter the new prompt: ");
                     string newPrompt = Console.ReadLine();
                     prompts.AddPrompt(newPrompt);
