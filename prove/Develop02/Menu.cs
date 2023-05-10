@@ -20,8 +20,14 @@ public class Menu
         Option3,
         [Description("Load my journal")]
         Option4,
+        [Description("Prompt Manager: Display all the prompts")]
+        Option5,
+        [Description("Prompt Manager: Add a prompt")]
+        Option6,
+        [Description("Prompt Manager: Remove a prompt")]
+        Option7,
         [Description("Quit")]
-        Option5
+        Option8
     }
 
     /// <summary>
@@ -46,6 +52,7 @@ public class Menu
     /// </summary>
     public void DisplayOptions()
     {
+        Console.WriteLine();
         foreach (string option in _options)
         {
             Console.WriteLine(option);
