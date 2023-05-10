@@ -22,7 +22,8 @@ public class Entry
 
     public string ReturnEntry()
     {
-        return $"\nDate: {_date.ToString("d")}  Time: {_time.ToString("HH:mm")}\n- Prompt: {_prompt}\n- My Answer: {_answer}\n";
+        return $"\nDate: {_date.ToString("d")}  Time: {_time.ToString("HH:mm")}\n- Prompt: {_prompt}" +
+        $"\n- My Answer: {_answer}\n";
     }
 
     public string SaveEntry()
