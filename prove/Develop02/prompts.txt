@@ -7,4 +7,4 @@
 7,Who is someone that inspires you
 8,Is there something that you're looking forward to in the near future?
 9,Did you tried something new recently? How did it make you feel?
-10,What are you doing toward your goals?
+10,What is something that you are doing towards your goals?
