@@ -20,12 +20,10 @@ public class Menu
         {
         { "1", "Create a new entry" },
         { "2", "Display my journal" },
-        { "3", "Save today's entries" },
-        { "4", "Load my journal" },
-        { "5", "Prompt Manager: Display all the prompts" },
-        { "6", "Prompt Manager: Add a prompt" },
-        { "7", "Prompt Manager: Remove a prompt" },
-        { "8", "Quit" },
+        { "3", "Prompt Manager: Display all the prompts" },
+        { "4", "Prompt Manager: Add a prompt" },
+        { "5", "Prompt Manager: Remove a prompt" },
+        { "6", "Quit" },
         };
     }
 
