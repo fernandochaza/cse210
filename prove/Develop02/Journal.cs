@@ -71,7 +71,7 @@ public class Journal
     {
         foreach(Entry entry in _entries)
         {
-            Console.WriteLine(entry.ReturnEntry());
+            Console.Write(entry.ReturnEntry());
         }
     }
 };
