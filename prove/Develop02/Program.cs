@@ -8,13 +8,14 @@ public class Program
 
         // Instantiate a new Journal
         Journal journal = new Journal();
+        journal.LoadJournal();
         journal._name = "John";
+
+        // Load the prompts manager
+        PromptManager prompts = new PromptManager();
 
         // Instantiate a new Menu
         Menu mainMenu = new Menu();
-
-        // Load the prompt manager
-        PromptManager prompts = new PromptManager();
 
         // Display welcome message
         mainMenu.DisplayWelcome(journal._name);
@@ -32,22 +33,33 @@ public class Program
             {
                 case "1":
                     string prompt = prompts.ReturnRandomPrompt();
-                    Entry newEntry = new Entry(prompt);
+                    Entry newEntry = new Entry();
+                    newEntry.AddEntry(prompt);
                     journal._entries.Add(newEntry);
                     journal.AddEntryToDatabase(newEntry);
                     break;
                 case "2":
                     journal.DisplayJournal();
+                    Console.Write("\nPress Enter to continue...");
+                    Console.ReadLine();
                     break;
                 case "3":
                     prompts.DisplayPrompts();
+                    Console.Write("\nPress Enter to continue...");
+                    Console.ReadLine();
                     break;
                 case "4":
                     Console.Write("Enter the new prompt: ");
                     string newPrompt = Console.ReadLine();
                     prompts.AddPrompt(newPrompt);
                     break;
+                case "5":
+                    prompts.RemovePrompt();
+                    break;
+                case "6":
+                    Console.WriteLine("See you soon!");
+                    break;
             }
-        } while (selectedOption != "8");
+        } while (selectedOption != "6");
     }
 }
