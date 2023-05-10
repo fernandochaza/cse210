@@ -19,8 +19,6 @@ public class PromptManager
 
     public PromptManager()
     {
-        _prompts = new Dictionary<int, string>();
-
         // Load prompts from a txt file
         string[] lines = System.IO.File.ReadAllLines("prompts.txt");
         foreach (string line in lines)
@@ -52,16 +50,34 @@ public class PromptManager
         _prompts.Add(id, prompt);
         SavePrompts();
         Console.Write("\n> Your new prompt was successfully added to the database.\n" +
-        "\nPress any key to continue...");
+        "\nPress Enter to continue...");
         Console.ReadLine();
     }
 
     /// <summary>
     /// Remove a prompt
     /// </summary>
-    public void RemovePrompt(int id)
+    public void RemovePrompt()
     {
+        DisplayPrompts();
+        Console.Write("Enter the prompt number to remove: ");
+        int promptKey = int.Parse(Console.ReadLine());
 
+        string oldPrompt;
+        _prompts.TryGetValue(promptKey, out oldPrompt);
+
+        if (_prompts.Remove(promptKey))
+        {
+            for (int i = promptKey; i <= _prompts.Count(); i++)
+            {
+                _prompts.Add(i, _prompts[i+1]);
+                _prompts.Remove(i+1);
+            }
+            SavePrompts();
+            Console.WriteLine($"The prompt \"{oldPrompt}\" was removed");
+            Console.Write("Press Enter to continue...");
+            Console.ReadLine();
+        };
     }
 
     /// <summary>
@@ -74,8 +90,6 @@ public class PromptManager
         {
             Console.WriteLine($"    ({prompt.Key}) {prompt.Value}");
         }
-        Console.Write("\nPress any key to continue...");
-        Console.ReadLine();
     }
 
     public void SavePrompts()
