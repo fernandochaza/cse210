@@ -8,8 +8,18 @@ public class Program
 
         // Instantiate a new Journal
         Journal journal = new Journal();
-        journal.LoadJournal();
         journal._name = "John";
+
+        // If the Journal file doesn't exists, create one
+        string journalData = "journal.txt";
+        if (!File.Exists(journalData))
+        {
+            journal.SaveJournal();
+        }
+        else
+        {
+            journal.LoadJournal();
+        }
 
         // Load the prompts manager
         PromptManager prompts = new PromptManager();
