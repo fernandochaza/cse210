@@ -21,7 +21,7 @@ public class Journal
 
         foreach (string line in lines)
         {
-            string[] parts = line.Split(",");
+            string[] parts = line.Split("|");
             
             DateTime _date = DateTime.Parse(parts[0]);
             string _prompt = parts[1];
@@ -35,11 +35,13 @@ public class Journal
         }
     }
 
+    /// <summary>
+    /// Creates a new database for the Journal
+    /// </summary>
     public void SaveJournal()
     {
         using (StreamWriter outputFile = new StreamWriter("journal.txt"))
         {
-            // You can add text to the file with the WriteLine method
             foreach (Entry entry in _entries)
             {
                 outputFile.WriteLine($"{entry.SaveEntry()}");
@@ -47,6 +49,10 @@ public class Journal
         }
     }
 
+    /// <summary>
+    /// Add a new line to the Journal database with the new entry
+    /// </summary>
+    /// <param name="newEntry">An Entry instance</param>
     public void AddEntryToDatabase(Entry newEntry)
     {
         using (StreamWriter outputFile = File.AppendText("journal.txt"))
@@ -58,6 +64,9 @@ public class Journal
         Console.ReadLine();
     }
     
+    /// <summary>
+    /// Display the complete Journal Entries
+    /// </summary>
     public void DisplayJournal()
     {
         foreach(Entry entry in _entries)
