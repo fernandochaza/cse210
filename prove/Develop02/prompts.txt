@@ -1,10 +1,10 @@
-1,Who was the most interesting person you interacted with today?
-2,What was the happiest moment you experienced recently?
-3,Did you do help somebody today?
-4,Where do you feel most relaxed
-5,Why do you appreciate your closest friend?
-6,How do you recharge when you feel overwhelmed?
-7,Who is someone that inspires you
-8,Is there something that you're looking forward to in the near future?
-9,Did you tried something new recently? How did it make you feel?
-10,What is something that you are doing towards your goals?
+1|Who was the most interesting person you interacted with today?
+2|What was the happiest moment you experienced recently?
+3|Did you help somebody recently?
+4|Where do you feel most relaxed?
+5|Why do you appreciate your closest friend?
+6|How do you recharge when you feel overwhelmed?
+7|Who is someone that inspires you?
+8|Is there something that you're looking forward to in the near future?
+9|Did you tried something new recently? How did it make you feel?
+10|What is something that you are doing towards your goals?
