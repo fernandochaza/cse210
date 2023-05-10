@@ -23,7 +23,7 @@ public class PromptManager
         string[] lines = System.IO.File.ReadAllLines("prompts.txt");
         foreach (string line in lines)
         {
-            string[] parts = line.Split(",");
+            string[] parts = line.Split("|");
             int id = int.Parse(parts[0]);
             string prompt = parts[1];
             _prompts.Add(id, prompt);
@@ -92,13 +92,16 @@ public class PromptManager
         }
     }
 
+    /// <summary>
+    /// Regenerate the prompts.txt using the current prompts list
+    /// </summary>
     public void SavePrompts()
     {
         using (StreamWriter outputFile = new StreamWriter("prompts.txt"))
         {
             foreach (KeyValuePair<int, string> prompt in _prompts)
                 {
-                    outputFile.WriteLine($"{prompt.Key},{prompt.Value}");
+                    outputFile.WriteLine($"{prompt.Key}|{prompt.Value}");
                 }
         }
     }
