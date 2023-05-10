@@ -27,7 +27,7 @@ public class Journal
             string _prompt = parts[1];
             string _answer = parts[2];
 
-            Entry newEntry = new Entry(_prompt);
+            Entry newEntry = new Entry();
             newEntry._date = _date;
             newEntry._prompt = _prompt;
             newEntry._answer = _answer;
@@ -53,8 +53,8 @@ public class Journal
         {
             outputFile.WriteLine($"{newEntry.SaveEntry()}");
         }
-        Console.WriteLine("\n--> New entry added to your Journal");
-        Console.Write("Press any key to continue...");
+        Console.WriteLine("\n> New entry added to your Journal");
+        Console.Write("Press Enter to continue...");
         Console.ReadLine();
     }
     
