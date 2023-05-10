@@ -10,7 +10,7 @@ public class Entry
     public string _answer;
     public DateTime _date;
 
-    public Entry(string prompt)
+    public void AddEntry(string prompt)
     {
         _prompt = prompt;
         Console.Write($"{_prompt}\n> ");
