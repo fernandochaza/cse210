@@ -15,17 +15,18 @@
 /// </summary>
 public class PromptManager
 {
-    public List<string> _prompts;
+    public Dictionary<int, string> _prompts = new Dictionary<int, string>();
 
     public PromptManager()
     {
-        _prompts = new List<string>();
+        _prompts = new Dictionary<int, string>();
 
         // Load prompts from a txt file
         string[] lines = System.IO.File.ReadAllLines("prompts.txt");
         foreach (string line in lines)
         {
-            _prompts.Add(line);
+            string[] parts = line.Split(",");
+            _prompts.Add(int.Parse(parts[0]), parts[1]);
         }
     }
 
