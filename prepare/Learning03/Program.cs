@@ -10,30 +10,32 @@ class Program
         Fraction thirdNumber = new Fraction(6,7);
 
         // Verify that the getters works correctly
-        Console.WriteLine($"{thirdNumber.GetTop()}/{thirdNumber.GetBottom()}"); // 6/7
+        Console.WriteLine($"{thirdNumber.Top}/{thirdNumber.Bottom}"); // 6/7
 
         // Verify that the setters works correctly
-        firstNumber.SetTop(5);
-        firstNumber.SetBottom(10);
+        firstNumber.Top =5;
+        firstNumber.Bottom =10;
 
-        Console.WriteLine($"{thirdNumber.GetTop()}/{thirdNumber.GetBottom()}"); // 5/10
+        Console.WriteLine($"{thirdNumber.Top}/{thirdNumber.Bottom}"); // 5/10
 
 
         // Test four different options
-        Fraction test1 = new Fraction();
-        Console.WriteLine(test1.GetFractionString());
-        Console.WriteLine(test1.GetDecimalValue());
+        Fraction test = new Fraction();
+        Console.WriteLine(test.GetFractionString());
+        Console.WriteLine(test.GetDecimalValue());
 
-        Fraction test2 = new Fraction(5);
-        Console.WriteLine(test2.GetFractionString());
-        Console.WriteLine(test2.GetDecimalValue());
+        test.Top = 5;
+        Console.WriteLine(test.GetFractionString());
+        Console.WriteLine(test.GetDecimalValue());
 
-        Fraction test3 = new Fraction(3,4);
-        Console.WriteLine(test3.GetFractionString());
-        Console.WriteLine(test3.GetDecimalValue());
+        test.Top = 3;
+        test.Bottom = 4;
+        Console.WriteLine(test.GetFractionString());
+        Console.WriteLine(test.GetDecimalValue());
 
-        Fraction test4 = new Fraction(1,3);
-        Console.WriteLine(test4.GetFractionString());
-        Console.WriteLine(test4.GetDecimalValue());
+        test.Top = 1;
+        test.Bottom = 3;
+        Console.WriteLine(test.GetFractionString());
+        Console.WriteLine(test.GetDecimalValue());
     }
 }

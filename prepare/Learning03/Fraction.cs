@@ -30,25 +30,25 @@ public class Fraction
         _bottom = bottom;
     }
 
-    public int GetTop()
-    {
-        return _top;
-    }
+    // public int GetTop()
+    // {
+    //     return _top;
+    // }
 
-    public int GetBottom()
-    {
-        return _bottom;
-    }
+    // public int GetBottom()
+    // {
+    //     return _bottom;
+    // }
 
-    public int SetTop(int number)
-    {
-        return _top = number;
-    }
+    // public int SetTop(int number)
+    // {
+    //     return _top = number;
+    // }
 
-    public int SetBottom(int number)
-    {
-        return _bottom = number;
-    }
+    // public int SetBottom(int number)
+    // {
+    //     return _bottom = number;
+    // }
     
     public string GetFractionString()
     {
@@ -58,5 +58,15 @@ public class Fraction
     public double GetDecimalValue()
     {
         return (double)_top / (double)_bottom;
+    }
+
+    public int Top {
+        get { return _top;}
+        set {_top = value;}
+    }
+
+    public int Bottom {
+        get { return _bottom;}
+        set { _bottom = value;}
     }
 }
