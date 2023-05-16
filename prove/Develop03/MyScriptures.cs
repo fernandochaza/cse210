@@ -5,7 +5,7 @@ using System;
 /// </summary>
 public class MyScriptures
 {
-    private List<Scripture> _scriptures;
+    private List<Scripture> _scriptures = new List<Scripture>();
     private string _database = "scriptures.txt";
 
 
@@ -17,7 +17,16 @@ public class MyScriptures
         // If the database file doesn't exists, create one
         if (!File.Exists(_database))
         {
-            SaveScriptures();
+            using (StreamWriter file = File.CreateText(_database))
+            {
+                // Create an empty file
+                Console.WriteLine("> New database created");
+            }
+        }
+        else
+        {
+            LoadScriptures();
+            Console.WriteLine("> Working from the existing database\n");
         }
     }
 
@@ -55,14 +64,15 @@ public class MyScriptures
     /// <summary>
     /// Add a new line to the database that represents a scripture
     /// </summary>
-    /// <param name="newScripture">An Entry instance</param>
+    /// <param name="newScripture">A Scripture instance</param>
     public void AddScriptureToDatabase(Scripture newScripture)
     {
         using (StreamWriter outputFile = File.AppendText(_database))
         {
             outputFile.WriteLine($"{newScripture.SaveScripture()}");
         }
-        Console.WriteLine("\n> New entry added to your Journal");
+        _scriptures.Add(newScripture);
+        Console.WriteLine("\n> New Scripture added to your Memorizer");
         Console.Write("Press Enter to continue...");
         Console.ReadLine();
     }
@@ -75,7 +85,7 @@ public class MyScriptures
     {
         foreach(Scripture scripture in _scriptures)
         {
-            Console.Write(scripture.ToString());
+            Console.WriteLine(scripture.ToString());
         }
     }
 }
