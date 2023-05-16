@@ -62,7 +62,7 @@ public class Scripture
     /// Return a string representation of a complete scripture including its reference and its text 
     /// formatted to be displayed to the user
     /// </summary>
-    public string DisplayScripture()
+    public override string ToString()
     {
         return $"{_reference.ToString()} \"{string.Join(" ", _text)}\"";
     }
