@@ -5,7 +5,7 @@ using System;
 /// </summary>
 public class MyScriptures
 {
-    private List<Scripture> _scriptures = new List<Scripture>();
+    private Dictionary<int, Scripture> _scriptures = new Dictionary<int, Scripture>();
     private string _database = "scriptures.txt";
 
 
@@ -40,8 +40,9 @@ public class MyScriptures
 
         foreach (string line in lines)
         {
+            int id = _scriptures.Count()+1;
             Scripture newScripture = new Scripture(line);
-            _scriptures.Add(newScripture);
+            _scriptures.Add(id, newScripture);
         }
     }
 
@@ -53,9 +54,9 @@ public class MyScriptures
     {
         using (StreamWriter outputFile = new StreamWriter(_database))
         {
-            foreach (Scripture scripture in _scriptures)
+            foreach (KeyValuePair<int, Scripture> scripture in _scriptures)
             {
-                outputFile.WriteLine($"{scripture.SaveScripture()}");
+                outputFile.WriteLine($"{scripture.Value.SaveScripture()}");
             }
         }
     }
@@ -71,7 +72,8 @@ public class MyScriptures
         {
             outputFile.WriteLine($"{newScripture.SaveScripture()}");
         }
-        _scriptures.Add(newScripture);
+        int id = _scriptures.Count()+1;
+        _scriptures.Add(id, newScripture);
         Console.WriteLine("\n> New Scripture added to your Memorizer");
         Console.Write("Press Enter to continue...");
         Console.ReadLine();
@@ -83,9 +85,9 @@ public class MyScriptures
     /// </summary>
     public void DisplayScriptures()
     {
-        foreach(Scripture scripture in _scriptures)
+        foreach(KeyValuePair<int, Scripture> scripture in _scriptures)
         {
-            Console.WriteLine(scripture.ToString());
+            Console.WriteLine($"    ({scripture.Key}) - {scripture.Value.ToString()}");
         }
     }
 }
