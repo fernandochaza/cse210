@@ -4,8 +4,23 @@
 public class Scripture
 {
     private Reference _reference;
-    private List<string> _text;
+    private List<string> _text = new List<string>();
     private string _separator = "|";
+
+    /// <summary>
+    /// Instantiate a Scripture reading from the user's input
+    /// </summary>
+    public Scripture()
+    {
+        Console.Write("Enter the reference (e.g. Book 1:2-3): ");
+        Reference reference = new Reference(Console.ReadLine());
+
+        Console.Write("Enter the text: ");
+        string text = Console.ReadLine();
+
+        _reference = reference;
+        _text = text.Split(" ").ToList();
+    }
 
 
     /// <summary>
@@ -17,8 +32,8 @@ public class Scripture
 
         Reference reference = new Reference(scriptureParts[0]);
 
-        string text = scriptureParts[1];
-        foreach (string word in text.Split(" "))
+        string[] text = scriptureParts[1].Split(" ");
+        foreach (string word in text)
         {
             _text.Add(word);
         }
