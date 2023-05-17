@@ -36,12 +36,27 @@ class Program
                     myScriptures.AddScriptureToDatabase(newScripture);
                     break;
                 case "3":
+                    // Display all the scriptures in the database
                     myScriptures.DisplayScriptures();
+
+                    // Ask the user to choose a scripture and save its choice
                     Console.Write("Select the number of scripture to memorize: ");
                     int choice = int.Parse(Console.ReadLine());
-                    Scripture UserScripture = myScriptures.GetScripture(choice);
-                    UserScripture.MemorizeScripture();
-                    Console.WriteLine(UserScripture.JoinedText);
+
+                    // Clear the Console
+                    Console.Clear();
+
+                    Scripture userScripture = myScriptures.GetScripture(choice);
+                    string endMemorizer;
+                    do
+                    {
+                        userScripture.MemorizeScripture();
+                        Console.WriteLine(userScripture.JoinedText);
+                        Console.Write("\nPress enter to continue or type \"quit\" to come back to the main menu: ");
+                        endMemorizer = Console.ReadLine();
+                        Console.Clear();
+
+                    } while (userScripture.MemorizeManager.ExcludedQuantity < userScripture.Text.Count && endMemorizer != "quit");
                     break;
             }
         } while (selectedOption != "4");
