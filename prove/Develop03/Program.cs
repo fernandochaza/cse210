@@ -36,6 +36,12 @@ class Program
                     myScriptures.AddScriptureToDatabase(newScripture);
                     break;
                 case "3":
+                    myScriptures.DisplayScriptures();
+                    Console.Write("Select the number of scripture to memorize: ");
+                    int choice = int.Parse(Console.ReadLine());
+                    Scripture UserScripture = myScriptures.GetScripture(choice);
+                    UserScripture.MemorizeScripture();
+                    Console.WriteLine(UserScripture.JoinedText);
                     break;
             }
         } while (selectedOption != "4");
