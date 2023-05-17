@@ -5,7 +5,7 @@
 public class MemorizeManager
 {
     private Random _random = new Random();
-    private List<int> excludeIndexes = new List<int>();
+    private List<int> _excludedIndexes = new List<int>();
 
 
     /// <summary>
@@ -26,10 +26,10 @@ public class MemorizeManager
             index = _random.Next(words.Count);
 
             // Check if the index was already selected
-            if (!excludeIndexes.Contains(index))
+            if (!_excludedIndexes.Contains(index))
             {
                 // Add the current index to the exclusion list
-                excludeIndexes.Add(index);
+                _excludedIndexes.Add(index);
                 // Generate a string of "n" underscores, where "n" is the length of the word to hide
                 string underscores = new String('_', words[index].Length);
                 // Take the word from the words list and replace its value for the underscores
@@ -37,6 +37,21 @@ public class MemorizeManager
 
                 counter ++;
             }
-        } while (counter <= numberOfWords && excludeIndexes.Count < words.Count);
+        } while (counter <= numberOfWords && _excludedIndexes.Count < words.Count);
+
+        if (_excludedIndexes.Count == words.Count)
+        {
+            Console.WriteLine("All the words were hidden");
+        }
+    }
+
+
+    /// <summary>
+    /// Get the quantity of excluded words for the current instance
+    /// </summary>
+    /// <value>An integer that represents the number of words hidden</value>
+    public int ExcludedQuantity
+    {
+        get {return _excludedIndexes.Count;}
     }
 }
