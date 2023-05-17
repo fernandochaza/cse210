@@ -10,6 +10,17 @@ public class MyScriptures
 
 
     /// <summary>
+    /// Get a Scripture from the _scriptures dictionary given its key
+    /// </summary>
+    /// <param name="key">The key that contains the Scripture value</param>
+    /// <returns></returns>
+    public Scripture GetScripture(int key)
+    {
+        return _scriptures[key];
+    }
+
+
+    /// <summary>
     /// Check the existence of the database file. Create a new one if it doesn't exists
     /// </summary>
     public void Initialize()
