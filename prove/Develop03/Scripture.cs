@@ -54,12 +54,19 @@ public class Scripture
     }
 
 
-    // public Reference Reference
-    // {
-    //     get {return _reference;}
-    // }
+    /// <summary>
+    /// Get the MemorizeManager instance for this Scripture
+    /// </summary>
+    /// <value>An instance of the MemorizeManager class</value>
+    public MemorizeManager MemorizeManager
+    {
+        get {return _memorizeManager;}
+    }
 
 
+    /// <summary>
+    /// Get or Set the Scripture text
+    /// </summary>
     public List<string> Text
     {
         get {return _text;}
@@ -67,9 +74,22 @@ public class Scripture
     }
 
 
+    /// <summary>
+    /// Return a string representation of the Scripture text
+    /// </summary>
     public string JoinedText
     {
         get {return string.Join(" ", _text);}
+    }
+
+
+    /// <summary>
+    /// Get the Reference instance for this Scripture
+    /// </summary>
+    /// <value>An instance of the Reference class</value>
+    public string Reference
+    {
+        get {return _reference.ToString();}
     }
 
     /// <summary>
@@ -90,9 +110,12 @@ public class Scripture
         return $"{_reference.ToString()} \"{string.Join(" ", _text)}\"";
     }
 
-
+    /// <summary>
+    /// Print the scripture Reference and call the Memorize method
+    /// </summary>
     public void MemorizeScripture()
     {
+        Console.WriteLine(_reference.ToString());
         _memorizeManager.Memorize(_text);    
     }
 }
