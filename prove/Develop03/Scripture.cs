@@ -3,6 +3,7 @@
 /// </summary>
 public class Scripture
 {
+    private MemorizeManager _memorizeManager = new MemorizeManager();
     private Reference _reference;
     private List<string> _text = new List<string>();
     private string _separator = "|";
@@ -59,10 +60,17 @@ public class Scripture
     // }
 
 
-    // public List<string> Text
-    // {
-    //     get {return _text;}
-    // }
+    public List<string> Text
+    {
+        get {return _text;}
+        set {_text = value;}
+    }
+
+
+    public string JoinedText
+    {
+        get {return string.Join(" ", _text);}
+    }
 
     /// <summary>
     /// Return a string representation of a complete scripture including its reference, a separator, and its text
@@ -80,5 +88,11 @@ public class Scripture
     public override string ToString()
     {
         return $"{_reference.ToString()} \"{string.Join(" ", _text)}\"";
+    }
+
+
+    public void MemorizeScripture()
+    {
+        _memorizeManager.Memorize(_text);    
     }
 }
