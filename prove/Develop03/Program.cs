@@ -4,6 +4,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        Console.Clear();
+
         // Instantiate a new Scriptures database
         MyScriptures myScriptures = new MyScriptures();
         myScriptures.Initialize();
@@ -40,7 +42,7 @@ class Program
                     myScriptures.DisplayScriptures();
 
                     // Ask the user to choose a scripture and save its choice
-                    Console.Write("Select the number of scripture to memorize: ");
+                    Console.Write("\n> Select the number of scripture to memorize: ");
                     int choice = int.Parse(Console.ReadLine());
 
                     // Clear the Console
@@ -48,6 +50,13 @@ class Program
 
                     Scripture userScripture = myScriptures.GetScripture(choice);
                     string endMemorizer;
+
+                    Console.WriteLine(userScripture.Reference.ToString());
+                    Console.WriteLine(userScripture.JoinedText);
+                    Console.WriteLine("\n> Press enter to hide random words");
+                    Console.ReadLine();
+                    Console.Clear();
+
                     do
                     {
                         userScripture.MemorizeScripture();
