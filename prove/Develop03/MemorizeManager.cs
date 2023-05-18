@@ -38,11 +38,6 @@ public class MemorizeManager
                 counter ++;
             }
         } while (counter <= numberOfWords && _excludedIndexes.Count < words.Count);
-
-        if (_excludedIndexes.Count == words.Count)
-        {
-            Console.WriteLine("All the words were hidden");
-        }
     }
 
 
