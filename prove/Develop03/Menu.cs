@@ -31,7 +31,7 @@ public class Menu
         {
             Console.WriteLine($"{option.Key} - {option.Value}");
         }
-        Console.Write("What would you like to do? ");
+        Console.Write("\n> What would you like to do? (Select an option): ");
     }
 
     /// <summary>
