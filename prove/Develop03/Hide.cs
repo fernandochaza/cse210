@@ -2,7 +2,7 @@
 /// Take a string of text and randomly hide words from it
 /// to help the user memorize the text
 /// </summary>
-public class MemorizeManager
+public class Hide
 {
     private Random _random = new Random();
     private List<int> _excludedIndexes = new List<int>();
@@ -12,7 +12,7 @@ public class MemorizeManager
     /// Hides random words from a given text
     /// </summary>
     /// <param name="words">An array of ordered strings representing a text</param>
-    public void Memorize(List<string> words)
+    public List<string> HideWords(List<string> words)
     {
         // Choose a random number of words between 1 and 4 to hide
         int numberOfWords = _random.Next(4);
@@ -38,6 +38,7 @@ public class MemorizeManager
                 counter ++;
             }
         } while (counter <= numberOfWords && _excludedIndexes.Count < words.Count);
+        return words;
     }
 
 

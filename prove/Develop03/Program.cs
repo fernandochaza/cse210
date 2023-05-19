@@ -13,6 +13,8 @@ class Program
         // Instantiate a new Menu
         Menu mainMenu = new Menu();
 
+        Hide hideWords = new Hide();
+
         // Display welcome message
         mainMenu.DisplayWelcome("Fernando");
 
@@ -49,23 +51,22 @@ class Program
                     Console.Clear();
 
                     Scripture userScripture = myScriptures.GetScripture(choice);
-                    string endMemorizer;
+                    string finishMemorizer;
 
-                    Console.WriteLine(userScripture.Reference.ToString());
-                    Console.WriteLine(userScripture.JoinedText);
+                    Console.WriteLine(userScripture.ToString());
                     Console.WriteLine("\n> Press enter to hide random words");
                     Console.ReadLine();
                     Console.Clear();
 
                     do
                     {
-                        userScripture.MemorizeScripture();
-                        Console.WriteLine(userScripture.JoinedText);
+                        userScripture.Text = hideWords.HideWords(userScripture.Text);
+                        Console.WriteLine(userScripture.ToString());
                         Console.Write("\nPress enter to continue or type \"quit\" to come back to the main menu: ");
-                        endMemorizer = Console.ReadLine();
+                        finishMemorizer = Console.ReadLine();
                         Console.Clear();
 
-                    } while (userScripture.MemorizeManager.ExcludedQuantity < userScripture.Text.Count && endMemorizer != "quit");
+                    } while (hideWords.ExcludedQuantity < userScripture.Text.Count && finishMemorizer != "quit");
                     break;
             }
         } while (selectedOption != "4");

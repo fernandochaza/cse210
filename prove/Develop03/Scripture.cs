@@ -3,7 +3,6 @@
 /// </summary>
 public class Scripture
 {
-    private MemorizeManager _memorizeManager = new MemorizeManager();
     private Reference _reference;
     private List<string> _text = new List<string>();
     private string _separator = "|";
@@ -55,16 +54,6 @@ public class Scripture
 
 
     /// <summary>
-    /// Get the MemorizeManager instance for this Scripture
-    /// </summary>
-    /// <value>An instance of the MemorizeManager class</value>
-    public MemorizeManager MemorizeManager
-    {
-        get {return _memorizeManager;}
-    }
-
-
-    /// <summary>
     /// Get or Set the Scripture text
     /// </summary>
     public List<string> Text
@@ -107,15 +96,6 @@ public class Scripture
     /// </summary>
     public override string ToString()
     {
-        return $"{_reference.ToString()} \"{string.Join(" ", _text)}\"";
-    }
-
-    /// <summary>
-    /// Print the scripture Reference and call the Memorize method
-    /// </summary>
-    public void MemorizeScripture()
-    {
-        Console.WriteLine(_reference.ToString());
-        _memorizeManager.Memorize(_text);    
+        return $"{_reference.ToString()}\n{string.Join(" ", _text)}";
     }
 }

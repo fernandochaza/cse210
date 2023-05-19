@@ -100,7 +100,7 @@ public class MyScriptures
         Console.WriteLine("These are your scriptures: \n");
         foreach(KeyValuePair<int, Scripture> scripture in _scriptures)
         {
-            Console.WriteLine($"    ({scripture.Key}) - {scripture.Value.ToString()}");
+            Console.WriteLine($"({scripture.Key}) - {scripture.Value.ToString()}\n");
         }
     }
 }
