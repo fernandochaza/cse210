@@ -15,7 +15,7 @@ public class Hide
     public List<string> HideWords(List<string> words)
     {
         // Choose a random number of words between 1 and 4 to hide
-        int numberOfWords = _random.Next(4);
+        int numberOfWordsToHide = _random.Next(4);
 
         int index;
         int counter = 0;
@@ -37,7 +37,8 @@ public class Hide
 
                 counter ++;
             }
-        } while (counter <= numberOfWords && _excludedIndexes.Count < words.Count);
+        } while (counter <= numberOfWordsToHide && _excludedIndexes.Count < words.Count);
+        // Return the new array with random hidden words
         return words;
     }
 
