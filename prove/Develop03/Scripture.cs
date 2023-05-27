@@ -4,7 +4,7 @@
 public class Scripture
 {
     private Reference _reference;
-    private List<string> _text = new List<string>();
+    private List<Word> _text = new List<Word>();
     private string _separator = "|";
 
     /// <summary>
@@ -14,12 +14,14 @@ public class Scripture
     {
         Console.Write("Enter the reference (e.g. Book 1:2-3): ");
         Reference reference = new Reference(Console.ReadLine());
+        _reference = reference;
 
         Console.Write("Enter the text: ");
-        string text = Console.ReadLine();
+        string userText = Console.ReadLine();
 
-        _reference = reference;
-        _text = text.Split(" ").ToList();
+        List<string> wordList = userText.Split(" ").ToList();
+
+        AddWords(wordList);
     }
 
 
@@ -31,13 +33,10 @@ public class Scripture
         string[] scriptureParts = rawScripture.Split(_separator);
 
         Reference reference = new Reference(scriptureParts[0]);
-
-        string[] text = scriptureParts[1].Split(" ");
-        foreach (string word in text)
-        {
-            _text.Add(word);
-        }
         _reference = reference;
+
+        List<string> wordList = scriptureParts[1].Split(" ").ToList();
+        AddWords(wordList);
     }
 
     /// <summary>
@@ -45,18 +44,31 @@ public class Scripture
     /// </summary>
     public Scripture(Reference reference, string text)
     {
-        foreach (string word in text.Split(" "))
-        {
-            _text.Add(word);
-        }
         _reference = reference;
+
+        List<string> wordList = text.Split(" ").ToList();
+        AddWords(wordList);
+    }
+
+
+    /// <summary>
+    /// Create a Word instance and add it to the Scripture Text for each string in a List
+    /// </summary>
+    /// <param name="words">A list of strings</param>
+    public void AddWords(List<string> words)
+    {
+        foreach (string word in words)
+        {
+            Word wordToAdd = new Word(word);
+            _text.Add(wordToAdd);
+        }
     }
 
 
     /// <summary>
     /// Get or Set the Scripture text
     /// </summary>
-    public List<string> Text
+    public List<Word> Text
     {
         get {return _text;}
         set {_text = value;}
@@ -64,22 +76,14 @@ public class Scripture
 
 
     /// <summary>
-    /// Return a string representation of the Scripture text
-    /// </summary>
-    public string JoinedText
-    {
-        get {return string.Join(" ", _text);}
-    }
-
-
-    /// <summary>
-    /// Get the Reference instance for this Scripture
+    /// Returns the Reference of the Scripture
     /// </summary>
     /// <value>An instance of the Reference class</value>
-    public string Reference
+    public Reference Reference
     {
-        get {return _reference.ToString();}
+        get {return _reference;}
     }
+
 
     /// <summary>
     /// Return a string representation of a complete scripture including its reference, a separator, and its text
@@ -87,8 +91,9 @@ public class Scripture
     /// </summary>
     public string SaveScripture()
     {
-        return $"{_reference.ToString()}{_separator}{string.Join(" ", _text)}";
+        return $"{_reference.ToString()}{_separator}{string.Join(" ", DisplayText())}";
     }
+
 
     /// <summary>
     /// Return a string representation of a complete scripture including its reference and its text 
@@ -96,6 +101,87 @@ public class Scripture
     /// </summary>
     public override string ToString()
     {
-        return $"{_reference.ToString()}\n{string.Join(" ", _text)}";
+        List<string> displayText = new List<string>();
+        foreach (Word word in _text)
+        {
+            displayText.Add(word.GetWord);
+        }
+        return $"{_reference.ToString()}\n{string.Join(" ", displayText)}";
+    }
+
+
+    /// <summary>
+    /// Hide random words from the Scripture
+    /// </summary>
+    public void HideRandom()
+    {
+        Random random = new Random();
+
+        // Check if all the words are hidden
+        if (CountHidden() == _text.Count)
+        {
+            Console.WriteLine("All the words are hidden");
+        }
+        else
+        {
+            // Generate random number of words to hide
+            int numberOfWordsToHide = random.Next(1,4);
+
+            // Set a counter of hidden words
+            int hiddenWords = 0;
+
+            while (hiddenWords < numberOfWordsToHide)
+            {
+                int index;
+                do
+                {
+                    // Generate random index
+                    index = random.Next(_text.Count);
+                } while (_text[index].Hidden);
+
+                // Take the word from the words list and replace its value for the underscores
+                _text[index].Hide();
+                hiddenWords ++;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Return a string representing each Word in the Scripture Text. Includes the hidden behavior
+    /// </summary>
+    /// <returns>A string representing the scripture Text</returns>
+    public string DisplayText()
+    {
+        return string.Join(" ", _text.Select(word => word.DisplayWord()));
+    }
+
+
+    /// <summary>
+    /// Set the Hidden value to false for every Word in this Scripture instance
+    /// </summary>
+    public void RevealWords()
+    {
+        foreach (Word word in _text)
+        {
+            word.Show();
+        }
+    }
+
+    /// <summary>
+    /// Count the number of Words hidden
+    /// </summary>
+    /// <returns>An integer</returns>
+    public int CountHidden()
+    {
+        int hidden = 0;
+        foreach (Word word in _text)
+        {
+            if (word.Hidden)
+            {
+                hidden++;
+            }
+        }
+        return hidden;
     }
 }

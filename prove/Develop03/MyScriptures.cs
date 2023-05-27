@@ -10,7 +10,7 @@ public class MyScriptures
 
 
     /// <summary>
-    /// Get a Scripture from the _scriptures dictionary given its key
+    /// Get a Scripture for the Scriptures List given its key
     /// </summary>
     /// <param name="key">The key that contains the Scripture value</param>
     /// <returns></returns>

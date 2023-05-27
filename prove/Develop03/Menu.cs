@@ -26,7 +26,6 @@ public class Menu
     /// </summary>
     public void DisplayOptions()
     {
-        Console.WriteLine();
         foreach (KeyValuePair<string, string> option in _options)
         {
             Console.WriteLine($"{option.Key} - {option.Value}");

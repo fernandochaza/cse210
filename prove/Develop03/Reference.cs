@@ -74,6 +74,7 @@ public class Reference
         _endingVerse = endingVerse;
     }
 
+
     /// <summary>
     /// Return a string representation of the Reference
     /// </summary>
@@ -88,28 +89,4 @@ public class Reference
 
         return referenceString;
     }
-
-
-    // public string Book 
-    // {
-    //     get {return _book;}
-    // }
-
-
-    // public int Chapter 
-    // {
-    //     get {return _chapter;}
-    // }
-
-
-    // public int InitialVerse 
-    // {
-    //     get {return _initialVerse;}
-    // }
-
-
-    // public int EndingVerse 
-    // {
-    //     get {return _endingVerse;}
-    // }
 }
