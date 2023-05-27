@@ -20,11 +20,22 @@ public class Reference
         string versesSeparator = "-";
         int endingVerse = 0;
         int initialVerse = 0;
+        
+        string book;
 
         // Divide the reference into Book and Passage
         string[] referenceParts = rawReference.Split(bookAndPassageSeparator);
-        string book = referenceParts[0];
-        
+
+        // The first part of the reference is the book
+        book = referenceParts[0];
+
+        // Check special case when a book name starts with an integer and a space
+        if (rawReference[1] == ' ')
+        {
+            book = referenceParts[0] + ' ' + referenceParts[1];
+            referenceParts[1] = referenceParts[2];
+        }
+
         // Divide the passage into Chapter and Verse/s
         string[] passage = referenceParts[1].Split(chapterAndVerseSeparator);
         int chapter = int.Parse(passage[0]);

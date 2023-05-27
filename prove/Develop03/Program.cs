@@ -43,12 +43,29 @@ class Program
 
                     // Ask the user to choose a scripture and save its choice
                     Console.Write("\n> Select the number of scripture to memorize: ");
-                    int choice = int.Parse(Console.ReadLine());
+
+                    string choice = Console.ReadLine();
+                    if (!int.TryParse(choice, out int parsedChoice))
+                    {
+                        Console.WriteLine("(!) Incorrect option. Try Again...\n");
+                        break;
+                    }
 
                     Console.Clear();
 
-                    // Get the Scripture instance
-                    Scripture userScripture = myScriptures.GetScripture(choice);
+                    Scripture userScripture;
+
+                    try
+                    {
+                        // Get the Scripture instance
+                        userScripture = myScriptures.GetScripture(parsedChoice);
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        // The key is not found in the dictionary
+                        Console.WriteLine($"The scripture number {parsedChoice} was not found in the database");
+                        break;
+                    }
 
                     userScripture.RevealWords();
 
@@ -73,6 +90,9 @@ class Program
 
                         Console.Clear();
                     } while (userScripture.CountHidden() < userScripture.Text.Count() && finishMemorizer != "quit");
+                    break;
+                    default:
+                    Console.WriteLine("(!) Please select a valid option: ");
                     break;
             }
         } while (selectedOption != "4");
