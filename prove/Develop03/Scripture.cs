@@ -117,32 +117,32 @@ public class Scripture
     {
         Random random = new Random();
 
+        // Generate random number of words to hide
+        int numberOfWordsToHide = random.Next(1,4);
+
+        // Set a counter of hidden words
+        int hiddenWords = 0;
+
+        // Check if the the program already hide the number of random words for this step and
+        // if all the words in the text aren't already hidden
+        while (hiddenWords < numberOfWordsToHide && CountHidden() != _text.Count)
+        {
+            int index;
+            do
+            {
+                // Generate random index
+                index = random.Next(_text.Count);
+            } while (_text[index].Hidden);
+
+            // Take the word from the words list and replace its value for the underscores
+            _text[index].Hide();
+            hiddenWords ++;
+        }
+        
         // Check if all the words are hidden
         if (CountHidden() == _text.Count)
         {
-            Console.WriteLine("All the words are hidden");
-        }
-        else
-        {
-            // Generate random number of words to hide
-            int numberOfWordsToHide = random.Next(1,4);
-
-            // Set a counter of hidden words
-            int hiddenWords = 0;
-
-            while (hiddenWords < numberOfWordsToHide)
-            {
-                int index;
-                do
-                {
-                    // Generate random index
-                    index = random.Next(_text.Count);
-                } while (_text[index].Hidden);
-
-                // Take the word from the words list and replace its value for the underscores
-                _text[index].Hide();
-                hiddenWords ++;
-            }
+            Console.WriteLine("--> All the words are hidden");
         }
     }
 

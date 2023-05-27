@@ -85,7 +85,7 @@ public class MyScriptures
         }
         int id = _scriptures.Count()+1;
         _scriptures.Add(id, newScripture);
-        Console.WriteLine("\n> New Scripture added to your Memorizer");
+        Console.WriteLine("\n> New Scripture added to your database");
         Console.Write("Press Enter to continue...");
         Console.ReadLine();
     }
