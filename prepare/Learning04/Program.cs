@@ -4,6 +4,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Learning04 World!");
+        string name = "Fernando Chazarreta";
+        string topic = "Inheritance";
+
+        Assignment assignment = new Assignment(name, topic);
+        Console.WriteLine(assignment.GetSummary());
     }
 }
