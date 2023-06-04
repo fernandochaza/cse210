@@ -13,4 +13,9 @@ public class Assignment
     {
         return $"{_studentName} - {_topic}";
     }
+
+    public string StudentName
+    {
+        get { return _studentName;}
+    }   
 }
