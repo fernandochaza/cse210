@@ -29,6 +29,7 @@ class Program
                 case "1":
                 BreathingActivity breathing = new BreathingActivity();
                 breathing.DisplayWelcome();
+                breathing.EndMessage();
                     break;
                 case "2":
                     break;

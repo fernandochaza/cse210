@@ -5,8 +5,7 @@ public class Activity
 {
     private string _title;  // Breathing Activity 
     private string _description;
-    private string _endMessage;
-    private int _duration;
+    private int _duration = 10;
     private Animation _pauseAnimation;
 
     public Activity()
@@ -33,4 +32,9 @@ public class Activity
         Console.WriteLine($"\n{_description}");
     }
 
+    public void EndMessage()
+    {
+        Console.WriteLine("Well done!");
+        Console.WriteLine($"\nYou have completed {_duration} seconds of {_title}");
+    }
 }
