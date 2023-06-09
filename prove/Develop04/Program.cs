@@ -27,6 +27,8 @@ class Program
             switch (selectedOption)
             {
                 case "1":
+                BreathingActivity breathing = new BreathingActivity();
+                breathing.DisplayWelcome();
                     break;
                 case "2":
                     break;
