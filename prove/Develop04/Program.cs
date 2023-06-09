@@ -20,6 +20,11 @@ class Program
             // Display the menu options
             mainMenu.DisplayOptions();
 
+            int duration = 5;
+            Countdown countdown = new Countdown(duration);
+            Spinner spinner = new Spinner(duration);
+
+
             // Read the user choice
             selectedOption = Console.ReadLine();
 
@@ -29,6 +34,8 @@ class Program
                 case "1":
                 BreathingActivity breathing = new BreathingActivity();
                 breathing.DisplayWelcome();
+                countdown.Initialize();
+                spinner.Initialize();
                 breathing.EndMessage();
                     break;
                 case "2":

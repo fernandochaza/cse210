@@ -6,7 +6,6 @@ public class Activity
     private string _title;  // Breathing Activity 
     private string _description;
     private int _duration = 10;
-    private Animation _pauseAnimation;
 
     public Activity()
     {
