@@ -1,19 +1,19 @@
 public class Animation
 {
-    private int _duration;
+    private int _pauseDuration;
     private List<string> _animationCharacters;
 
     public Animation()
     {
         _animationCharacters = new List<string>();
-        _duration = 0;
+        _pauseDuration = 0;
     }
 
 
-    public int Duration
+    public int PauseDuration
     {
-        get {return _duration;}
-        set {_duration = value;}
+        get {return _pauseDuration;}
+        set {_pauseDuration = value;}
     }
 
     public List<string> Characters

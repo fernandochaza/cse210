@@ -34,6 +34,7 @@ class Program
                 case "1":
                 BreathingActivity breathing = new BreathingActivity();
                 breathing.DisplayWelcome();
+                breathing.SetDuration();
                 countdown.Initialize();
                 spinner.Initialize();
                 breathing.EndMessage();

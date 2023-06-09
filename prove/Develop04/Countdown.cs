@@ -7,7 +7,7 @@ public class Countdown : Animation
     public Countdown(int duration)
     {
         // Assign the given seconds as the Countdown Duration
-        Duration = duration;
+        PauseDuration = duration;
 
         // Reverse loop to create a list of numbers in reserve order, starting at the duration time in seconds.
         List<string> characters = new List<string>();
@@ -25,7 +25,7 @@ public class Countdown : Animation
     /// </summary>
     public void Initialize()
     {
-        int timeLeft = Duration;
+        int timeLeft = PauseDuration;
         int index = 0;
 
         do

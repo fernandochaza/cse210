@@ -3,9 +3,9 @@
 /// </summary>
 public class Activity
 {
-    private string _title;  // Breathing Activity 
+    private string _title;
     private string _description;
-    private int _duration = 10;
+    private int _duration;
 
     public Activity()
     {
@@ -35,5 +35,22 @@ public class Activity
     {
         Console.WriteLine("Well done!");
         Console.WriteLine($"\nYou have completed {_duration} seconds of {_title}");
+    }
+
+    public void SetDuration()
+    {
+        while (true)
+        {
+            Console.Write("How long, in seconds, would you like for your session? ");
+            string userInput = Console.ReadLine();
+
+            if (int.TryParse(userInput, out _duration))
+            {
+                // Valid number entered, break out of the loop
+                break;
+            }
+
+        Console.WriteLine("Invalid input. Please enter a valid number.");
+        }
     }
 }

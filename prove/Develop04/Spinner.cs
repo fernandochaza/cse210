@@ -7,7 +7,7 @@ public class Spinner : Animation
     public Spinner(int duration)
     {
         // Assign the given seconds as the Spinner Duration
-        Duration = duration;
+        PauseDuration = duration;
 
         // Create the list of characters that simulates a spinner
         Characters = new List<string>{"|", "/", "-", "\\"};
@@ -15,7 +15,7 @@ public class Spinner : Animation
 
     public void Initialize()
     {
-        int timeLeft = Duration;
+        int timeLeft = PauseDuration;
         int index = 0;
 
         do
