@@ -7,9 +7,9 @@ public class Countdown : Animation
     public Countdown(int duration)
     {
         // Assign the given seconds as the Countdown Duration
-        PauseDuration = duration;
+        AnimationSeconds = duration;
 
-        // Reverse loop to create a list of numbers in reserve order, starting at the duration time in seconds.
+        // Reverse loop to create a list of numbers in reverse order, starting at the duration time in seconds.
         List<string> characters = new List<string>();
         for (int i = duration; i > 0; i--)
         {
@@ -17,28 +17,34 @@ public class Countdown : Animation
         }
 
         // Assign the resulting characters to the Animation String
-        Characters = characters;
+        AnimationCharacters = characters;
     }
 
     /// <summary>
     /// Initialize a countdown starting at the defined Animation Duration
     /// </summary>
-    public void Initialize()
+    public void Initialize(int totalTimeLeft)
     {
-        int timeLeft = PauseDuration;
+        int animationTimeLeft = AnimationSeconds;
         int index = 0;
 
         do
         {
-            Console.Write(Characters[index]);
+            Console.Write(AnimationCharacters[index]);
             Thread.Sleep(1000);
             Console.Write("\b \b"); // Erase the character
             index++;
-            timeLeft--;
-            if (index >= Characters.Count())
+            animationTimeLeft--;
+            totalTimeLeft--;
+            if (index >= AnimationCharacters.Count())
             {
                 index = 0;
             }
-        } while (timeLeft > 0);
+            if (totalTimeLeft == 0)
+            {
+                break;
+            }
+        } while (animationTimeLeft > 0);
+
     }
 }
