@@ -20,10 +20,7 @@ class Program
             // Display the menu options
             mainMenu.DisplayOptions();
 
-            int duration = 5;
-            Countdown countdown = new Countdown(duration);
-            Spinner spinner = new Spinner(duration);
-
+            Countdown countdown = new Countdown(0);
 
             // Read the user choice
             selectedOption = Console.ReadLine();
@@ -34,9 +31,21 @@ class Program
                 case "1":
                 BreathingActivity breathing = new BreathingActivity();
                 breathing.DisplayWelcome();
+
+                // Ask the user for the session duration
                 breathing.SetDuration();
-                countdown.Initialize();
-                spinner.Initialize();
+                Console.Clear();
+
+                // Display a preparation message
+                Console.WriteLine("Get ready...");
+                Spinner spinner = new Spinner(5);
+                spinner.Initialize(5);
+
+                // Initialize the Breathing Activity
+                Console.Clear();
+                breathing.Initialize();
+
+                // Display an ending message
                 breathing.EndMessage();
                     break;
                 case "2":
@@ -50,6 +59,5 @@ class Program
                     break;
             }
         } while (selectedOption != "4");
-
     }
 }

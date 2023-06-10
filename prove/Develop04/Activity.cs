@@ -81,7 +81,7 @@ public class Activity
     public void Spinner(int duration)
     {
         _spinner = new Spinner(duration);
-        _spinner.Initialize();
+        _spinner.Initialize(TimeLeft);
     }
 
 /// <summary>
