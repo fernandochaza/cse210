@@ -1,5 +1,7 @@
 public class BreathingActivity : Activity
 {
+    private int breatheInSeconds;
+    private int breatheOutSeconds;
 
     /// <summary>
     /// Instantiate a Breathing Activity and set its Title and Description
@@ -9,6 +11,8 @@ public class BreathingActivity : Activity
         Title = "Breathing Activity";
         Description = "This activity will help you relax by walking through breathing in and out slowly. " +
         "Clear your mind and focus on your breathing.";
+        breatheInSeconds = 4;
+        breatheOutSeconds = 7;
     }
 
     public void Initialize()
@@ -24,20 +28,20 @@ public class BreathingActivity : Activity
             if (TimeLeft > 0)
             {
                 Console.Write("\nBreathe In... ");
-                Countdown(5);
+                Countdown(breatheInSeconds);
 
-                // Update the remaining time
-                TimeLeft = TimeLeft - 5;
+                // Update the Activity remaining time
+                TimeLeft = TimeLeft - breatheInSeconds;
             }
 
             // Check the "TimeLeft", which is an Activity class member, to avoid Countdown after the time has ended.
             if (TimeLeft > 0)
             {
                 Console.Write("\n\nBreathe Out...");
-                Countdown(5);
+                Countdown(breatheOutSeconds);
 
-                // Update the remaining time
-                TimeLeft = TimeLeft - 5;
+                // Update the Activity remaining time
+                TimeLeft = TimeLeft - breatheOutSeconds;
                 Console.WriteLine();
             }
         }
