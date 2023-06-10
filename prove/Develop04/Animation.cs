@@ -14,4 +14,31 @@ public class Animation
         get {return _animationCharacters;}
         set {_animationCharacters = value;}
     }
+
+    /// <summary>
+    /// Initialize the animation given the total time left of the session
+    /// </summary>
+    public void Initialize(int totalTimeLeft)
+    {
+        int animationTimeLeft = AnimationSeconds;
+        int index = 0;
+
+        do
+        {
+            Console.Write(AnimationCharacters[index]);
+            Thread.Sleep(1000);
+            Console.Write("\b \b"); // Erase the character
+            index++;
+            animationTimeLeft--;
+            totalTimeLeft--;
+            if (index >= AnimationCharacters.Count())
+            {
+                index = 0;
+            }
+            if (totalTimeLeft == 0)
+            {
+                break;
+            }
+        } while (animationTimeLeft > 0);
+    }
 }

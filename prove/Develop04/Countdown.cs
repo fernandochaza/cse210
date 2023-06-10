@@ -19,32 +19,4 @@ public class Countdown : Animation
         // Assign the resulting characters to the Animation String
         AnimationCharacters = characters;
     }
-
-    /// <summary>
-    /// Initialize a countdown starting at the defined Animation Duration
-    /// </summary>
-    public void Initialize(int totalTimeLeft)
-    {
-        int animationTimeLeft = AnimationSeconds;
-        int index = 0;
-
-        do
-        {
-            Console.Write(AnimationCharacters[index]);
-            Thread.Sleep(1000);
-            Console.Write("\b \b"); // Erase the character
-            index++;
-            animationTimeLeft--;
-            totalTimeLeft--;
-            if (index >= AnimationCharacters.Count())
-            {
-                index = 0;
-            }
-            if (totalTimeLeft == 0)
-            {
-                break;
-            }
-        } while (animationTimeLeft > 0);
-
-    }
 }
