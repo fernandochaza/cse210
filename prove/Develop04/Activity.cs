@@ -44,11 +44,17 @@ public class Activity
 /// <summary>
 /// Displays a default ending message informing the total time of the performed Activity
 /// </summary>
-    public void EndMessage()
+    public void EndMessage(Spinner spinner)
     {
+        // Set the spinner duration
+        spinner.AnimationSeconds = 5;
+
         Console.Clear();
         Console.WriteLine("Well done!");
+        spinner.Initialize();
         Console.WriteLine($"\nYou have completed {_activityDuration} seconds of {_title}");
+        spinner.Initialize();
+        Console.Clear();
     }
 
 /// <summary>

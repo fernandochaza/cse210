@@ -38,15 +38,16 @@ class Program
 
                 // Display a preparation message
                 Console.WriteLine("Get ready...");
-                Spinner spinner = new Spinner(5);
-                spinner.Initialize(5);
+                int pauseTime = 5;
+                Spinner pause = new Spinner(pauseTime);
+                pause.Initialize();
 
                 // Initialize the Breathing Activity
                 Console.Clear();
                 breathing.Initialize();
 
                 // Display an ending message
-                breathing.EndMessage();
+                breathing.EndMessage(pause);
                     break;
                 case "2":
                     break;
