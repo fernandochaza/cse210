@@ -65,7 +65,7 @@ public class Animation
             {
                 break;
             }
-            
+
         } while (animationTimeLeft > 0);
     }
 }

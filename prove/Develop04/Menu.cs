@@ -26,7 +26,7 @@ public class Menu
     /// </summary>
     public void DisplayOptions()
     {
-        Console.WriteLine();
+        Console.WriteLine("Menu Options:");
         foreach (KeyValuePair<string, string> option in _options)
         {
             Console.WriteLine($"{option.Key} - {option.Value}");
@@ -41,6 +41,6 @@ public class Menu
     /// <returns></returns>
     public void DisplayWelcome(string userName)
     {
-        Console.WriteLine($"Hello {userName}! Welcome to your Mindfulness Tool");
+        Console.WriteLine($"Hello {userName}! Welcome to your Mindfulness Tool\n");
     }
 }

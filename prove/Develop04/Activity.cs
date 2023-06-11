@@ -52,7 +52,7 @@ public class Activity
         Console.Clear();
         Console.WriteLine("Well done!");
         spinner.Initialize();
-        Console.WriteLine($"\nYou have completed {_activityDuration} seconds of {_title}");
+        Console.WriteLine($"\nYou have completed {_activityDuration} seconds of the {_title}");
         spinner.Initialize();
         Console.Clear();
     }
@@ -64,7 +64,7 @@ public class Activity
     {
         while (true)
         {
-            Console.Write("How long, in seconds, would you like for your session? ");
+            Console.Write("\nHow long, in seconds, would you like for your session? ");
             string userInput = Console.ReadLine();
 
             if (int.TryParse(userInput, out _timeLeft))
