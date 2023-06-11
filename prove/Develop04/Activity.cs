@@ -21,19 +21,19 @@ public class Activity
         set {_description = value;}
     }
 
-/// <summary>
-/// Get/Set the remaining time for the current session
-/// </summary>
-/// <value>Time in seconds</value>
+    /// <summary>
+    /// Get/Set the remaining time for the current session
+    /// </summary>
+    /// <value>Time in seconds</value>
     public int TimeLeft
     {
         get {return _timeLeft;}
         set {_timeLeft = value;}
     }
 
-/// <summary>
-/// Displays a default welcome message using the Activity Title and Description
-/// </summary>
+    /// <summary>
+    /// Displays a default welcome message using the Activity Title and Description
+    /// </summary>
     private void DisplayWelcome()
     {
         Console.Clear();
@@ -41,9 +41,9 @@ public class Activity
         Console.WriteLine($"\n{_description}");
     }
 
-/// <summary>
-/// Displays a default ending message informing the total time of the performed Activity
-/// </summary>
+    /// <summary>
+    /// Displays a default ending message informing the total time of the performed Activity
+    /// </summary>
     public void EndMessage(Spinner spinner)
     {
         // Set the spinner duration
@@ -57,9 +57,9 @@ public class Activity
         Console.Clear();
     }
 
-/// <summary>
-/// Validate and Set the total time for the session in seconds.
-/// </summary>
+    /// <summary>
+    /// Validate and Set the total time for the session in seconds.
+    /// </summary>
     private void SetDuration()
     {
         while (true)
@@ -80,20 +80,20 @@ public class Activity
         }
     }
 
-/// <summary>
-/// Instantiate a Spinner Animation given its desired duration
-/// </summary>
-/// <param name="duration">Time in seconds</param>
+    /// <summary>
+    /// Instantiate a Spinner Animation given its desired duration
+    /// </summary>
+    /// <param name="duration">Time in seconds</param>
     public void Spinner(int duration)
     {
         _spinner = new Spinner(duration);
         _spinner.Initialize(TimeLeft);
     }
 
-/// <summary>
-/// Instantiate a Countdown Animation given its desired duration
-/// </summary>
-/// <param name="duration">Time in seconds</param>
+    /// <summary>
+    /// Instantiate a Countdown Animation given its desired duration
+    /// </summary>
+    /// <param name="duration">Time in seconds</param>
     public void Countdown(int duration)
     {
         _countdown = new Countdown(duration);
