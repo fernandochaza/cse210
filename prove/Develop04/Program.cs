@@ -23,8 +23,6 @@ class Program
             // Display the menu options
             mainMenu.DisplayOptions();
 
-            Countdown countdown = new Countdown(0);
-
             // Read the user choice
             selectedOption = Console.ReadLine();
 
