@@ -12,6 +12,9 @@ class Program
         // Display welcome message
         mainMenu.DisplayWelcome("Fernando");
 
+        // Set a global spinner animation
+        Spinner pauseSpinner = new Spinner();
+
         // Variable to store the user option choice
         string selectedOption;
         
@@ -29,27 +32,46 @@ class Program
             switch (selectedOption)
             {
                 case "1":
-                BreathingActivity breathing = new BreathingActivity();
-                breathing.DisplayWelcome();
+                    BreathingActivity breathing = new BreathingActivity();
+                    breathing.DisplayWelcome();
 
-                // Ask the user for the session duration
-                breathing.SetDuration();
-                Console.Clear();
+                    // Ask the user for the session duration
+                    breathing.SetDuration();
+                    Console.Clear();
 
-                // Display a preparation message
-                Console.WriteLine("Get ready...");
-                int pauseTime = 5;
-                Spinner pause = new Spinner(pauseTime);
-                pause.Initialize();
+                    // Display a preparation message
+                    Console.WriteLine("Get ready...");
+                    pauseSpinner.AnimationSeconds = 5;
+                    pauseSpinner.Initialize();
 
-                // Initialize the Breathing Activity
-                Console.Clear();
-                breathing.Initialize();
+                    // Initialize the Breathing Activity
+                    Console.Clear();
+                    breathing.Initialize();
 
-                // Display an ending message
-                breathing.EndMessage(pause);
+                    // Display an ending message
+                    breathing.EndMessage(pauseSpinner);
                     break;
                 case "2":
+                    ReflectionActivity reflection = new ReflectionActivity();
+                    reflection.DisplayWelcome();
+
+                    // Ask the user for the session duration
+                    reflection.SetDuration();
+                    Console.Clear();
+
+                    // Display a preparation message
+                    Console.WriteLine("Get ready...");
+                    pauseSpinner.AnimationSeconds = 5;
+                    pauseSpinner.Initialize();
+
+                    // Initialize the Breathing Activity
+                    Console.Clear();
+                    reflection.DisplayRandomPrompt();
+                    reflection.DisplayQuestions();
+
+                    // Display an ending message
+                    reflection.EndMessage(pauseSpinner);
+
                     break;
                 case "3":
                     break;
