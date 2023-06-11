@@ -12,4 +12,13 @@ public class Spinner : Animation
         // Create the list of characters that simulates a spinner
         AnimationCharacters = new List<string>{"|", "/", "-", "\\"};
     }
+
+    /// <summary>
+    /// Instantiate a spinner without an specific duration
+    /// </summary>
+    public Spinner()
+    {
+        // Create the list of characters that simulates a spinner
+        AnimationCharacters = new List<string>{"|", "/", "-", "\\"};
+    }
 }
