@@ -15,7 +15,7 @@ public class BreathingActivity : Activity
         breatheOutSeconds = 7;
     }
 
-    public void Initialize()
+    public void InitializeBreathing()
     {
         // Determine the end time
         DateTime startTime = DateTime.Now;

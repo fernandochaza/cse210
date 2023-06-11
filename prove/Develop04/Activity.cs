@@ -34,7 +34,7 @@ public class Activity
 /// <summary>
 /// Displays a default welcome message using the Activity Title and Description
 /// </summary>
-    public void DisplayWelcome()
+    private void DisplayWelcome()
     {
         Console.Clear();
         Console.WriteLine($"Welcome to the {_title}.");
@@ -60,7 +60,7 @@ public class Activity
 /// <summary>
 /// Validate and Set the total time for the session in seconds.
 /// </summary>
-    public void SetDuration()
+    private void SetDuration()
     {
         while (true)
         {
@@ -98,5 +98,18 @@ public class Activity
     {
         _countdown = new Countdown(duration);
         _countdown.Initialize(TimeLeft);
+    }
+
+    public void InitializeActivity(Activity activity)
+    {
+        activity.DisplayWelcome();
+
+        // Ask the user for the session duration
+        activity.SetDuration();
+        Console.Clear();
+
+        // Display a preparation message
+        Console.WriteLine("Get ready...");
+        Spinner(5);
     }
 }

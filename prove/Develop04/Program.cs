@@ -33,38 +33,20 @@ class Program
             {
                 case "1":
                     BreathingActivity breathing = new BreathingActivity();
-                    breathing.DisplayWelcome();
-
-                    // Ask the user for the session duration
-                    breathing.SetDuration();
-                    Console.Clear();
-
-                    // Display a preparation message
-                    Console.WriteLine("Get ready...");
-                    pauseSpinner.AnimationSeconds = 5;
-                    pauseSpinner.Initialize();
+                    breathing.InitializeActivity(breathing);
 
                     // Initialize the Breathing Activity
                     Console.Clear();
-                    breathing.Initialize();
+                    breathing.InitializeBreathing();
 
                     // Display an ending message
                     breathing.EndMessage(pauseSpinner);
                     break;
                 case "2":
                     ReflectionActivity reflection = new ReflectionActivity();
-                    reflection.DisplayWelcome();
+                    reflection.InitializeActivity(reflection);
 
-                    // Ask the user for the session duration
-                    reflection.SetDuration();
-                    Console.Clear();
-
-                    // Display a preparation message
-                    Console.WriteLine("Get ready...");
-                    pauseSpinner.AnimationSeconds = 5;
-                    pauseSpinner.Initialize();
-
-                    // Initialize the Breathing Activity
+                    // Initialize the Reflection Activity
                     Console.Clear();
                     reflection.DisplayRandomPrompt();
                     reflection.DisplayQuestions();
