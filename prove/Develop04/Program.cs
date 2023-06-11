@@ -56,6 +56,15 @@ class Program
 
                     break;
                 case "3":
+                    ListingActivity listing = new ListingActivity();
+                    listing.InitializeActivity(listing);
+
+                    // Initialize the Listing Activity
+                    listing.InitializeListing();
+
+                    // Display an ending message
+                    listing.EndMessage(pauseSpinner);
+
                     break;
                 case "4":
                     break;
