@@ -11,17 +11,17 @@ public class Goal
 
     }
 
-    public void CreateGoal()
+    public virtual void CreateGoal()
     {
 
     }
 
-    public void MarkCompleted()
+    public virtual void MarkCompleted()
     {
 
     }
 
-    public void DisplayGoal()
+    public virtual void DisplayGoal()
     {
 
     }
