@@ -1,4 +1,4 @@
-public abstract class Goal
+public class Goal
 {
     private string _type;
     private string _shortDescription;
@@ -26,5 +26,8 @@ public abstract class Goal
 
     }
 
-    public abstract string GetStringRepresentation();
+    public string GetStringRepresentation()
+    {
+        return "";
+    }
 }
