@@ -26,8 +26,12 @@ public class Goal
 
     }
 
-    public string GetStringRepresentation()
+    /// <summary>
+    /// Generate a one-line string to represent the Goal with it's values separated by a pipe symbol "|".
+    /// </summary>
+    /// <returns>A one line string</returns>
+    public virtual string GetStringRepresentation()
     {
-        return "";
+        return $"{_type}|{_shortDescription}|{_longDescription}|{_points}|{_isCompleted}";
     }
 }
