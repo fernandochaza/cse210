@@ -6,18 +6,52 @@ public class Goal
     protected int _points;
     protected bool _isCompleted;
 
+
     public Goal()
     {
     }
+
+
+    protected string Type
+    {
+        set {_type = value;}
+    }
     
-    public static Goal CreateGoal()
+    
+    protected string Name
+    {
+        set {_name = value;}
+    }
+    
+    protected string Description
+    {
+        set {_shortDescription = value;}
+    }
+    
+    protected int Points
+    {
+        set {_points = value;}
+    }
+    
+    protected bool Completed
+    {
+        set {_isCompleted = value;}
+    }
+    
+
+    // public Goal SetGoal(int type)
+    // {
+    //     Goal goal = SetGoalType(type);
+    //     return goal;
+    // }
+
+    public void CreateGoal()
     {
         DisplayGoalTypes();
 
         // Get and validate user choice
         int typeSelected = GetUserInt("Which type of goal would you like to create? ");
 
-        // 
         Goal goal = SetGoalType(typeSelected);
 
         if (goal != null)
@@ -29,7 +63,29 @@ public class Goal
             goal._points = GetUserInt("What is the amount of points associated with this goal? ");
         }
         
-        return goal;
+    }
+
+
+    public void ParseGoal(string line)
+    {
+        string[] parts = line.Split("|");
+        int type = int.Parse(parts[0]);
+        string name = parts[1];
+        string description = parts[2];
+        int points = int.Parse(parts[3]);
+        bool isCompleted = bool.Parse(parts[4]);
+        if (parts.Length > 5)
+        {
+            int currentRepetitions = int.Parse(parts[5]);
+            int repetitionsToComplete = int.Parse(parts[6]);
+            int bonusPoints = int.Parse(parts[7]);
+        }
+
+        Goal goal = SetGoalType(type);
+        goal.Name = name;
+        goal.Description = description;
+        goal.Points = points;
+        goal.Completed = isCompleted;
     }
 
     /// <summary>
@@ -37,7 +93,7 @@ public class Goal
     /// </summary>
     /// <param name="message">The prompt displayed to the user to ask for an integer input</param>
     /// <returns>A valid integer</returns>
-    public static int GetUserInt(string message)
+    public int GetUserInt(string message)
     {
         string userInput;
         int validInteger = 0;
@@ -71,16 +127,19 @@ public class Goal
     /// <param name="type">An integer that represent the Goal subclass. 
     /// (Options: 1=SimpleGoal, 2=EternalGoal, 3=ChecklistGoal)</param>
     /// <returns>A new instance of the required Goal subclass OR -null- if the type is incorrect</returns>
-    public static Goal SetGoalType(int type)
+    public Goal SetGoalType(int type)
     {
         switch (type)
         {
             case 1:
-                return new SimpleGoal();
+                SimpleGoal simpleGoal = new SimpleGoal();
+                return simpleGoal;
             case 2:
-                return new EternalGoal();
+                EternalGoal eternalGoal = new EternalGoal();
+                return eternalGoal;
             case 3:
-                return new ChecklistGoal();
+                ChecklistGoal checklistGoal = new ChecklistGoal();
+                return checklistGoal;
             default:
                 Console.WriteLine("Invalid type");
                 return null;
@@ -106,7 +165,7 @@ public class Goal
         return $"{_type}|{_name}|{_shortDescription}|{_points}|{_isCompleted}";
     }
 
-    public static void DisplayGoalTypes()
+    public void DisplayGoalTypes()
     {
         Console.WriteLine("The types of goals are:");
         Console.WriteLine("1. Simple Goal");

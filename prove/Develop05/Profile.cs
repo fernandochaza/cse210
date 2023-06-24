@@ -1,11 +1,20 @@
 public class Profile
 {
+    private string _userName;
     private List<Goal> _userGoals;
     private string _databaseFilename = "goals-data.txt";
+
 
     public Profile()
     {
 
+    }
+
+
+    public string UserName
+    {
+        get {return _userName;}
+        set {_userName = value;}
     }
 
         /// <summary>
@@ -39,18 +48,8 @@ public class Profile
 
         foreach (string line in lines)
         {
-            string[] parts = line.Split("|");
-            string type = parts[0];
-            string name = parts[1];
-            string description = parts[2];
-            int points = int.Parse(parts[3]);
-            bool isCompleted = bool.Parse(parts[4]);
-            if (parts.Length > 5)
-            {
-                int currentRepetitions = int.Parse(parts[5]);
-                int repetitionsToComplete = int.Parse(parts[6]);
-                int bonusPoints = int.Parse(parts[7]);
-            }
+            Goal goal = new Goal();
+            goal.ParseGoal(line);
         }
     }
 

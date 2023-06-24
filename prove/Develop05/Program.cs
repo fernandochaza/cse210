@@ -9,8 +9,12 @@ class Program
         // Instantiate a new Menu
         Menu mainMenu = new Menu();
 
+        // Instantiate an user Profile and set User Name
+        Profile profile = new Profile();
+        profile.UserName = "Fernando";
+
         // Display welcome message
-        mainMenu.DisplayWelcome("Fernando");
+        mainMenu.DisplayWelcome(profile.UserName);
 
         // Variable to store the user option choice
         string selectedOption;
@@ -27,7 +31,8 @@ class Program
             switch (selectedOption)
             {
                 case "1":
-                    Goal goal = Goal.CreateGoal();
+                        Goal goal = new Goal();
+                        goal.CreateGoal();
                     break;
                 case "2":
 
