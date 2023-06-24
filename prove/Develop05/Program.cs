@@ -27,7 +27,7 @@ class Program
             switch (selectedOption)
             {
                 case "1":
-
+                    Goal goal = Goal.CreateGoal();
                     break;
                 case "2":
 
