@@ -1,0 +1,2 @@
+Eternal Goal|Read Scriptures|Read the scriptures for at least 10 minutes|50|False
+Simple Goal|Run Marathon|Run a Marathon|500|False

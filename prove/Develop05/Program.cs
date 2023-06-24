@@ -13,6 +13,9 @@ class Program
         Profile profile = new Profile();
         profile.UserName = "Fernando";
 
+        // Initialize User Database
+        profile.InitializeDatabase();
+
         // Display welcome message
         mainMenu.DisplayWelcome(profile.UserName);
 
@@ -31,8 +34,14 @@ class Program
             switch (selectedOption)
             {
                 case "1":
-                        Goal goal = new Goal();
-                        goal.CreateGoal();
+                        Utils.DisplayGoalTypes();
+
+                        // Get and validate user choice
+                        int typeSelected = Utils.GetUserInt("Which type of goal would you like to create? ");
+
+                        Goal goal = Utils.CreateGoalFromInt(typeSelected);
+                        goal.Initialize();
+
                     break;
                 case "2":
 

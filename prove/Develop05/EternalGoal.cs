@@ -2,7 +2,7 @@ public class EternalGoal : Goal
 {
     public EternalGoal()
     {
-        _type = "Eternal Goal";
+        _typeName = "Eternal Goal";
     }
 
 }
