@@ -2,11 +2,7 @@ public class SimpleGoal : Goal
 {
     public SimpleGoal()
     {
-
+        _type = "Simple Goal";
     }
 
-    public override void CreateGoal()
-    {
-
-    }
 }
