@@ -41,6 +41,7 @@ class Program
 
                         Goal goal = Utils.CreateGoalFromInt(typeSelected);
                         goal.Initialize();
+                        Console.WriteLine(goal);
 
                     break;
                 case "2":

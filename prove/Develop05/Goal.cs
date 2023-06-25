@@ -10,6 +10,7 @@ public class Goal
 
     public Goal()
     {
+        
     }
 
 
@@ -23,7 +24,11 @@ public class Goal
     }
 
 
-    public void ParseGoal(string stringGoal)
+    /// <summary>
+    /// Get the Goal data from a string representation of the goal
+    /// </summary>
+    /// <param name="stringGoal">A one-line string representing the goal data separated by a pipe symbol "|"</param>
+    public virtual void ParseGoal(string stringGoal)
     {
         string[] parts = stringGoal.Split("|");
         int type = int.Parse(parts[0]);
@@ -31,13 +36,6 @@ public class Goal
         string description = parts[2];
         int points = int.Parse(parts[3]);
         bool isCompleted = bool.Parse(parts[4]);
-
-        if (parts.Length > 5)
-        {
-            int currentRepetitions = int.Parse(parts[5]);
-            int repetitionsToComplete = int.Parse(parts[6]);
-            int bonusPoints = int.Parse(parts[7]);
-        }
 
         _typeID = type;
         _name = name;
@@ -47,30 +45,6 @@ public class Goal
     }
 
 
-    /// <summary>
-    /// Create an instance of a determined Goal subclass given an integer option
-    /// </summary>
-    /// <param name="type">An integer that represent the Goal subclass. 
-    /// (Options: 1=SimpleGoal, 2=EternalGoal, 3=ChecklistGoal)</param>
-    /// <returns>A new instance of the required Goal subclass OR -null- if the type is incorrect</returns>
-    public Goal GetGoalFromInt(int type)
-    {
-        switch (type)
-        {
-            case 1:
-                SimpleGoal simpleGoal = new SimpleGoal();
-                return simpleGoal;
-            case 2:
-                EternalGoal eternalGoal = new EternalGoal();
-                return eternalGoal;
-            case 3:
-                ChecklistGoal checklistGoal = new ChecklistGoal();
-                return checklistGoal;
-            default:
-                Console.WriteLine("Invalid type");
-                return null;
-        }
-    }
 
 
     public virtual void MarkCompleted()
@@ -78,9 +52,10 @@ public class Goal
 
     }
 
-    public virtual void DisplayGoal()
+    public virtual string GetGoalStatus()
     {
 
+        return $"";
     }
 
 

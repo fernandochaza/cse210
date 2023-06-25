@@ -73,8 +73,8 @@ public class Profile
         // Add the goal to the user Profile list of Goals
         _userGoals.Add(goal);
 
-        Console.WriteLine("\n> New Goal added to your database");
-        Console.Write("Press Enter to continue...");
+        Utils.DisplayText("\n> New Goal added to your database");
+        Utils.DisplayText("Press Enter to continue...");
         Console.ReadLine();
     }
 

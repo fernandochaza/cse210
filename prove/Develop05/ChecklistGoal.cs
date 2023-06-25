@@ -17,9 +17,32 @@ public class ChecklistGoal : Goal
         Console.Write("What is a short description of it? ");
         _shortDescription = Console.ReadLine();
         _points = Utils.GetUserInt("What is the amount of points associated with this goal? ");
-        _repetitionsToComplete = Utils.GetUserInt("");
+        _repetitionsToComplete = Utils.GetUserInt("How many times does this goal need to be accomplished for a bonus? ");
         _currentRepetitions = 0;
-        _bonusPoints = Utils.GetUserInt("");
+        _bonusPoints = Utils.GetUserInt("What is the bonus for accomplishing it that many times? ");
+    }
+
+
+    public override void ParseGoal(string stringGoal)
+    {
+        string[] parts = stringGoal.Split("|");
+        int type = int.Parse(parts[0]);
+        string name = parts[1];
+        string description = parts[2];
+        int points = int.Parse(parts[3]);
+        bool isCompleted = bool.Parse(parts[4]);
+        int currentRepetitions = int.Parse(parts[5]);
+        int repetitionsToComplete = int.Parse(parts[6]);
+        int bonusPoints = int.Parse(parts[7]);
+
+        _typeID = type;
+        _name = name;
+        _shortDescription = description;
+        _points = points;
+        _isCompleted = isCompleted;
+        _currentRepetitions = currentRepetitions;
+        _repetitionsToComplete = repetitionsToComplete;
+        _bonusPoints = bonusPoints;
     }
 
 
@@ -28,9 +51,9 @@ public class ChecklistGoal : Goal
 
     }
 
-    public override void DisplayGoal()
+    public override string GetGoalStatus()
     {
-
+        return "";
     }
 
     /// <summary>

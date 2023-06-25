@@ -26,12 +26,12 @@ public class Menu
     /// </summary>
     public void DisplayOptions()
     {
-        Console.WriteLine("Menu Options:");
+        Utils.DisplayText("\nMenu Options:\n");
         foreach (KeyValuePair<string, string> option in _options)
         {
-            Console.WriteLine($"{option.Key} - {option.Value}");
+            Utils.DisplayText($"{option.Key} - {option.Value}\n");
         }
-        Console.Write("\n> Select a choice from the menu: ");
+        Utils.DisplayText("\n> Select a choice from the menu: ");
     }
 
     /// <summary>
@@ -41,6 +41,6 @@ public class Menu
     /// <returns></returns>
     public void DisplayWelcome(string userName)
     {
-        Console.WriteLine($"Hello {userName}! Welcome again to your goals tracker\n");
+        Utils.DisplayText($"Hello {userName}! Welcome again to your goals tracker!!\n");
     }
 }

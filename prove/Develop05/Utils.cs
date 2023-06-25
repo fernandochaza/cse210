@@ -61,4 +61,17 @@ public static class Utils
         Console.WriteLine("3. Checklist Goal");
     }
 
+
+    public static void DisplayText(string text)
+    {
+        int textLength = text.Length;
+
+        for (int i = 0; i < textLength; i++)
+        {
+            Console.Write(text[i]);
+            Thread.Sleep(20);
+            // Console.Write("\b \b"); // Erase the character
+        }
+    }
+
 }
