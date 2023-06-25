@@ -25,7 +25,7 @@ public static class Utils
             }
             else
             {
-                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                Console.WriteLine("\n> Invalid input. Please enter a valid integer.");
             }
         }
 
@@ -33,6 +33,11 @@ public static class Utils
     }
 
 
+/// <summary>
+/// Instantiate a Goal subclass accordingly to the given integer and return it. (1:SimpleGoal, 2:EternalGoal, 3:ChecklistGoal)
+/// </summary>
+/// <param name="goalType"></param>
+/// <returns></returns>
     public static Goal CreateGoalFromInt(int goalType)
     {
         switch (goalType)
@@ -47,21 +52,28 @@ public static class Utils
                 ChecklistGoal checklistGoal = new ChecklistGoal();
                 return checklistGoal;
             default:
-                Console.WriteLine("Invalid type");
+                Console.WriteLine("\n> Invalid type!\n");
                 return null;
         }
     }
 
 
+    /// <summary>
+    /// Print a ordered list of the available Goal types
+    /// </summary>
     public static void DisplayGoalTypes()
     {
-        Console.WriteLine("\nThe types of goals are:");
-        Console.WriteLine("1. Simple Goal");
-        Console.WriteLine("2. Eternal Goal");
-        Console.WriteLine("3. Checklist Goal");
+        DisplayText("\nThe types of goals are:\n");
+        DisplayText("1. Simple Goal\n");
+        DisplayText("2. Eternal Goal\n");
+        DisplayText("3. Checklist Goal\n");
     }
 
 
+    /// <summary>
+    /// Create a text typing animation from a given text
+    /// </summary>
+    /// <param name="text">The text to be displayed</param>
     public static void DisplayText(string text)
     {
         int textLength = text.Length;
@@ -69,9 +81,7 @@ public static class Utils
         for (int i = 0; i < textLength; i++)
         {
             Console.Write(text[i]);
-            Thread.Sleep(20);
-            // Console.Write("\b \b"); // Erase the character
+            Thread.Sleep(1);
         }
     }
-
 }

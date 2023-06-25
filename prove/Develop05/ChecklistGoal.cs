@@ -51,10 +51,27 @@ public class ChecklistGoal : Goal
 
     }
 
+
+    /// <summary>
+    /// Return a string informing the goal Status
+    /// </summary>
+    /// <returns></returns>
     public override string GetGoalStatus()
     {
-        return "";
+        string statusMark;
+
+        if (_isCompleted)
+        {
+            statusMark = "[X]";
+        }
+        else
+        {
+            statusMark = "[ ]";
+        }
+
+        return $"{statusMark} {_name} ({_shortDescription}) --- Currently completed: {_currentRepetitions}/{_repetitionsToComplete}";
     }
+
 
     /// <summary>
     /// Generate a one-line string to represent the Goal with it's values separated by a pipe symbol "|".

@@ -79,9 +79,12 @@ public class Profile
     }
 
 
-    public void DisplayGoals()
+    public void DisplayGoalsData()
     {
-
+        foreach (Goal goal in _userGoals)
+        {
+            Console.WriteLine(goal.GetGoalStatus());
+        }
     }
 
     private void LoadGoalToProfile(Goal goal)

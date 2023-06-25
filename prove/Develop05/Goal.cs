@@ -52,10 +52,25 @@ public class Goal
 
     }
 
+
+    /// <summary>
+    /// Return a string informing the goal Status
+    /// </summary>
+    /// <returns></returns>
     public virtual string GetGoalStatus()
     {
+        string statusMark;
 
-        return $"";
+        if (_isCompleted)
+        {
+            statusMark = "[X]";
+        }
+        else
+        {
+            statusMark = "[ ]";
+        }
+
+        return $"{statusMark} {_name} ({_shortDescription})";
     }
 
 

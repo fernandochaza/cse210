@@ -45,7 +45,7 @@ class Program
 
                     break;
                 case "2":
-
+                        profile.DisplayGoalsData();
                     break;
                 case "3":
 
