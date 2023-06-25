@@ -34,18 +34,25 @@ class Program
             switch (selectedOption)
             {
                 case "1":
-                        Utils.DisplayGoalTypes();
+                    //Display the possible Goal options
+                    Utils.DisplayGoalTypes();
 
-                        // Get and validate user choice
-                        int typeSelected = Utils.GetUserInt("Which type of goal would you like to create? ");
+                    // Ask for the user choice.
+                    int typeSelected = Utils.GetUserInt("Which type of goal would you like to create? ");
 
-                        Goal goal = Utils.CreateGoalFromInt(typeSelected);
-                        goal.Initialize();
-                        Console.WriteLine(goal);
+                    // Instantiate a new goal type
+                    Goal goal = Utils.InstantiateGoalFromInt(typeSelected);
+
+                    // Populate the goal data from the user's inputs
+                    goal.RequestGoalData();
+
+                    // Add new goal to database and user profile
+                    profile.AddGoalToDatabase(goal);
 
                     break;
                 case "2":
-                        profile.DisplayGoalsData();
+                    // Display the current goals status
+                    profile.DisplayGoalsData();
                     break;
                 case "3":
 

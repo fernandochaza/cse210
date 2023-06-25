@@ -38,7 +38,7 @@ public static class Utils
 /// </summary>
 /// <param name="goalType"></param>
 /// <returns></returns>
-    public static Goal CreateGoalFromInt(int goalType)
+    public static Goal InstantiateGoalFromInt(int goalType)
     {
         switch (goalType)
         {
@@ -59,7 +59,7 @@ public static class Utils
 
 
     /// <summary>
-    /// Print a ordered list of the available Goal types
+    /// Print an ordered list of the available Goal types
     /// </summary>
     public static void DisplayGoalTypes()
     {

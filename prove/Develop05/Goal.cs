@@ -14,7 +14,10 @@ public class Goal
     }
 
 
-    public virtual void Initialize()
+    /// <summary>
+    /// Get the goal data from the user.
+    /// </summary>
+    public virtual void RequestGoalData()
     {
         Console.Write("What is the name of your goal? ");
         _name = Console.ReadLine();
@@ -25,10 +28,10 @@ public class Goal
 
 
     /// <summary>
-    /// Get the Goal data from a string representation of the goal
+    /// Instantiate the Goal variables from a string representation of the goal
     /// </summary>
     /// <param name="stringGoal">A one-line string representing the goal data separated by a pipe symbol "|"</param>
-    public virtual void ParseGoal(string stringGoal)
+    public Goal(string stringGoal)
     {
         string[] parts = stringGoal.Split("|");
         int type = int.Parse(parts[0]);
@@ -43,7 +46,6 @@ public class Goal
         _points = points;
         _isCompleted = isCompleted;
     }
-
 
 
 

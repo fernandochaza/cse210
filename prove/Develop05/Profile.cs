@@ -17,7 +17,8 @@ public class Profile
         set {_userName = value;}
     }
 
-        /// <summary>
+    
+    /// <summary>
     /// Check the existence of the database file. Create a new one if it doesn't exists
     /// </summary>
     public void InitializeDatabase()
@@ -44,14 +45,13 @@ public class Profile
     /// </summary>
     public void LoadUserData()
     {
-        string[] lines = System.IO.File.ReadAllLines(_databaseFilename);
+        string[] databaseLines = System.IO.File.ReadAllLines(_databaseFilename);
 
-        if (lines.Length >= 1)
+        if (databaseLines.Length >= 1)
         {
-            foreach (string line in lines)
+            foreach (string stringGoal in databaseLines)
             {
-                Goal goal = new Goal();
-                goal.ParseGoal(line);
+                Goal goal = new Goal(stringGoal);
                 LoadGoalToProfile(goal);
             }  
         }
@@ -79,6 +79,9 @@ public class Profile
     }
 
 
+    /// <summary>
+    /// Display the statistics of every goal in the user database
+    /// </summary>
     public void DisplayGoalsData()
     {
         foreach (Goal goal in _userGoals)
@@ -87,11 +90,17 @@ public class Profile
         }
     }
 
+
+    /// <summary>
+    /// Add a new goal to the user Profile
+    /// </summary>
+    /// <param name="goal"></param>
     private void LoadGoalToProfile(Goal goal)
     {
         _userGoals.Add(goal);
     }
     
+
     public void DisplayTotalScore()
     {
         

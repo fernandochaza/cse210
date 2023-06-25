@@ -10,21 +10,13 @@ public class ChecklistGoal : Goal
     }
 
 
-    public override void Initialize()
+    /// <summary>
+    /// Instantiate the Goal variables from a string representation of the goal
+    /// </summary>
+    /// <param name="stringGoal">A one-line string representing the goal data separated by a pipe symbol "|"</param>
+    public ChecklistGoal(string stringGoal)
     {
-        Console.Write("What is the name of your goal? ");
-        _name = Console.ReadLine();
-        Console.Write("What is a short description of it? ");
-        _shortDescription = Console.ReadLine();
-        _points = Utils.GetUserInt("What is the amount of points associated with this goal? ");
-        _repetitionsToComplete = Utils.GetUserInt("How many times does this goal need to be accomplished for a bonus? ");
-        _currentRepetitions = 0;
-        _bonusPoints = Utils.GetUserInt("What is the bonus for accomplishing it that many times? ");
-    }
-
-
-    public override void ParseGoal(string stringGoal)
-    {
+        _typeName = "Checklist Goal";
         string[] parts = stringGoal.Split("|");
         int type = int.Parse(parts[0]);
         string name = parts[1];
@@ -43,6 +35,22 @@ public class ChecklistGoal : Goal
         _currentRepetitions = currentRepetitions;
         _repetitionsToComplete = repetitionsToComplete;
         _bonusPoints = bonusPoints;
+    }
+
+
+    /// <summary>
+    /// Get the goal data from the user.
+    /// </summary>
+    public override void RequestGoalData()
+    {
+        Console.Write("What is the name of your goal? ");
+        _name = Console.ReadLine();
+        Console.Write("What is a short description of it? ");
+        _shortDescription = Console.ReadLine();
+        _points = Utils.GetUserInt("What is the amount of points associated with this goal? ");
+        _repetitionsToComplete = Utils.GetUserInt("How many times does this goal need to be accomplished for a bonus? ");
+        _currentRepetitions = 0;
+        _bonusPoints = Utils.GetUserInt("What is the bonus for accomplishing it that many times? ");
     }
 
 
