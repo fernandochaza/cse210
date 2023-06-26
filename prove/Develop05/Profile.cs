@@ -208,7 +208,7 @@ public class Profile
 
 
     /// <summary>
-    /// Display the user goals with status NOT completed
+    /// Get the user goals with status NOT completed
     /// </summary>
     private Dictionary<int, int> GetAvailableGoals()
     {
@@ -237,7 +237,7 @@ public class Profile
 
 
     /// <summary>
-    /// Mark a completion of an user selected's available Goal
+    /// Add a new event to an user selected's available Goal
     /// </summary>
     public void AddEvent()
     {
@@ -262,12 +262,13 @@ public class Profile
                 Utils.DisplayText("\n(!) That number doesn't match with an available Goal. Try Again...\n");
                 Utils.MessageToContinueAndClear();
             }
+            // Check that the user input matches an available goal
         } while (goalToComplete < availableGoals.Count || goalToComplete >availableGoals.Count);
 
         // Use the list number to get the Goal index from the dictionary
         int goalToCompleteIndex = availableGoals[goalToComplete];
 
-        // Use the index to mark the Goal Completed
+        // Use the index to mark the Goal Completed OR add a new repetition to it
         _userGoals[goalToCompleteIndex].NewEvent();
         UpdateDatabase();
 
