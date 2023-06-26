@@ -86,13 +86,29 @@ public class Profile
     }
 
 
+    public void UpdateDatabase()
+    {
+        // Add new line in database to represent the new Goal
+        using (StreamWriter outputFile = File.CreateText(_databaseFilename))
+        {
+            foreach (Goal goal in _userGoals)
+            {
+            outputFile.WriteLine(goal.GetStringRepresentation());
+            }
+        }
+    }
+
+
     /// <summary>
     /// Display the statistics of every goal in the user database
     /// </summary>
     public void DisplayGoalsData()
     {
+        Console.Clear();
+
         DisplayCompletedGoals();
         DisplayAvailableGoals();
+
         Utils.DisplayText("\n> Press Enter to continue...");
         Console.ReadLine();
         Console.Clear();
@@ -179,7 +195,7 @@ public class Profile
 
 
     /// <summary>
-    /// Display the user goals with status NOT completed
+    /// Display the user goals with status NOT "Completed"
     /// </summary>
     public void DisplayAvailableGoals()
     {
@@ -195,27 +211,66 @@ public class Profile
 
 
     /// <summary>
-    /// Display an ordered list of the user goals with status NOT completed
+    /// Display the user goals with status NOT completed
     /// </summary>
-    public void DisplayGoalsToComplete()
+    public Dictionary<int, int> GetAvailableGoals()
     {
-        List<Goal> availableGoals = new List<Goal>();
+        int goalIndex = 0;
+        int listIndex = 1;
+
+        // Create new dictionary to store the available Goals with their indexes
+        Dictionary<int, int> availableGoals = new Dictionary<int, int>();
+
+        // Iterate through all the user Goals
         foreach (Goal goal in _userGoals)
         {
+            // Get only the Goals available to complete
             if (!goal.IsCompleted)
             {
-                availableGoals.Add(goal);
+                // Add the list number and the Goal index into the dictionary
+                availableGoals.Add(listIndex, goalIndex);
+
+                listIndex++;
             }
+            goalIndex++;
         }
 
-        int goalsQuantity = availableGoals.Count;
+        return availableGoals;
+    }
 
+
+    /// <summary>
+    /// Mark a completion of an user selected's available Goal
+    /// </summary>
+    public void AddEvent()
+    {
+        Console.Clear();
+        Dictionary<int, int> availableGoals = GetAvailableGoals();
+
+        // Display the available Goals
         Console.WriteLine("\nAvailable Goals:");
-        for (int i = 0; i < goalsQuantity; i++)
+        foreach (KeyValuePair<int, int> goal in availableGoals)
         {
-            string goalStatus = availableGoals[i].GetGoalStatus();
-            Utils.DisplayText($"{i+1} - {goalStatus}\n");
+            int goalIndex = goal.Value;
+            Utils.DisplayText($"{goal.Key} - {_userGoals[goalIndex].GetGoalStatus()}\n");
         }
+
+        // Get the user selected goal's list number.
+        int goalToComplete = Utils.GetUserInt("\nWhich goal do you want to mark? ");
+
+        // Use the list number to get the Goal index from the dictionary
+        int goalToCompleteIndex = availableGoals[goalToComplete];
+
+        // Use the index to mark the Goal Completed
+        _userGoals[goalToCompleteIndex].MarkCompleted();
+        UpdateDatabase();
+
+        Utils.DisplayText("> The event was successfully recorded! \n");
+        Utils.DisplayText("> Press Any Key to continue...");
+        Console.ReadLine();
+
+        Console.Clear();
+
     }
 
 

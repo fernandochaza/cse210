@@ -44,7 +44,7 @@ class Program
                     int typeSelected = 0;
                     do
                     {
-                        typeSelected = Utils.GetUserInt("Which type of goal would you like to create? ");
+                        typeSelected = Utils.GetUserInt("Which type of goal would you like to create (1, 2 or 3)? ");
                     } while (typeSelected < 1 || typeSelected > 3);
 
                     // Instantiate a new goal type
@@ -62,7 +62,7 @@ class Program
                     profile.DisplayGoalsData();
                     break;
                 case "3":
-                    profile.DisplayGoalsToComplete();
+                    profile.AddEvent();
                     break;
                 case "4":
                     break;
