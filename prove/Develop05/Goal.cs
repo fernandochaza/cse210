@@ -25,7 +25,7 @@ public abstract class Goal
     /// <summary>
     /// Change the goal status as Completed OR add a new goal repetition
     /// </summary>
-    public abstract void MarkCompleted();
+    public abstract void NewEvent();
 
 
     /// <summary>

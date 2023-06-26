@@ -49,7 +49,7 @@ public class SimpleGoal : Goal
     }
 
 
-    public override void MarkCompleted()
+    public override void NewEvent()
     {
         if (!_isCompleted)
             {

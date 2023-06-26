@@ -33,13 +33,13 @@ public class Profile
             using (StreamWriter file = File.CreateText(_databaseFilename))
             {
                 // Create an empty file
-                Console.WriteLine("(!) New database created");
+                Console.WriteLine("(!) New database created in the main program folder (goals-data.txt)");
             }
         }
         else
         {
             LoadUserData();
-            Console.WriteLine("(!) Working from the existing database");
+            Console.WriteLine("(!) Reading data from the existing database (goals-data.txt)");
         }
     }
 
@@ -112,7 +112,7 @@ public class Profile
 
 
     /// <summary>
-    /// Create the required Goal type and and populate its variables from a string representation of Goal data (1:SimpleGoal, 2:EternalGoal, 3:ChecklistGoal)
+    /// Create the required Goal type and and populate its variables with the given string that represents the Goal data (1:SimpleGoal, 2:EternalGoal, 3:ChecklistGoal)
     /// </summary>
     /// <param name="goalType">An integer representing the Goal type</param>
     /// <param name="stringGoal">A string representation of the Goal data</param>
@@ -179,7 +179,7 @@ public class Profile
     /// </summary>
     private void DisplayCompletedGoals()
     {
-        Console.WriteLine("\nCompleted Goals:");
+        Utils.DisplayText("\nCompleted Goals:\n");
         foreach (Goal goal in _userGoals)
         {
             if (goal.IsCompleted)
@@ -187,6 +187,7 @@ public class Profile
                 Utils.DisplayText($"{goal.GetGoalStatus()}\n");
             }
         }
+        Console.WriteLine();
     }
 
 
@@ -195,7 +196,7 @@ public class Profile
     /// </summary>
     private void DisplayAvailableGoals()
     {
-        Console.WriteLine("\nAvailable Goals:");
+        Utils.DisplayText("\nAvailable Goals:\n");
         foreach (Goal goal in _userGoals)
         {
             if (!goal.IsCompleted)
@@ -240,25 +241,34 @@ public class Profile
     /// </summary>
     public void AddEvent()
     {
-        Console.Clear();
         Dictionary<int, int> availableGoals = GetAvailableGoals();
+        int goalToComplete = 0;
 
-        // Display the available Goals
-        Console.WriteLine("\nAvailable Goals:");
-        foreach (KeyValuePair<int, int> goal in availableGoals)
+        do
         {
-            int goalIndex = goal.Value;
-            Utils.DisplayText($"{goal.Key} - {_userGoals[goalIndex].GetGoalStatus()}\n");
-        }
+            // Display the available Goals
+            Console.Clear();
+            Console.WriteLine("\nAvailable Goals:");
+            foreach (KeyValuePair<int, int> goal in availableGoals)
+            {
+                int goalIndex = goal.Value;
+                Utils.DisplayText($"{goal.Key} - {_userGoals[goalIndex].GetGoalStatus()}\n");
+            }
 
-        // Get the user selected goal's list number.
-        int goalToComplete = Utils.GetUserInt("\n For which goal do you want to record and event? ");
+            // Get the user selected goal's list number.
+            goalToComplete = Utils.GetUserInt("\n> For which goal do you want to record and event? ");
+            if (goalToComplete < availableGoals.Count || goalToComplete >availableGoals.Count)
+            {
+                Utils.DisplayText("\n(!) That number doesn't match with an available Goal. Try Again...\n");
+                Utils.MessageToContinueAndClear();
+            }
+        } while (goalToComplete < availableGoals.Count || goalToComplete >availableGoals.Count);
 
         // Use the list number to get the Goal index from the dictionary
         int goalToCompleteIndex = availableGoals[goalToComplete];
 
         // Use the index to mark the Goal Completed
-        _userGoals[goalToCompleteIndex].MarkCompleted();
+        _userGoals[goalToCompleteIndex].NewEvent();
         UpdateDatabase();
 
         Utils.DisplayText("(!) The event was successfully recorded!\n");

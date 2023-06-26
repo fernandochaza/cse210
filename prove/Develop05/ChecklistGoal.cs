@@ -54,7 +54,7 @@ public class ChecklistGoal : Goal
     }
 
 
-    public override void MarkCompleted()
+    public override void NewEvent()
     {
         if (!_isCompleted)
         {

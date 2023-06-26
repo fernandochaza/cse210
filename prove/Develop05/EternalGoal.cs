@@ -37,7 +37,7 @@ public class EternalGoal : Goal
     }
 
 
-    public override void MarkCompleted()
+    public override void NewEvent()
     {
         _timesCompleted += 1;
     }
