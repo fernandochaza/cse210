@@ -195,6 +195,31 @@ public class Profile
 
 
     /// <summary>
+    /// Display an ordered list of the user goals with status NOT completed
+    /// </summary>
+    public void DisplayGoalsToComplete()
+    {
+        List<Goal> availableGoals = new List<Goal>();
+        foreach (Goal goal in _userGoals)
+        {
+            if (!goal.IsCompleted)
+            {
+                availableGoals.Add(goal);
+            }
+        }
+
+        int goalsQuantity = availableGoals.Count;
+
+        Console.WriteLine("\nAvailable Goals:");
+        for (int i = 0; i < goalsQuantity; i++)
+        {
+            string goalStatus = availableGoals[i].GetGoalStatus();
+            Utils.DisplayText($"{i+1} - {goalStatus}\n");
+        }
+    }
+
+
+    /// <summary>
     /// Get the user total Score from its completed Goals
     /// </summary>
     /// <returns></returns>

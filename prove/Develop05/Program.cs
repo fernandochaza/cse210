@@ -62,21 +62,14 @@ class Program
                     profile.DisplayGoalsData();
                     break;
                 case "3":
-
+                    profile.DisplayGoalsToComplete();
                     break;
                 case "4":
-
-                    break;
-                case "5":
-
-                    break;
-                case "6":
-
                     break;
                 default:
                     Console.WriteLine("\n(!) Please select a valid option: ");
                     break;
             }
-        } while (selectedOption != "6");
+        } while (selectedOption != "4");
     }
 }
