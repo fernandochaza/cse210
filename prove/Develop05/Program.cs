@@ -36,6 +36,7 @@ class Program
             switch (selectedOption)
             {
                 case "1":
+                    Console.Clear();
                     //Display the possible Goal options
                     Profile.DisplayGoalTypes();
 
@@ -47,7 +48,7 @@ class Program
                     } while (typeSelected < 1 || typeSelected > 3);
 
                     // Instantiate a new goal type
-                    Goal goal = Profile.InstantiateGoalFromInt(typeSelected);
+                    Goal goal = Profile.CreateEmptyGoal(typeSelected);
 
                     // Populate the goal data from the user's inputs
                     goal.RequestGoalData();

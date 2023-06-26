@@ -55,7 +55,9 @@ public class Profile
         {
             foreach (string stringGoal in databaseLines)
             {
-                Goal goal = new Goal(stringGoal);
+                string[] parts = stringGoal.Split("|");
+                int goalType = int.Parse(parts[0]);
+                Goal goal = CreateGoal(goalType, stringGoal);
                 _userGoals.Add(goal);
             }  
         }
@@ -80,6 +82,7 @@ public class Profile
         Utils.DisplayText("\n> New Goal added to your database");
         Utils.DisplayText("\n> Press Enter to continue...");
         Console.ReadLine();
+        Console.Clear();
     }
 
 
@@ -90,6 +93,35 @@ public class Profile
     {
         DisplayCompletedGoals();
         DisplayAvailableGoals();
+        Utils.DisplayText("\n> Press Enter to continue...");
+        Console.ReadLine();
+        Console.Clear();
+    }
+
+
+    /// <summary>
+    /// Create the required Goal type and and populate its variables from a string representation of Goal data (1:SimpleGoal, 2:EternalGoal, 3:ChecklistGoal)
+    /// </summary>
+    /// <param name="goalType">An integer representing the Goal type</param>
+    /// <param name="stringGoal">A string representation of the Goal data</param>
+    /// <returns>A new instance of the Goal subclass</returns>
+    public static Goal CreateGoal(int goalType, string stringGoal)
+    {
+        switch (goalType)
+        {
+            case 1:
+                SimpleGoal simpleGoal = new SimpleGoal(stringGoal);
+                return simpleGoal;
+            case 2:
+                EternalGoal eternalGoal = new EternalGoal(stringGoal);
+                return eternalGoal;
+            case 3:
+                ChecklistGoal checklistGoal = new ChecklistGoal(stringGoal);
+                return checklistGoal;
+            default:
+                Console.WriteLine("\n> Invalid type!\n");
+                return null;
+        }
     }
 
 
@@ -97,8 +129,8 @@ public class Profile
     /// Instantiate a Goal subclass accordingly to the given integer and return it. (1:SimpleGoal, 2:EternalGoal, 3:ChecklistGoal)
     /// </summary>
     /// <param name="goalType"></param>
-    /// <returns></returns>
-    public static Goal InstantiateGoalFromInt(int goalType)
+    /// <returns>A new instance of the Goal subclass</returns>
+    public static Goal CreateEmptyGoal(int goalType)
     {
         switch (goalType)
         {
@@ -130,6 +162,9 @@ public class Profile
     }
 
 
+    /// <summary>
+    /// Display the user goals with status "Completed"
+    /// </summary>
     public void DisplayCompletedGoals()
     {
         Console.WriteLine("\nCompleted Goals:");
@@ -137,12 +172,15 @@ public class Profile
         {
             if (goal.IsCompleted)
             {
-                goal.GetGoalStatus();
+                Utils.DisplayText($"{goal.GetGoalStatus()}\n");
             }
         }
     }
 
 
+    /// <summary>
+    /// Display the user goals with status NOT completed
+    /// </summary>
     public void DisplayAvailableGoals()
     {
         Console.WriteLine("\nAvailable Goals:");
@@ -150,20 +188,24 @@ public class Profile
         {
             if (!goal.IsCompleted)
             {
-                goal.GetGoalStatus();
+                Utils.DisplayText($"{goal.GetGoalStatus()}\n");
             }
         }
     }
 
 
+    /// <summary>
+    /// Get the user total Score from its completed Goals
+    /// </summary>
+    /// <returns></returns>
     public int GetTotalScore()
     {
         int totalScore = 0;
 
         foreach (Goal goal in _userGoals)
         {
-
-            
+            int goalScore = goal.GetScore();
+            totalScore += goalScore;   
         }
 
         return totalScore;
