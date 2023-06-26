@@ -43,14 +43,14 @@ public class ChecklistGoal : Goal
     /// </summary>
     public override void RequestGoalData()
     {
-        Console.Write("What is the name of your goal? ");
+        Utils.DisplayText("> What is the name of your goal? ");
         _name = Console.ReadLine();
-        Console.Write("What is a short description of it? ");
+        Utils.DisplayText("> What is a short description of it? ");
         _shortDescription = Console.ReadLine();
-        _points = Utils.GetUserInt("What is the amount of points associated with this goal? ");
-        _repetitionsToBonus = Utils.GetUserInt("How many times does this goal need to be accomplished for a bonus? ");
+        _points = Utils.GetUserInt("> What is the amount of points associated with this goal? ");
+        _repetitionsToBonus = Utils.GetUserInt("> How many times does this goal need to be accomplished for a bonus? ");
         _timesCompleted = 0;
-        _bonusPoints = Utils.GetUserInt("What is the bonus for accomplishing it that many times? ");
+        _bonusPoints = Utils.GetUserInt("> What is the bonus for accomplishing it that many times? ");
     }
 
 

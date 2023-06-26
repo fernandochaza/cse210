@@ -18,8 +18,9 @@ class Program
 
         // Display welcome message
         mainMenu.DisplayWelcome(profile.UserName);
+
         string currentScore = profile.GetTotalScore().ToString();
-        Utils.DisplayText($"Current Score: {currentScore}");
+        Utils.DisplayText($"\n> Your current score is: {currentScore}\n");
 
         // Variable to store the user option choice
         string selectedOption;
@@ -47,6 +48,7 @@ class Program
                         typeSelected = Utils.GetUserInt("Which type of goal would you like to create (1, 2 or 3)? ");
                     } while (typeSelected < 1 || typeSelected > 3);
 
+                    Console.Clear();
                     // Instantiate a new goal type
                     Goal goal = Profile.CreateEmptyGoal(typeSelected);
 
@@ -62,6 +64,13 @@ class Program
                     profile.DisplayGoalsData();
                     break;
                 case "3":
+                    if (profile.GetAvailableGoalsQuantity() == 0)
+                    {
+                        Utils.DisplayText("(!) There are not available Goals to complete.\n");
+                        Utils.DisplayText("(!) Please, add new goals to track.\n");
+                        Utils.MessageToContinueAndClear();
+                        break;
+                    }
                     profile.AddEvent();
                     break;
                 case "4":

@@ -42,6 +42,6 @@ public class Menu
     /// <returns></returns>
     public void DisplayWelcome(string userName)
     {
-        Utils.DisplayText($"Hello {userName}! Welcome again to your goals tracker!!\n");
+        Utils.DisplayText($"\n> Hello {userName}! Welcome again to your goals tracker!!\n");
     }
 }

@@ -1,6 +1,0 @@
-1|Run a marathon|Marathon|1000|True|1
-2|Read Scriptures|Read Scriptures|50|False|0
-3|Visit people at the hospital|hospital|100|True|5|5|1000
-1|Run a marathon|Marathon|1000|False|0
-2|Read Scriptures|Read Scriptures|50|False|0
-3|Visit people at the hospital|hospital|100|False|0|5|1000

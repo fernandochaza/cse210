@@ -14,7 +14,7 @@ public static class Utils
         while (!isValidNumber)
         {
             // Display the given prompt
-            Console.Write(message);
+            Utils.DisplayText(message);
 
             userInput = Console.ReadLine();
 
@@ -25,7 +25,7 @@ public static class Utils
             }
             else
             {
-                Console.WriteLine("\n> Invalid input. Please enter a valid integer.");
+                Console.WriteLine("\n(!) Invalid input. Please enter a valid integer.");
             }
         }
 
@@ -44,7 +44,14 @@ public static class Utils
         for (int i = 0; i < textLength; i++)
         {
             Console.Write(text[i]);
-            Thread.Sleep(1);
+            Thread.Sleep(2);
         }
+    }
+
+    public static void MessageToContinueAndClear()
+    {
+        Utils.DisplayText("\n> Press Enter to continue...");
+        Console.ReadLine();
+        Console.Clear();
     }
 }

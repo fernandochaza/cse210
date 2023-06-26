@@ -14,11 +14,11 @@ public abstract class Goal
     /// </summary>
     public virtual void RequestGoalData()
     {
-        Console.Write("What is the name of your goal? ");
+        Utils.DisplayText("> What is the name of your goal? ");
         _name = Console.ReadLine();
-        Console.Write("What is a short description of it? ");
+        Utils.DisplayText("> What is a short description of it? ");
         _shortDescription = Console.ReadLine();
-        _points = Utils.GetUserInt("What is the amount of points associated with this goal? ");
+        _points = Utils.GetUserInt("> What is the amount of points associated with this goal? ");
     }
 
 

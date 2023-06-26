@@ -33,13 +33,13 @@ public class Profile
             using (StreamWriter file = File.CreateText(_databaseFilename))
             {
                 // Create an empty file
-                Console.WriteLine("> New database created");
+                Console.WriteLine("(!) New database created");
             }
         }
         else
         {
             LoadUserData();
-            Console.WriteLine("> Working from the existing database\n");
+            Console.WriteLine("(!) Working from the existing database");
         }
     }
 
@@ -79,21 +79,19 @@ public class Profile
         // Add the goal to the user Profile list of Goals
         _userGoals.Add(goal);
 
-        Utils.DisplayText("\n> New Goal added to your database");
-        Utils.DisplayText("\n> Press Enter to continue...");
-        Console.ReadLine();
-        Console.Clear();
+        Utils.DisplayText("\n(!) New Goal added to your database");
+        Utils.MessageToContinueAndClear();
     }
 
 
-    public void UpdateDatabase()
+    private void UpdateDatabase()
     {
         // Add new line in database to represent the new Goal
         using (StreamWriter outputFile = File.CreateText(_databaseFilename))
         {
             foreach (Goal goal in _userGoals)
             {
-            outputFile.WriteLine(goal.GetStringRepresentation());
+                outputFile.WriteLine(goal.GetStringRepresentation());
             }
         }
     }
@@ -109,9 +107,7 @@ public class Profile
         DisplayCompletedGoals();
         DisplayAvailableGoals();
 
-        Utils.DisplayText("\n> Press Enter to continue...");
-        Console.ReadLine();
-        Console.Clear();
+        Utils.MessageToContinueAndClear();
     }
 
 
@@ -121,7 +117,7 @@ public class Profile
     /// <param name="goalType">An integer representing the Goal type</param>
     /// <param name="stringGoal">A string representation of the Goal data</param>
     /// <returns>A new instance of the Goal subclass</returns>
-    public static Goal CreateGoal(int goalType, string stringGoal)
+    private static Goal CreateGoal(int goalType, string stringGoal)
     {
         switch (goalType)
         {
@@ -135,7 +131,7 @@ public class Profile
                 ChecklistGoal checklistGoal = new ChecklistGoal(stringGoal);
                 return checklistGoal;
             default:
-                Console.WriteLine("\n> Invalid type!\n");
+                Console.WriteLine("\n(!) Invalid type!\n");
                 return null;
         }
     }
@@ -160,7 +156,7 @@ public class Profile
                 ChecklistGoal checklistGoal = new ChecklistGoal();
                 return checklistGoal;
             default:
-                Console.WriteLine("\n> Invalid type!\n");
+                Console.WriteLine("\n(!) Invalid type!\n");
                 return null;
         }
     }
@@ -181,7 +177,7 @@ public class Profile
     /// <summary>
     /// Display the user goals with status "Completed"
     /// </summary>
-    public void DisplayCompletedGoals()
+    private void DisplayCompletedGoals()
     {
         Console.WriteLine("\nCompleted Goals:");
         foreach (Goal goal in _userGoals)
@@ -197,7 +193,7 @@ public class Profile
     /// <summary>
     /// Display the user goals with status NOT "Completed"
     /// </summary>
-    public void DisplayAvailableGoals()
+    private void DisplayAvailableGoals()
     {
         Console.WriteLine("\nAvailable Goals:");
         foreach (Goal goal in _userGoals)
@@ -213,7 +209,7 @@ public class Profile
     /// <summary>
     /// Display the user goals with status NOT completed
     /// </summary>
-    public Dictionary<int, int> GetAvailableGoals()
+    private Dictionary<int, int> GetAvailableGoals()
     {
         int goalIndex = 0;
         int listIndex = 1;
@@ -256,7 +252,7 @@ public class Profile
         }
 
         // Get the user selected goal's list number.
-        int goalToComplete = Utils.GetUserInt("\nWhich goal do you want to mark? ");
+        int goalToComplete = Utils.GetUserInt("\n For which goal do you want to record and event? ");
 
         // Use the list number to get the Goal index from the dictionary
         int goalToCompleteIndex = availableGoals[goalToComplete];
@@ -265,12 +261,8 @@ public class Profile
         _userGoals[goalToCompleteIndex].MarkCompleted();
         UpdateDatabase();
 
-        Utils.DisplayText("> The event was successfully recorded! \n");
-        Utils.DisplayText("> Press Any Key to continue...");
-        Console.ReadLine();
-
-        Console.Clear();
-
+        Utils.DisplayText("(!) The event was successfully recorded!\n");
+        Utils.MessageToContinueAndClear();
     }
 
 
@@ -289,5 +281,19 @@ public class Profile
         }
 
         return totalScore;
+    }
+
+
+    public int GetAvailableGoalsQuantity()
+    {
+        int quantity = 0;
+        foreach (Goal goal in _userGoals)
+        {
+            if (!goal.IsCompleted)
+            {
+                quantity++;
+            }
+        }
+        return quantity;
     }
 }
