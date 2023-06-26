@@ -18,6 +18,8 @@ class Program
 
         // Display welcome message
         mainMenu.DisplayWelcome(profile.UserName);
+        string currentScore = profile.GetTotalScore().ToString();
+        Utils.DisplayText($"Current Score: {currentScore}");
 
         // Variable to store the user option choice
         string selectedOption;
@@ -35,13 +37,17 @@ class Program
             {
                 case "1":
                     //Display the possible Goal options
-                    Utils.DisplayGoalTypes();
+                    Profile.DisplayGoalTypes();
 
                     // Ask for the user choice.
-                    int typeSelected = Utils.GetUserInt("Which type of goal would you like to create? ");
+                    int typeSelected = 0;
+                    do
+                    {
+                        typeSelected = Utils.GetUserInt("Which type of goal would you like to create? ");
+                    } while (typeSelected < 1 || typeSelected > 3);
 
                     // Instantiate a new goal type
-                    Goal goal = Utils.InstantiateGoalFromInt(typeSelected);
+                    Goal goal = Profile.InstantiateGoalFromInt(typeSelected);
 
                     // Populate the goal data from the user's inputs
                     goal.RequestGoalData();

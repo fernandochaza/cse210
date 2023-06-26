@@ -33,43 +33,6 @@ public static class Utils
     }
 
 
-/// <summary>
-/// Instantiate a Goal subclass accordingly to the given integer and return it. (1:SimpleGoal, 2:EternalGoal, 3:ChecklistGoal)
-/// </summary>
-/// <param name="goalType"></param>
-/// <returns></returns>
-    public static Goal InstantiateGoalFromInt(int goalType)
-    {
-        switch (goalType)
-        {
-            case 1:
-                SimpleGoal simpleGoal = new SimpleGoal();
-                return simpleGoal;
-            case 2:
-                EternalGoal eternalGoal = new EternalGoal();
-                return eternalGoal;
-            case 3:
-                ChecklistGoal checklistGoal = new ChecklistGoal();
-                return checklistGoal;
-            default:
-                Console.WriteLine("\n> Invalid type!\n");
-                return null;
-        }
-    }
-
-
-    /// <summary>
-    /// Print an ordered list of the available Goal types
-    /// </summary>
-    public static void DisplayGoalTypes()
-    {
-        DisplayText("\nThe types of goals are:\n");
-        DisplayText("1. Simple Goal\n");
-        DisplayText("2. Eternal Goal\n");
-        DisplayText("3. Checklist Goal\n");
-    }
-
-
     /// <summary>
     /// Create a text typing animation from a given text
     /// </summary>

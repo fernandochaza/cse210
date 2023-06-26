@@ -1,22 +1,21 @@
 public class ChecklistGoal : Goal
 {
-    private int _repetitionsToComplete;
-    private int _currentRepetitions;
+    private int _repetitionsToBonus;
     private int _bonusPoints;
 
     public ChecklistGoal()
     {
+        _typeID = 3;
         _typeName = "Checklist Goal";
     }
 
-
+    
     /// <summary>
     /// Instantiate the Goal variables from a string representation of the goal
     /// </summary>
     /// <param name="stringGoal">A one-line string representing the goal data separated by a pipe symbol "|"</param>
     public ChecklistGoal(string stringGoal)
     {
-        _typeName = "Checklist Goal";
         string[] parts = stringGoal.Split("|");
         int type = int.Parse(parts[0]);
         string name = parts[1];
@@ -28,12 +27,13 @@ public class ChecklistGoal : Goal
         int bonusPoints = int.Parse(parts[7]);
 
         _typeID = type;
+        _typeName = "Checklist Goal";
         _name = name;
         _shortDescription = description;
         _points = points;
         _isCompleted = isCompleted;
-        _currentRepetitions = currentRepetitions;
-        _repetitionsToComplete = repetitionsToComplete;
+        _timesCompleted = currentRepetitions;
+        _repetitionsToBonus = repetitionsToComplete;
         _bonusPoints = bonusPoints;
     }
 
@@ -48,15 +48,26 @@ public class ChecklistGoal : Goal
         Console.Write("What is a short description of it? ");
         _shortDescription = Console.ReadLine();
         _points = Utils.GetUserInt("What is the amount of points associated with this goal? ");
-        _repetitionsToComplete = Utils.GetUserInt("How many times does this goal need to be accomplished for a bonus? ");
-        _currentRepetitions = 0;
+        _repetitionsToBonus = Utils.GetUserInt("How many times does this goal need to be accomplished for a bonus? ");
+        _timesCompleted = 0;
         _bonusPoints = Utils.GetUserInt("What is the bonus for accomplishing it that many times? ");
     }
 
 
     public override void MarkCompleted()
     {
-
+        if (!_isCompleted)
+        {
+            _timesCompleted += 1;
+            if (_timesCompleted == _repetitionsToBonus)
+            {
+                _isCompleted = true;
+            }
+        }
+        else
+        {
+            Console.WriteLine("(!) This goal is already completed!");
+        }
     }
 
 
@@ -77,7 +88,7 @@ public class ChecklistGoal : Goal
             statusMark = "[ ]";
         }
 
-        return $"{statusMark} {_name} ({_shortDescription}) --- Currently completed: {_currentRepetitions}/{_repetitionsToComplete}";
+        return $"{_typeName}: {statusMark} {_name} ({_shortDescription}) --- Currently completed: {_timesCompleted}/{_repetitionsToBonus}";
     }
 
 
@@ -88,6 +99,6 @@ public class ChecklistGoal : Goal
     public override string GetStringRepresentation()
     {
         return $"{_typeID}|{_name}|{_shortDescription}|" +
-        $"{_points}|{_isCompleted}|{_currentRepetitions}|{_repetitionsToComplete}|{_bonusPoints}";
+        $"{_points}|{_isCompleted}|{_timesCompleted}|{_repetitionsToBonus}|{_bonusPoints}";
     }
 }

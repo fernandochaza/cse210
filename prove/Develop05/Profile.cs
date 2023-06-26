@@ -11,6 +11,10 @@ public class Profile
     }
 
 
+    /// <summary>
+    /// Get/Set User Name
+    /// </summary>
+    /// <value></value>
     public string UserName
     {
         get {return _userName;}
@@ -41,7 +45,7 @@ public class Profile
 
 
     /// <summary>
-    /// Read the database file and create the necessary scriptures
+    /// Read the database file and load the user Goals
     /// </summary>
     public void LoadUserData()
     {
@@ -52,7 +56,7 @@ public class Profile
             foreach (string stringGoal in databaseLines)
             {
                 Goal goal = new Goal(stringGoal);
-                LoadGoalToProfile(goal);
+                _userGoals.Add(goal);
             }  
         }
     }
@@ -74,7 +78,7 @@ public class Profile
         _userGoals.Add(goal);
 
         Utils.DisplayText("\n> New Goal added to your database");
-        Utils.DisplayText("Press Enter to continue...");
+        Utils.DisplayText("\n> Press Enter to continue...");
         Console.ReadLine();
     }
 
@@ -84,25 +88,84 @@ public class Profile
     /// </summary>
     public void DisplayGoalsData()
     {
-        foreach (Goal goal in _userGoals)
+        DisplayCompletedGoals();
+        DisplayAvailableGoals();
+    }
+
+
+    /// <summary>
+    /// Instantiate a Goal subclass accordingly to the given integer and return it. (1:SimpleGoal, 2:EternalGoal, 3:ChecklistGoal)
+    /// </summary>
+    /// <param name="goalType"></param>
+    /// <returns></returns>
+    public static Goal InstantiateGoalFromInt(int goalType)
+    {
+        switch (goalType)
         {
-            Console.WriteLine(goal.GetGoalStatus());
+            case 1:
+                SimpleGoal simpleGoal = new SimpleGoal();
+                return simpleGoal;
+            case 2:
+                EternalGoal eternalGoal = new EternalGoal();
+                return eternalGoal;
+            case 3:
+                ChecklistGoal checklistGoal = new ChecklistGoal();
+                return checklistGoal;
+            default:
+                Console.WriteLine("\n> Invalid type!\n");
+                return null;
         }
     }
 
 
     /// <summary>
-    /// Add a new goal to the user Profile
+    /// Print an ordered list of the available Goal types
     /// </summary>
-    /// <param name="goal"></param>
-    private void LoadGoalToProfile(Goal goal)
+    public static void DisplayGoalTypes()
     {
-        _userGoals.Add(goal);
+        Utils.DisplayText("\nThe types of goals are:\n");
+        Utils.DisplayText("1. Simple Goal\n");
+        Utils.DisplayText("2. Eternal Goal\n");
+        Utils.DisplayText("3. Checklist Goal\n");
     }
-    
 
-    public void DisplayTotalScore()
+
+    public void DisplayCompletedGoals()
     {
-        
+        Console.WriteLine("\nCompleted Goals:");
+        foreach (Goal goal in _userGoals)
+        {
+            if (goal.IsCompleted)
+            {
+                goal.GetGoalStatus();
+            }
+        }
+    }
+
+
+    public void DisplayAvailableGoals()
+    {
+        Console.WriteLine("\nAvailable Goals:");
+        foreach (Goal goal in _userGoals)
+        {
+            if (!goal.IsCompleted)
+            {
+                goal.GetGoalStatus();
+            }
+        }
+    }
+
+
+    public int GetTotalScore()
+    {
+        int totalScore = 0;
+
+        foreach (Goal goal in _userGoals)
+        {
+
+            
+        }
+
+        return totalScore;
     }
 }

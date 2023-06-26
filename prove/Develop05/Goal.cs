@@ -6,6 +6,7 @@ public class Goal
     protected string _shortDescription;
     protected int _points;
     protected bool _isCompleted;
+    protected int _timesCompleted;
 
 
     public Goal()
@@ -39,19 +40,21 @@ public class Goal
         string description = parts[2];
         int points = int.Parse(parts[3]);
         bool isCompleted = bool.Parse(parts[4]);
+        int timesCompleted = int.Parse(parts[5]);
 
         _typeID = type;
         _name = name;
         _shortDescription = description;
         _points = points;
         _isCompleted = isCompleted;
+        _timesCompleted = timesCompleted;
     }
 
 
 
     public virtual void MarkCompleted()
     {
-
+        _isCompleted = true;
     }
 
 
@@ -61,18 +64,20 @@ public class Goal
     /// <returns></returns>
     public virtual string GetGoalStatus()
     {
-        string statusMark;
+        return "This is GetGoalStatus in Goal Class"; // I tried making this and abstract method but I'm have problems instantiating the Goal class
+    }
 
+
+    public virtual int GetScore()
+    {
         if (_isCompleted)
         {
-            statusMark = "[X]";
+            return _points;
         }
         else
         {
-            statusMark = "[ ]";
+            return 0;
         }
-
-        return $"{statusMark} {_name} ({_shortDescription})";
     }
 
 
@@ -82,7 +87,7 @@ public class Goal
     /// <returns>A one line string</returns>
     public virtual string GetStringRepresentation()
     {
-        return $"{_typeID}|{_name}|{_shortDescription}|{_points}|{_isCompleted}";
+        return $"{_typeID}|{_name}|{_shortDescription}|{_points}|{_isCompleted}|{_timesCompleted}";
     }
 
 
@@ -90,6 +95,12 @@ public class Goal
     {
         set {_typeID = value;}
         get {return _typeID;}
+    }
+
+
+    public string TypeName
+    {
+        get {return _typeName;}
     }
     
     
@@ -103,13 +114,20 @@ public class Goal
         set {_shortDescription = value;}
     }
     
-    protected int Points
+    public int Points
     {
+        get {return _points;}
         set {_points = value;}
     }
     
-    protected bool Completed
+    public bool IsCompleted
     {
+        get {return _isCompleted;}
         set {_isCompleted = value;}
+    }
+
+    public int TimesCompleted
+    {
+        get {return _timesCompleted;}
     }
 }
