@@ -257,13 +257,14 @@ public class Profile
 
             // Get the user selected goal's list number.
             goalToComplete = Utils.GetUserInt("\n> For which goal do you want to record and event? ");
-            if (goalToComplete < availableGoals.Count || goalToComplete >availableGoals.Count)
+            Console.WriteLine($"AVAILABLE GOALS: {availableGoals.Count}");
+            if (goalToComplete < 0 || goalToComplete > availableGoals.Count)
             {
                 Utils.DisplayText("\n(!) That number doesn't match with an available Goal. Try Again...\n");
                 Utils.MessageToContinueAndClear();
             }
             // Check that the user input matches an available goal
-        } while (goalToComplete < availableGoals.Count || goalToComplete >availableGoals.Count);
+        } while (goalToComplete < 0 || goalToComplete > availableGoals.Count);
 
         // Use the list number to get the Goal index from the dictionary
         int goalToCompleteIndex = availableGoals[goalToComplete];
