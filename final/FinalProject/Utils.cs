@@ -5,7 +5,7 @@ public static class Utils
     /// </summary>
     /// <param name="message">The prompt displayed to the user to ask for an integer input</param>
     /// <returns>A validated integer</returns>
-    public static int GetUserInt(string message)
+    public static int GetUserInt(string prompt)
     {
         string userInput;
         int validInteger = 0;
@@ -15,7 +15,7 @@ public static class Utils
         while (!isValidNumber)
         {
             // Display the given prompt
-            Utils.DisplayText(message);
+            Utils.DisplayText(prompt);
 
             userInput = Console.ReadLine();
 
@@ -35,7 +35,8 @@ public static class Utils
 
 
     /// <summary>
-    /// Create a text typing animation from a given text
+    /// Create a text typing animation from a given text to give the user a better sense of 
+    /// what is being printed in the console
     /// </summary>
     /// <param name="text">The text to be displayed</param>
     public static void DisplayText(string text)
