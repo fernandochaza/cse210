@@ -5,16 +5,14 @@ public class Menu
 {
     private Dictionary<string, string> _options = new Dictionary<string, string>();
 
-
-  /// <summary>
-  /// Instantiate a Menu with the given options
-  /// </summary>
-  /// <param name="options">A Dictionary containing a list </param>
+    /// <summary>
+    /// Instantiate a Menu with the given options
+    /// </summary>
+    /// <param name="options">A Dictionary containing a list of options</param>
     public Menu(Dictionary<string, string> options)
     {
-      _options = options;
+        _options = options;
     }
-
 
     /// <summary>
     /// Display the menu options

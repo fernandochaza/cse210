@@ -1,7 +1,7 @@
 public static class Utils
 {
     /// <summary>
-    /// Display a prompt and validate an user integer input 
+    /// Display a prompt and validate an user integer input
     /// </summary>
     /// <param name="message">The prompt displayed to the user to ask for an integer input</param>
     /// <returns>A validated integer</returns>
@@ -33,9 +33,8 @@ public static class Utils
         return validInteger;
     }
 
-
     /// <summary>
-    /// Create a text typing animation from a given text to give the user a better sense of 
+    /// Create a text typing animation from a given text to give the user a better sense of
     /// what is being printed in the console
     /// </summary>
     /// <param name="text">The text to be displayed</param>
@@ -49,7 +48,6 @@ public static class Utils
             Thread.Sleep(2);
         }
     }
-
 
     /// <summary>
     /// Allow the user to decide when to continue by pressing a key before cleaning the console
