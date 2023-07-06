@@ -1,5 +1,5 @@
 public interface SerializableObject
 {
-    void Serialize();
-    void Deserialize();
+  void Serialize();
+  void Deserialize();
 }

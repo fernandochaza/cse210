@@ -3,27 +3,27 @@
 /// </summary>
 public class Menu
 {
-    private Dictionary<string, string> _options = new Dictionary<string, string>();
+  private Dictionary<string, string> _options = new Dictionary<string, string>();
 
-    /// <summary>
-    /// Instantiate a Menu with the given options
-    /// </summary>
-    /// <param name="options">A Dictionary containing a list of options</param>
-    public Menu(Dictionary<string, string> options)
-    {
-        _options = options;
-    }
+  /// <summary>
+  /// Instantiate a Menu with the given options
+  /// </summary>
+  /// <param name="options">A Dictionary containing a list of options</param>
+  public Menu(Dictionary<string, string> options)
+  {
+    _options = options;
+  }
 
-    /// <summary>
-    /// Display the menu options
-    /// </summary>
-    public void DisplayOptions(Dictionary<string, string> options)
+  /// <summary>
+  /// Display the menu options
+  /// </summary>
+  public void DisplayOptions(Dictionary<string, string> options)
+  {
+    Utils.DisplayText("\nMenu Options:\n");
+    foreach (KeyValuePair<string, string> option in options)
     {
-        Utils.DisplayText("\nMenu Options:\n");
-        foreach (KeyValuePair<string, string> option in options)
-        {
-            Utils.DisplayText($"{option.Key} - {option.Value}\n");
-        }
-        Utils.DisplayText("\n> Select a choice from the menu: ");
+      Utils.DisplayText($"{option.Key} - {option.Value}\n");
     }
+    Utils.DisplayText("\n> Select a choice from the menu: ");
+  }
 }
