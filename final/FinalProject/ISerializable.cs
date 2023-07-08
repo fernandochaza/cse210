@@ -1,4 +1,4 @@
-public interface SerializableObject
+public interface ISerializable
 {
   void Serialize();
   void Deserialize();

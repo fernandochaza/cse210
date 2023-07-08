@@ -1,0 +1,22 @@
+{
+  "meal_id": 1,
+  "meal_name": "mila",
+  "meal_type": 0,
+  "meal_ingredients": [
+    {
+      "ingredient_id": 1,
+      "ingredient_name": "carne",
+      "ingredient_type": 0
+    },
+    {
+      "ingredient_id": 2,
+      "ingredient_name": "papa",
+      "ingredient_type": 0
+    },
+    {
+      "ingredient_id": 3,
+      "ingredient_name": "sal",
+      "ingredient_type": 1
+    }
+  ]
+}

@@ -1,11 +1,10 @@
-using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 /// <summary>
 /// Represents a unique ingredient with its name and type
 /// </summary>
-public class Ingredient : SerializableObject
+public class Ingredient : ISerializable
 {
   private int _id;
   private static int _lastId = 0;
@@ -14,56 +13,10 @@ public class Ingredient : SerializableObject
 
   public Ingredient()
   {
-    _id = 0;
-    _name = "algo";
-    _type = IngredientType.Main;
+
   }
 
-  /// <summary>
-  /// Constructor used when deserializing the object???
-  /// </summary>
-  /// <param name="id"></param>
-  /// <param name="name"></param>
-  /// <param name="type"></param>
-  public Ingredient(int id, string name, IngredientType type)
-  {
-    _id = id;
-    _lastId = id;
-    _name = name;
-    _type = type;
-  }
-
-  /// <summary>
-  /// Instantiate a Ingredient, populate its data from the user input and return it
-  /// </summary>
-  public static Ingredient CreateIngredient()
-  {
-    Ingredient ingredient = new Ingredient();
-    ingredient._id = GetNextId();
-
-    Utils.DisplayText("Ingredient name: ");
-    ingredient._name = Console.ReadLine();
-
-    Utils.DisplayText("Ingredient type: ");
-    string type = Console.ReadLine();
-
-    if (type == "main")
-    {
-      ingredient._type = IngredientType.Main;
-    }
-    else if (type == "seasoning")
-    {
-      ingredient._type = IngredientType.Seasoning;
-    }
-    else
-    {
-      Console.WriteLine("Type error");
-    }
-
-    return ingredient;
-  }
-
-  // Declare getters and setters to allow private members serialization
+    // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
 
   [JsonPropertyName("ingredient_id")]
@@ -94,6 +47,57 @@ public class Ingredient : SerializableObject
     }
   }
 
+    // Define custom ingredient types
+  public enum IngredientType
+  {
+    Main,
+    Seasoning
+  }
+
+  /// <summary>
+  /// Constructor used when deserializing the object???
+  /// </summary>
+  /// <param name="id"></param>
+  /// <param name="name"></param>
+  /// <param name="type"></param>
+  // public Ingredient(int id, string name, IngredientType type)
+  // {
+  //   _id = id;
+  //   _lastId = id;
+  //   _name = name;
+  //   _type = type;
+  // }
+
+  /// <summary>
+  /// Instantiate a Ingredient, populate its data from the user input and return it
+  /// </summary>
+  public static Ingredient Create()
+  {
+    Ingredient ingredient = new Ingredient();
+    ingredient._id = GetNextId();
+
+    Utils.DisplayText("Ingredient name: ");
+    ingredient._name = Console.ReadLine();
+
+    Utils.DisplayText("Ingredient type (main or seasoning): ");
+    string type = Console.ReadLine();
+
+    if (type == "main")
+    {
+      ingredient._type = IngredientType.Main;
+    }
+    else if (type == "seasoning")
+    {
+      ingredient._type = IngredientType.Seasoning;
+    }
+    else
+    {
+      Console.WriteLine("Type error");
+    }
+
+    return ingredient;
+  }
+
   public void Serialize()
   {
     var options = new JsonSerializerOptions
@@ -104,6 +108,7 @@ public class Ingredient : SerializableObject
 
     // Serialize the current Ingredient instance
     string jsonString = JsonSerializer.Serialize(this, options);
+    Console.WriteLine($"INGREDIENT JSON: \n {jsonString}");
 
     // Option 1: Write the data in a file (Currently, this overrides the file)
     // File.WriteAllText("ingredient.json", jsonString);
@@ -130,13 +135,6 @@ public class Ingredient : SerializableObject
     // _name = deserializedIngredient._name;
     // _type = deserializedIngredient._type;
 
-  }
-
-  // Define custom ingredient types
-  public enum IngredientType
-  {
-    Main,
-    Seasoning
   }
 
   private static int GetNextId()
