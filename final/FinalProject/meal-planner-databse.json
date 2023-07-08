@@ -1,0 +1,239 @@
+{
+  "user_meals": [
+    {
+      "id": 1,
+      "name": "Spaghetti Bolognese",
+      "type": "0"
+    },
+    {
+      "id": 2,
+      "name": "Caesar Salad",
+      "type": "1"
+    },
+    {
+      "id": 3,
+      "name": "Grilled Chicken",
+      "type": "0"
+    },
+    {
+      "id": 4,
+      "name": "Mushroom Risotto",
+      "type": "0"
+    },
+    {
+      "id": 5,
+      "name": "Baked Salmon",
+      "type": "0"
+    },
+    {
+      "id": 6,
+      "name": "Caprese Salad",
+      "type": "1"
+    },
+    {
+      "id": 7,
+      "name": "Beef Stroganoff",
+      "type": "0"
+    },
+    {
+      "id": 8,
+      "name": "Roasted Vegetables",
+      "type": "1"
+    },
+    {
+      "id": 9,
+      "name": "Lemon Herb Roasted Chicken",
+      "type": "0"
+    },
+    {
+      "id": 10,
+      "name": "Greek Salad",
+      "type": "1"
+    }
+  ],
+  "user_ingredients": [
+  {
+    "id": 1,
+    "name": "Spaghetti",
+    "type": "0"
+  },
+  {
+    "id": 2,
+    "name": "Ground beef",
+    "type": "0"
+  },
+  {
+    "id": 3,
+    "name": "Tomato sauce",
+    "type": "1"
+  },
+  {
+    "id": 4,
+    "name": "Onion",
+    "type": "1"
+  },
+  {
+    "id": 5,
+    "name": "Garlic",
+    "type": "1"
+  },
+  {
+    "id": 6,
+    "name": "Olive oil",
+    "type": "1"
+  },
+  {
+    "id": 7,
+    "name": "Salt",
+    "type": "1"
+  },
+  {
+    "id": 8,
+    "name": "Pepper",
+    "type": "1"
+  },
+  {
+    "id": 9,
+    "name": "Romaine lettuce",
+    "type": "0"
+  },
+  {
+    "id": 10,
+    "name": "Croutons",
+    "type": "0"
+  },
+  {
+    "id": 11,
+    "name": "Parmesan cheese",
+    "type": "0"
+  },
+  {
+    "id": 12,
+    "name": "Caesar dressing",
+    "type": "1"
+  },
+  {
+    "id": 13,
+    "name": "Chicken breast",
+    "type": "0"
+  },
+  {
+    "id": 14,
+    "name": "Lemon",
+    "type": "1"
+  },
+  {
+    "id": 15,
+    "name": "Olive oil",
+    "type": "1"
+  },
+  {
+    "id": 16,
+    "name": "Garlic",
+    "type": "1"
+  },
+  {
+    "id": 17,
+    "name": "Salt",
+    "type": "1"
+  },
+  {
+    "id": 18,
+    "name": "Pepper",
+    "type": "1"
+  },
+  {
+    "id": 19,
+    "name": "Mushrooms",
+    "type": "0"
+  },
+  {
+    "id": 20,
+    "name": "Arborio rice",
+    "type": "0"
+  },
+  {
+    "id": 21,
+    "name": "Chicken broth",
+    "type": "1"
+  },
+  {
+    "id": 22,
+    "name": "White wine",
+    "type": "1"
+  },
+  {
+    "id": 23,
+    "name": "Butter",
+    "type": "0"
+  },
+  {
+    "id": 24,
+    "name": "Salmon fillet",
+    "type": "0"
+  },
+  {
+    "id": 25,
+    "name": "Basil",
+    "type": "1"
+  },
+  {
+    "id": 26,
+    "name": "Balsamic vinegar",
+    "type": "1"
+  },
+  {
+    "id": 27,
+    "name": "Beef sirloin",
+    "type": "0"
+  },
+  {
+    "id": 28,
+    "name": "Sour cream",
+    "type": "1"
+  },
+  {
+    "id": 29,
+    "name": "Onion powder",
+    "type": "1"
+  },
+  {
+    "id": 30,
+    "name": "Mixed vegetables",
+    "type": "0"
+  },
+  {
+    "id": 31,
+    "name": "Potatoes",
+    "type": "0"
+  },
+  {
+    "id": 32,
+    "name": "Thyme",
+    "type": "1"
+  },
+  {
+    "id": 33,
+    "name": "Rosemary",
+    "type": "1"
+  },
+  {
+    "id": 34,
+    "name": "Paprika",
+    "type": "1"
+  },
+  {
+    "id": 35,
+    "name": "Lemon juice",
+    "type": "1"
+  },
+  {
+    "id": 36,
+    "name": "Feta cheese",
+    "type": "0"
+  }
+  ],
+  "planned_meals": [
+    
+  ]
+}

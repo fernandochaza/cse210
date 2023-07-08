@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -99,7 +100,25 @@ public class Meal : ISerializable
     return meal;
   }
 
-  public void Serialize()
+  public void Display()
+  {
+    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+    string name = textInfo.ToTitleCase(_name);
+
+    string ingredients = "";
+
+    foreach (Ingredient ingredient in _ingredients)
+    {
+      ingredients += $"{ingredient.ToString()}, ";
+    }
+
+    ingredients = ingredients.Substring(0, ingredients.Length - 2);
+
+    Console.WriteLine($"-> {name} ({_type}):");
+    Console.WriteLine($"Ingredients: {ingredients}");
+  }
+
+  public string Serialize()
   {
     var options = new JsonSerializerOptions
     {
@@ -115,7 +134,7 @@ public class Meal : ISerializable
     // File.WriteAllText("meal.json", jsonString);
 
     // Option 2: Return the JSONString
-    // return jsonString;
+    return jsonString;
   }
 
   public void Deserialize()

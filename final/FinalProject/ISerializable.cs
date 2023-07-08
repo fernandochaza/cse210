@@ -1,5 +1,5 @@
 public interface ISerializable
 {
-  void Serialize();
+  string Serialize();
   void Deserialize();
 }

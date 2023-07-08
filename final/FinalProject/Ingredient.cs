@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -16,7 +17,7 @@ public class Ingredient : ISerializable
 
   }
 
-    // Declare getters and setters to allow private members serialization
+  // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
 
   [JsonPropertyName("ingredient_id")]
@@ -98,7 +99,14 @@ public class Ingredient : ISerializable
     return ingredient;
   }
 
-  public void Serialize()
+  public void Display()
+  {
+    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+    string name = textInfo.ToTitleCase(_name);
+    Console.WriteLine($"{name}({_type})");
+  }
+
+  public string Serialize()
   {
     var options = new JsonSerializerOptions
     {
@@ -114,7 +122,7 @@ public class Ingredient : ISerializable
     // File.WriteAllText("ingredient.json", jsonString);
 
     // Option 2: Return the JSONString
-    // return jsonString;
+    return jsonString;
   }
 
   public void Deserialize()
@@ -145,6 +153,9 @@ public class Ingredient : ISerializable
   // String for testing purposes
   public override string ToString()
   {
-    return $"ID: {_id}, NAME: {_name}, TYPE: {_type}";
+    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+    string name = textInfo.ToTitleCase(_name);
+    string ingredient = $"{name} ({_type})";
+    return ingredient;
   }
 }
