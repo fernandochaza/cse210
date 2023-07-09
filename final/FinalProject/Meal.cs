@@ -11,28 +11,31 @@ public class Meal : ISerializable
   private static int _lastId = 0;
   private string _name;
   private MealType _type;
-  private List<Ingredient> _ingredients = new List<Ingredient>();
+  private List<int> _ingredientsID;
 
   public Meal()
   {
 
   }
 
-  [JsonPropertyName("meal_id")]
+  // Declare getters and setters to allow private members serialization
+  // Use JsonPropertyName to define a key name for the Json file
+
+  [JsonPropertyName("meal-id")]
   public int Id
   {
     get { return _id; }
     set { _id = value; }
   }
 
-  [JsonPropertyName("meal_name")]
+  [JsonPropertyName("meal-name")]
   public string Name
   {
     get { return _name; }
     set { _name = value; }
   }
 
-  [JsonPropertyName("meal_type")]
+  [JsonPropertyName("meal-type")]
   public MealType Type
   {
     get { return _type; }
@@ -46,11 +49,11 @@ public class Meal : ISerializable
     }
   }
 
-  [JsonPropertyName("meal_ingredients")]
-  public List<Ingredient> Ingredients
+  [JsonPropertyName("meal-ingredients")]
+  public List<int> IngredientsID
   {
-    get { return _ingredients; }
-    set { _ingredients = value; }
+    get { return _ingredientsID; }
+    set { _ingredientsID = value; }
   }
 
   public enum MealType
@@ -91,11 +94,7 @@ public class Meal : ISerializable
     Utils.DisplayText("how many ingredients? ");
     quantity = int.Parse(Console.ReadLine());
 
-    for (int i = 0; i < quantity; i++)
-    {
-      Ingredient ingredient = Ingredient.Create();
-      meal._ingredients.Add(ingredient);
-    }
+    // ------ ADD CODE TO ADD INGREDIENTS -----
 
     return meal;
   }
@@ -107,7 +106,7 @@ public class Meal : ISerializable
 
     string ingredients = "";
 
-    foreach (Ingredient ingredient in _ingredients)
+    foreach (int ingredient in _ingredientsID)
     {
       ingredients += $"{ingredient.ToString()}, ";
     }
@@ -168,10 +167,10 @@ public class Meal : ISerializable
   {
     string ingredients = "";
 
-    foreach (Ingredient ingredient in _ingredients)
-    {
-      ingredients += $" {ingredient.Name}";
-    }
+    // foreach (Ingredient ingredient in _ingredients)
+    // {
+    //   ingredients += $" {ingredient.Name}";
+    // }
     return $"ID: {_id}, NAME: {_name}, TYPE: {_type}, INGREDIENTS: ({ingredients})";
   }
 }

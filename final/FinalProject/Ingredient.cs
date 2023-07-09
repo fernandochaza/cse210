@@ -20,21 +20,21 @@ public class Ingredient : ISerializable
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
 
-  [JsonPropertyName("ingredient_id")]
+  [JsonPropertyName("ingredient-id")]
   public int Id
   {
     get { return _id; }
     set { _id = value; }
   }
 
-  [JsonPropertyName("ingredient_name")]
+  [JsonPropertyName("ingredient-name")]
   public string Name
   {
     get { return _name; }
     set { _name = value; }
   }
 
-  [JsonPropertyName("ingredient_type")]
+  [JsonPropertyName("ingredient-type")]
   public IngredientType Type
   {
     get { return _type; }

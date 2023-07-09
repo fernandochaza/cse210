@@ -5,6 +5,11 @@ public class Menu
 {
   private Dictionary<string, string> _options = new Dictionary<string, string>();
 
+  public Menu()
+  {
+
+  }
+
   /// <summary>
   /// Instantiate a Menu with the given options
   /// </summary>
@@ -25,5 +30,16 @@ public class Menu
       Utils.DisplayText($"{option.Key} - {option.Value}\n");
     }
     Utils.DisplayText("\n> Select a choice from the menu: ");
+  }
+
+  public void DisplayOptions()
+  {
+    List<string> _options = new List<string>();
+    _options.Add("");
+  }
+
+  public static void DisplayWelcome()
+  {
+    Utils.DisplayText("Welcome to the Meal Tracker!\n");
   }
 }
