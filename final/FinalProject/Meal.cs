@@ -39,7 +39,7 @@ public class Meal
     set
     {
       // Validate that the meal type is either Main or SideDish
-      if (value == MealType.Main || value == MealType.SideDish)
+      if (value == MealType.Main || value == MealType.Side_Dish)
         _type = value;
       else
         throw new ArgumentException("Invalid meal type.");
@@ -56,7 +56,7 @@ public class Meal
   public enum MealType
   {
     Main,
-    SideDish
+    Side_Dish
   }
 
   /// <summary>
@@ -67,10 +67,10 @@ public class Meal
     Meal meal = new Meal();
     meal._id = GetNextId();
 
-    Utils.DisplayText("Meal name: ");
+    Utils.DisplayText("Meal name: \n");
     meal._name = Console.ReadLine();
 
-    Utils.DisplayText("Meal type (main or side dish): ");
+    Utils.DisplayText("Meal type (main or side dish): \n");
     string type = Console.ReadLine();
 
     if (type == "main")
@@ -79,11 +79,11 @@ public class Meal
     }
     else if (type == "side dish")
     {
-      meal._type = MealType.SideDish;
+      meal._type = MealType.Side_Dish;
     }
     else
     {
-      Console.WriteLine("Type error");
+      Utils.DisplayText("Type error\n");
     }
 
     // Add ingredients from Ingredients database or create new ingredients
@@ -109,10 +109,10 @@ public class Meal
     string mealName = textInfo.ToTitleCase(_name);
     string mealType = textInfo.ToTitleCase(_type.ToString());
 
-    Console.WriteLine($"({mealType}) {mealName}");
+    Utils.DisplayText($"({mealType}) {mealName}\n");
   }
 
-  public void DisplayIngredients()
+  public void DisplayIngredients(List<Ingredient> userIngredients)
   {
     
   }
@@ -153,17 +153,5 @@ public class Meal
   private static int GetNextId()
   {
     return ++_lastId;
-  }
-
-  // String for testing purposes
-  public override string ToString()
-  {
-    string ingredients = "";
-
-    // foreach (Ingredient ingredient in _ingredients)
-    // {
-    //   ingredients += $" {ingredient.Name}";
-    // }
-    return $"ID: {_id}, NAME: {_name}, TYPE: {_type}, INGREDIENTS: ({ingredients})";
   }
 }

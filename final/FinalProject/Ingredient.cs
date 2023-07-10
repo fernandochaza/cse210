@@ -44,7 +44,7 @@ public class Ingredient
       if (value == IngredientType.Main || value == IngredientType.Seasoning)
         _type = value;
       else
-        throw new ArgumentException("Invalid ingredient type.");
+        throw new ArgumentException("Invalid ingredient type.\n");
     }
   }
 
@@ -63,10 +63,10 @@ public class Ingredient
     Ingredient ingredient = new Ingredient();
     ingredient._id = GetNextId();
 
-    Utils.DisplayText("Ingredient name: ");
+    Utils.DisplayText("Ingredient name: \n");
     ingredient._name = Console.ReadLine();
 
-    Utils.DisplayText("Ingredient type (main or seasoning): ");
+    Utils.DisplayText("Ingredient type (main or seasoning): \n");
     string type = Console.ReadLine();
 
     if (type == "main")
@@ -79,7 +79,7 @@ public class Ingredient
     }
     else
     {
-      Console.WriteLine("Type error");
+      Utils.DisplayText("Type error\n");
     }
 
     return ingredient;
@@ -92,7 +92,7 @@ public class Ingredient
   {
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
     string name = textInfo.ToTitleCase(_name);
-    Console.WriteLine($"{name} ({_type})");
+    Utils.DisplayText($"{name} ({_type}) \n");
   }
 
   // public string Serialize()

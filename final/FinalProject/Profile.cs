@@ -41,14 +41,14 @@ public class Profile
     {
       // Code to create a JSON file containing the user data
 
-      Console.WriteLine(
-          $"(!) New database created in the main program folder ({_databaseFilename})"
+      Utils.DisplayText(
+          $"(!) New database created in the main program folder ({_databaseFilename})\n\n"
       );
     }
     else
     {
       LoadUserData();
-      Console.WriteLine($"(!) Reading data from the existing database ({_databaseFilename})");
+      Utils.DisplayText($"(!) Reading data from the existing database ({_databaseFilename})\n\n");
     }
   }
 

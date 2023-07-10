@@ -45,7 +45,7 @@ public static class Utils
     for (int i = 0; i < textLength; i++)
     {
       Console.Write(text[i]);
-      Thread.Sleep(2);
+      Thread.Sleep(0);
     }
   }
 

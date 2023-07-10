@@ -27,7 +27,7 @@ public class Menu
     Utils.DisplayText("\nMenu Options:\n");
     foreach (KeyValuePair<string, string> option in options)
     {
-      Utils.DisplayText($"{option.Key} - {option.Value}\n");
+      Utils.DisplayText($"{option.Key} - {option.Value} \n");
     }
     Utils.DisplayText("\n> Select a choice from the menu: ");
   }
@@ -38,10 +38,10 @@ public class Menu
     _options.Add("");
   }
 
-  public static void DisplayWelcome()
+  public void DisplayWelcome()
   {
-    Utils.DisplayText("Welcome to the Meal Tracker!\n");
-    Utils.DisplayText("We have prepared a list of meals and ingredients for you to start " +
-    " planning your next meals ASAP! \n");
+    Utils.DisplayText("Welcome to the Meal Tracker! \n");
+    Utils.DisplayText("We have prepared a list of meals and ingredients for you to START " +
+    "planning your next meals ASAP! \n");
   }
 }

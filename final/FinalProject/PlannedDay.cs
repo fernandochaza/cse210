@@ -65,7 +65,7 @@ public class PlannedDay
     Console.WriteLine();
 
     // Display Date
-    Console.WriteLine($"{_date.DayOfWeek} - {_date.ToShortDateString()}");
+    Utils.DisplayText($"{_date.DayOfWeek} - {_date.ToShortDateString()} \n");
 
     // Create a new variable containing a list of the User Meals that match the PlannedDay Meals
     IEnumerable<Meal> matchingMeals = userMeals.Where(meal => _mealsID.Contains(meal.Id));
