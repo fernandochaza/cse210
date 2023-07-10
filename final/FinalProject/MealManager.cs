@@ -1,14 +1,13 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-public class MealManager : ISerializable
+public class MealManager : ISerializable, IIngredientRepository
 {
   private List<Ingredient> _userIngredients = new List<Ingredient>();
   private List<Meal> _userMeals = new List<Meal>();
 
   public void Create(Ingredient ingredient, Meal meal)
   {
-    
     _userIngredients.Add(ingredient);
     _userMeals.Add(meal);
   }
@@ -50,10 +49,37 @@ public class MealManager : ISerializable
 
   public void DisplayIngredients()
   {
+    Utils.DisplayText("User Ingredients: \n");
     foreach (Ingredient ingredient in _userIngredients)
     {
       ingredient.Display();
     }
+  }
+
+  // public Ingredient GetIngredient(int ingredientId)
+  // {
+  //   foreach (Ingredient ingredient in _userIngredients)
+  //   {
+  //     if (ingredient.Id == ingredientId)
+  //     {
+  //       return ingredient;
+  //     }
+  //   }
+
+  //   return null;
+  // }
+
+  public Ingredient GetIngredient(int ingredientId)
+  {
+    foreach (Ingredient ingredient in _userIngredients)
+    {
+        if (ingredient.Id == ingredientId)
+        {
+            return ingredient;
+        }
+    }
+
+    return null;
   }
 
   public string Serialize()

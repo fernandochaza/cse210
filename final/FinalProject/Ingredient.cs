@@ -92,7 +92,7 @@ public class Ingredient : ISerializable
   {
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
     string name = textInfo.ToTitleCase(_name);
-    Console.Write($"{name} ({_type})");
+    Utils.DisplayText($"{name} ({_type})");
   }
 
   public string Serialize()

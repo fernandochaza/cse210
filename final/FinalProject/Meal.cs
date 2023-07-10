@@ -12,10 +12,15 @@ public class Meal : ISerializable
   private string _name;
   private MealType _type;
   private List<int> _ingredientsID = new List<int>();
-
+  private readonly IIngredientRepository _ingredientRepository;
   public Meal()
   {
 
+  }
+
+  public Meal(IIngredientRepository ingredientRepository)
+  {
+      _ingredientRepository = ingredientRepository;
   }
 
   // Declare getters and setters to allow private members serialization
@@ -106,19 +111,29 @@ public class Meal : ISerializable
   public void Display()
   {
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-    string name = textInfo.ToTitleCase(_name);
+    string mealName = textInfo.ToTitleCase(_name);
+    string mealType = textInfo.ToTitleCase(_type.ToString());
 
-    string ingredients = "";
+    string ingredientsString = "";
 
-    foreach (int ingredient in _ingredientsID)
+    foreach (int id in _ingredientsID)
     {
-      ingredients += $"{ingredient.ToString()}, ";
+      Ingredient ingredient = _ingredientRepository.GetIngredient(id);
+      if (ingredient != null)
+      {
+          ingredientsString += $"{ingredient.Name}, ";
+      }    
     }
 
-    ingredients = ingredients.Substring(0, ingredients.Length - 2);
+    ingredientsString = ingredientsString.Substring(0, ingredientsString.Length - 2);
 
-    Console.WriteLine($"-> {name} ({_type}):");
-    Console.WriteLine($"Ingredients: {ingredients}");
+    Console.WriteLine($"-> ({mealType}) {mealName}:");
+    Console.WriteLine($"-> Ingredients: {ingredientsString}");
+  }
+
+  public void DisplayIngredients()
+  {
+    
   }
 
   public string Serialize()

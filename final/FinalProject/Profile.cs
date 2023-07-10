@@ -7,7 +7,27 @@ public class Profile
   private MealManager _mealManagerData;
   private Planner _plannerData;
 
-  public Profile() { }
+  /// <summary>
+  /// Check the existence of the database file. Create a new one if it doesn't exists
+  /// </summary>
+  public Profile()
+  {
+    // If the database file doesn't exists, create one
+    if (!File.Exists(_databaseFilename))
+    {
+      // Code to create a JSON file containing the user data
+
+      Console.WriteLine(
+          $"(!) New database created in the main program folder ({_databaseFilename})"
+      );
+    }
+    else
+    {
+      LoadUserData();
+      Utils.DisplayText($"(!) Reading data from the existing database ({_databaseFilename})");
+    }
+
+  }
 
   public Profile(MealManager mealManager, Planner planner) {
     _mealManagerData = mealManager;
@@ -31,30 +51,7 @@ public class Profile
     set { _plannerData = value; }
   }
 
-  /// <summary>
-  /// Check the existence of the database file. Create a new one if it doesn't exists
-  /// </summary>
-  public void InitializeDatabase()
-  {
-    // If the database file doesn't exists, create one
-    if (!File.Exists(_databaseFilename))
-    {
-      // Code to create a JSON file containing the user data
-
-      Console.WriteLine(
-          $"(!) New database created in the main program folder ({_databaseFilename})"
-      );
-    }
-    else
-    {
-      // Code to load the existing data in the database file
-
-      DeserializeUserData();
-      Console.WriteLine($"(!) Reading data from the existing database ({_databaseFilename})");
-    }
-  }
-
-  public void SerializeUserData()
+  public void SaveUserData()
   {
     var options = new JsonSerializerOptions
     {
@@ -64,28 +61,28 @@ public class Profile
 
     // Serialize the current Profile instance
     string jsonString = JsonSerializer.Serialize(this, options);
-    Console.WriteLine($"DATABASE JSON: \n {jsonString}");
 
-    // Option 1: Write the data in a file (Currently, this overrides the file)
+    // Option 1: Write the data in a file (---THIS OVERRIDES THE FILE---)
     File.WriteAllText(_databaseFilename, jsonString);
-
-    // Option 2: Return the JSONString
   }
 
-  public void DeserializeUserData()
+  /// <summary>
+  /// Read the database JSON file to create and populate instances of MealManager and Planner
+  /// </summary>
+  public void LoadUserData()
   {
-    // Read the data (Currently, this is only one planner)
+    // Read the file
     string jsonString = File.ReadAllText(_databaseFilename);
 
+    // Convert the Enums to populate Enum member variables (MealType and IngredientType)
     var options = new JsonSerializerOptions();
     options.Converters.Add(new JsonStringEnumConverter());
 
     Profile deserializedDatabase = JsonSerializer.Deserialize<Profile>(jsonString, options);
     Console.WriteLine("DESERIALIZED DATABASE: \n{deserializedDatabase}");
 
-    // Option 1: Return the Planner
-    // Return deserializedPlanner;
-
-    // Option 2: Pass the values to the current Planner
+    // Pass the data to the current instance
+    _mealManagerData = deserializedDatabase._mealManagerData;
+    _plannerData = deserializedDatabase._plannerData;
   }
 }
