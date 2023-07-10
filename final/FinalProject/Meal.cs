@@ -11,7 +11,7 @@ public class Meal : ISerializable
   private static int _lastId = 0;
   private string _name;
   private MealType _type;
-  private List<int> _ingredientsID;
+  private List<int> _ingredientsID = new List<int>();
 
   public Meal()
   {
@@ -95,6 +95,10 @@ public class Meal : ISerializable
     quantity = int.Parse(Console.ReadLine());
 
     // ------ ADD CODE TO ADD INGREDIENTS -----
+
+    meal._ingredientsID.Add(1);
+    meal._ingredientsID.Add(2);
+    meal._ingredientsID.Add(3);
 
     return meal;
   }

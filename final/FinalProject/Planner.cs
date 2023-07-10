@@ -5,6 +5,16 @@ public class Planner : ISerializable
 {
   private List<PlannedDay> _userPlan = new List<PlannedDay>();
 
+  public Planner()
+  {
+
+  }
+
+  public void AddDay(PlannedDay plannedDay)
+  {
+    _userPlan.Add(plannedDay);
+  }
+
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
 

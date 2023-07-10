@@ -9,6 +9,11 @@ public class Profile
 
   public Profile() { }
 
+  public Profile(MealManager mealManager, Planner planner) {
+    _mealManagerData = mealManager;
+    _plannerData = planner;
+   }
+
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
 
@@ -49,7 +54,7 @@ public class Profile
     }
   }
 
-  private void SerializeUserData()
+  public void SerializeUserData()
   {
     var options = new JsonSerializerOptions
     {

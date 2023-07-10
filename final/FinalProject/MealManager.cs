@@ -6,6 +6,13 @@ public class MealManager : ISerializable
   private List<Ingredient> _userIngredients = new List<Ingredient>();
   private List<Meal> _userMeals = new List<Meal>();
 
+  public void Create(Ingredient ingredient, Meal meal)
+  {
+    
+    _userIngredients.Add(ingredient);
+    _userMeals.Add(meal);
+  }
+
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
 

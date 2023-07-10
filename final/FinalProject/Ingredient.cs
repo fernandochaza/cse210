@@ -48,26 +48,12 @@ public class Ingredient : ISerializable
     }
   }
 
-    // Define custom ingredient types
+  // Define custom ingredient types
   public enum IngredientType
   {
     Main,
     Seasoning
   }
-
-  /// <summary>
-  /// Constructor used when deserializing the object???
-  /// </summary>
-  /// <param name="id"></param>
-  /// <param name="name"></param>
-  /// <param name="type"></param>
-  // public Ingredient(int id, string name, IngredientType type)
-  // {
-  //   _id = id;
-  //   _lastId = id;
-  //   _name = name;
-  //   _type = type;
-  // }
 
   /// <summary>
   /// Instantiate a Ingredient, populate its data from the user input and return it
@@ -99,11 +85,14 @@ public class Ingredient : ISerializable
     return ingredient;
   }
 
+  /// <summary>
+  /// Displays the ingredient in the format "Name (type). It doesn't includes new line."
+  /// </summary>
   public void Display()
   {
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
     string name = textInfo.ToTitleCase(_name);
-    Console.WriteLine($"{name}({_type})");
+    Console.Write($"{name} ({_type})");
   }
 
   public string Serialize()
@@ -148,14 +137,5 @@ public class Ingredient : ISerializable
   private static int GetNextId()
   {
     return ++_lastId;
-  }
-
-  // String for testing purposes
-  public override string ToString()
-  {
-    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-    string name = textInfo.ToTitleCase(_name);
-    string ingredient = $"{name} ({_type})";
-    return ingredient;
   }
 }

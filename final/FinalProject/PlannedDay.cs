@@ -5,7 +5,7 @@ public class PlannedDay : ISerializable
 {
   private DateTime _date;
   // private Meal _plannedMeal;  //This should be an ID referencing to a Meal
-  private List<int> _MealsID;  //This should be an ID referencing to a Meal
+  private List<int> _MealsID = new List<int>();  //This should be an ID referencing to a Meal
   private bool _isCompleted;
   private bool _isSkipped;
 
@@ -40,13 +40,20 @@ public class PlannedDay : ISerializable
     set { _isSkipped = value; }
   }
 
-  public static PlannedDay Create(Meal meal)
+  public static PlannedDay Create()
   {
     PlannedDay plannedDay = new PlannedDay();
-    DateTime today = new DateTime();
 
-    plannedDay._date = today.Date;
-    plannedDay._MealsID.Add(1);
+    int day = Utils.GetUserInt("Day: ");
+    int month = Utils.GetUserInt("Month: ");
+    int currentYear = DateTime.Today.Year;
+
+    DateTime date = new DateTime(currentYear, month, day);
+
+    int meal = 1;
+
+    plannedDay._date = date;
+    plannedDay._MealsID.Add(meal);
     plannedDay._isCompleted = false;
     plannedDay._isSkipped = false;
     
