@@ -2,25 +2,17 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-/// <summary>
-/// 
-/// </summary>
-public class Meal : ISerializable
+public class Meal
 {
   private int _id;
   private static int _lastId = 0;
   private string _name;
   private MealType _type;
   private List<int> _ingredientsID = new List<int>();
-  private readonly IIngredientRepository _ingredientRepository;
+
   public Meal()
   {
 
-  }
-
-  public Meal(IIngredientRepository ingredientRepository)
-  {
-      _ingredientRepository = ingredientRepository;
   }
 
   // Declare getters and setters to allow private members serialization
@@ -108,27 +100,16 @@ public class Meal : ISerializable
     return meal;
   }
 
+  /// <summary>
+  /// Display the Meal in the format "(Type) Meal Name"
+  /// </summary>
   public void Display()
   {
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
     string mealName = textInfo.ToTitleCase(_name);
     string mealType = textInfo.ToTitleCase(_type.ToString());
 
-    string ingredientsString = "";
-
-    foreach (int id in _ingredientsID)
-    {
-      Ingredient ingredient = _ingredientRepository.GetIngredient(id);
-      if (ingredient != null)
-      {
-          ingredientsString += $"{ingredient.Name}, ";
-      }    
-    }
-
-    ingredientsString = ingredientsString.Substring(0, ingredientsString.Length - 2);
-
-    Console.WriteLine($"-> ({mealType}) {mealName}:");
-    Console.WriteLine($"-> Ingredients: {ingredientsString}");
+    Console.WriteLine($"({mealType}) {mealName}");
   }
 
   public void DisplayIngredients()
@@ -136,45 +117,38 @@ public class Meal : ISerializable
     
   }
 
-  public string Serialize()
-  {
-    var options = new JsonSerializerOptions
-    {
-      // Add indentation to the json data
-      WriteIndented = true
-    };
+  // public string Serialize()
+  // {
+  //   var options = new JsonSerializerOptions
+  //   {
+  //     // Add indentation to the json data
+  //     WriteIndented = true
+  //   };
 
-    // Serialize the current Meal instance
-    string jsonString = JsonSerializer.Serialize(this, options);
-    Console.WriteLine($"MEAL JSON: \n {jsonString}");
+  //   // Serialize the current Meal instance
+  //   string jsonString = JsonSerializer.Serialize(this, options);
+  //   Console.WriteLine($"MEAL JSON: \n {jsonString}");
 
-    // Option 1: Write the data in a file (Currently, this overrides the file)
-    // File.WriteAllText("meal.json", jsonString);
+  //   // Option 1: Write the data in a file (Currently, this overrides the file)
+  //   // File.WriteAllText("meal.json", jsonString);
 
-    // Option 2: Return the JSONString
-    return jsonString;
-  }
+  //   // Option 2: Return the JSONString
+  //   return jsonString;
+  // }
 
-  public void Deserialize()
-  {
-    // Read the data (Currently, this is only one Meal)
-    string jsonString = File.ReadAllText("meal.json");
+  // public void Deserialize()
+  // {
+  //   // Read the data (Currently, this is only one Meal)
+  //   string jsonString = File.ReadAllText("meal.json");
 
-    var options = new JsonSerializerOptions();
-    options.Converters.Add(new JsonStringEnumConverter());
+  //   var options = new JsonSerializerOptions();
+  //   options.Converters.Add(new JsonStringEnumConverter());
 
-    Meal deserializedMeal = JsonSerializer.Deserialize<Meal>(jsonString, options);
+  //   Meal deserializedMeal = JsonSerializer.Deserialize<Meal>(jsonString, options);
 
-    Console.WriteLine($"DESERIALIZED MEAL: \n ${deserializedMeal.ToString()}");
+  //   Console.WriteLine($"DESERIALIZED MEAL: \n ${deserializedMeal.ToString()}");
 
-    // Option 1: Return the Ingredient
-    // Return deserializedIngredient;
-
-    // Option 2: Pass the values to the current Ingredient
-    // _id = deserializedIngredient._id;
-    // _name = deserializedIngredient._name;
-    // _type = deserializedIngredient._type;
-  }
+  // }
 
   private static int GetNextId()
   {

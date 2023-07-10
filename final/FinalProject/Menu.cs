@@ -41,5 +41,7 @@ public class Menu
   public static void DisplayWelcome()
   {
     Utils.DisplayText("Welcome to the Meal Tracker!\n");
+    Utils.DisplayText("We have prepared a list of meals and ingredients for you to start " +
+    " planning your next meals ASAP! \n");
   }
 }

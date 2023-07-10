@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 /// <summary>
 /// Represents a unique ingredient with its name and type
 /// </summary>
-public class Ingredient : ISerializable
+public class Ingredient
 {
   private int _id;
   private static int _lastId = 0;
@@ -86,53 +86,45 @@ public class Ingredient : ISerializable
   }
 
   /// <summary>
-  /// Displays the ingredient in the format "Name (type). It doesn't includes new line."
+  /// Displays the ingredient in the format "Name (type)"
   /// </summary>
   public void Display()
   {
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
     string name = textInfo.ToTitleCase(_name);
-    Utils.DisplayText($"{name} ({_type})");
+    Console.WriteLine($"{name} ({_type})");
   }
 
-  public string Serialize()
-  {
-    var options = new JsonSerializerOptions
-    {
-      // Add indentation to the json data
-      WriteIndented = true
-    };
+  // public string Serialize()
+  // {
+  //   var options = new JsonSerializerOptions
+  //   {
+  //     // Add indentation to the json data
+  //     WriteIndented = true
+  //   };
 
-    // Serialize the current Ingredient instance
-    string jsonString = JsonSerializer.Serialize(this, options);
-    Console.WriteLine($"INGREDIENT JSON: \n {jsonString}");
+  //   // Serialize the current Ingredient instance
+  //   string jsonString = JsonSerializer.Serialize(this, options);
+  //   Console.WriteLine($"INGREDIENT JSON: \n {jsonString}");
 
-    // Option 1: Write the data in a file (Currently, this overrides the file)
-    // File.WriteAllText("ingredient.json", jsonString);
+  //   // Option 1: Write the data in a file (Currently, this overrides the file)
+  //   // File.WriteAllText("ingredient.json", jsonString);
 
-    // Option 2: Return the JSONString
-    return jsonString;
-  }
+  //   // Option 2: Return the JSONString
+  //   return jsonString;
+  // }
 
-  public void Deserialize()
-  {
-    // Read the data (Currently, this is only one Ingredient)
-    string jsonString = File.ReadAllText("ingredient.json");
+  // public void Deserialize()
+  // {
+  //   // Read the data (Currently, this is only one Ingredient)
+  //   string jsonString = File.ReadAllText("ingredient.json");
 
-    var options = new JsonSerializerOptions();
-    options.Converters.Add(new JsonStringEnumConverter());
+  //   var options = new JsonSerializerOptions();
+  //   options.Converters.Add(new JsonStringEnumConverter());
 
-    Ingredient deserializedIngredient = JsonSerializer.Deserialize<Ingredient>(jsonString, options);
+  //   Ingredient deserializedIngredient = JsonSerializer.Deserialize<Ingredient>(jsonString, options);
 
-    // Option 1: Return the Ingredient
-    // Return deserializedIngredient;
-
-    // Option 2: Pass the values to the current Ingredient
-    // _id = deserializedIngredient._id;
-    // _name = deserializedIngredient._name;
-    // _type = deserializedIngredient._type;
-
-  }
+  // }
 
   private static int GetNextId()
   {

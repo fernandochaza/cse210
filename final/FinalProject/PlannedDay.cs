@@ -1,11 +1,11 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-public class PlannedDay : ISerializable
+public class PlannedDay
 {
   private DateTime _date;
   // private Meal _plannedMeal;  //This should be an ID referencing to a Meal
-  private List<int> _MealsID = new List<int>();  //This should be an ID referencing to a Meal
+  private List<int> _mealsID = new List<int>();  //This should be an ID referencing to a Meal
   private bool _isCompleted;
   private bool _isSkipped;
 
@@ -22,8 +22,8 @@ public class PlannedDay : ISerializable
   [JsonPropertyName("meals-id")]
   public List<int> MealIDs
   {
-    get { return _MealsID; }
-    set { _MealsID = value; }
+    get { return _mealsID; }
+    set { _mealsID = value; }
   }
 
   [JsonPropertyName("completed")]
@@ -53,49 +53,66 @@ public class PlannedDay : ISerializable
     int meal = 1;
 
     plannedDay._date = date;
-    plannedDay._MealsID.Add(meal);
+    plannedDay._mealsID.Add(meal);
     plannedDay._isCompleted = false;
     plannedDay._isSkipped = false;
     
     return plannedDay;
   }
 
-  // Declare getters and setters to allow private members serialization
-  // Use JsonPropertyName to define a key name for the Json file
-
-  public string Serialize()
+  public void Display(List<Meal> userMeals)
   {
-    var options = new JsonSerializerOptions
+    Console.WriteLine();
+
+    // Display Date
+    Console.WriteLine($"{_date.DayOfWeek} - {_date.ToShortDateString()}");
+
+    // Create a new variable containing a list of the User Meals that match the PlannedDay Meals
+    IEnumerable<Meal> matchingMeals = userMeals.Where(meal => _mealsID.Contains(meal.Id));
+
+    // Display the Matching Meals
+    foreach (Meal matchingMeal in matchingMeals)
     {
-      // Add indentation to the json data
-      WriteIndented = true
-    };
+        matchingMeal.Display();
+    }
 
-    // Serialize the current Planned Day instance
-    string jsonString = JsonSerializer.Serialize(this, options);
-    Console.WriteLine($"PLANNED DAY JSON: \n {jsonString}");
-
-    // Option 1: Write the data in a file (Currently, this overrides the file)
-    File.WriteAllText("planned-day.json", jsonString);
-
-    // Option 2: Return the JSONString
-    return jsonString;
+    Console.WriteLine(_isCompleted);
+    Console.WriteLine(IsSkipped);
   }
 
-  public void Deserialize()
-  {
-    // Read the data (Currently, this is only one planned day)
-    string jsonString = File.ReadAllText("planned-day.json");
+  // public string Serialize()
+  // {
+  //   var options = new JsonSerializerOptions
+  //   {
+  //     // Add indentation to the json data
+  //     WriteIndented = true
+  //   };
 
-    var options = new JsonSerializerOptions();
-    options.Converters.Add(new JsonStringEnumConverter());
+  //   // Serialize the current Planned Day instance
+  //   string jsonString = JsonSerializer.Serialize(this, options);
+  //   Console.WriteLine($"PLANNED DAY JSON: \n {jsonString}");
 
-    PlannedDay deserializedPlannedDay = JsonSerializer.Deserialize<PlannedDay>(jsonString, options);
+  //   // Option 1: Write the data in a file (Currently, this overrides the file)
+  //   File.WriteAllText("planned-day.json", jsonString);
 
-    // Option 1: Return the PlannedDay
-    // Return deserializedPlannedDay;
+  //   // Option 2: Return the JSONString
+  //   return jsonString;
+  // }
 
-    // Option 2: Pass the values to the current PlannedDay
+  // public void Deserialize()
+  // {
+  //   // Read the data (Currently, this is only one planned day)
+  //   string jsonString = File.ReadAllText("planned-day.json");
 
-  }
+  //   var options = new JsonSerializerOptions();
+  //   options.Converters.Add(new JsonStringEnumConverter());
+
+  //   PlannedDay deserializedPlannedDay = JsonSerializer.Deserialize<PlannedDay>(jsonString, options);
+
+  //   // Option 1: Return the PlannedDay
+  //   // Return deserializedPlannedDay;
+
+  //   // Option 2: Pass the values to the current PlannedDay
+
+  // }
 }

@@ -7,27 +7,7 @@ public class Profile
   private MealManager _mealManagerData;
   private Planner _plannerData;
 
-  /// <summary>
-  /// Check the existence of the database file. Create a new one if it doesn't exists
-  /// </summary>
-  public Profile()
-  {
-    // If the database file doesn't exists, create one
-    if (!File.Exists(_databaseFilename))
-    {
-      // Code to create a JSON file containing the user data
-
-      Console.WriteLine(
-          $"(!) New database created in the main program folder ({_databaseFilename})"
-      );
-    }
-    else
-    {
-      LoadUserData();
-      Utils.DisplayText($"(!) Reading data from the existing database ({_databaseFilename})");
-    }
-
-  }
+  public Profile() { }
 
   public Profile(MealManager mealManager, Planner planner) {
     _mealManagerData = mealManager;
@@ -49,6 +29,27 @@ public class Profile
   {
     get { return _plannerData; }
     set { _plannerData = value; }
+  }
+
+  /// <summary>
+  /// Check the existence of the database file. Create a new one if it doesn't exists
+  /// </summary>
+  public void InitializeProgram()
+  {
+    // If the database file doesn't exists, create one
+    if (!File.Exists(_databaseFilename))
+    {
+      // Code to create a JSON file containing the user data
+
+      Console.WriteLine(
+          $"(!) New database created in the main program folder ({_databaseFilename})"
+      );
+    }
+    else
+    {
+      LoadUserData();
+      Console.WriteLine($"(!) Reading data from the existing database ({_databaseFilename})");
+    }
   }
 
   public void SaveUserData()
@@ -79,7 +80,6 @@ public class Profile
     options.Converters.Add(new JsonStringEnumConverter());
 
     Profile deserializedDatabase = JsonSerializer.Deserialize<Profile>(jsonString, options);
-    Console.WriteLine("DESERIALIZED DATABASE: \n{deserializedDatabase}");
 
     // Pass the data to the current instance
     _mealManagerData = deserializedDatabase._mealManagerData;

@@ -5,6 +5,12 @@ class Program
   static void Main(string[] args)
   {
     Profile userProfile = new Profile();
+    userProfile.InitializeProgram();
+
+    userProfile.MealsData.DisplayMeals();
+    userProfile.MealsData.DisplayIngredients();
+
+    userProfile.PlannerData.DisplayPlan(userProfile.MealsData.Meals);
   }
 
   private static int HandleOptions(List<string> options)

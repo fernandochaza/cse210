@@ -1,18 +1,13 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-public class Planner : ISerializable
+public class Planner
 {
   private List<PlannedDay> _userPlan = new List<PlannedDay>();
 
   public Planner()
   {
 
-  }
-
-  public void AddDay(PlannedDay plannedDay)
-  {
-    _userPlan.Add(plannedDay);
   }
 
   // Declare getters and setters to allow private members serialization
@@ -25,38 +20,51 @@ public class Planner : ISerializable
     set { _userPlan = value; }
   }
 
-  public string Serialize()
+  public void AddDay(PlannedDay plannedDay)
   {
-    var options = new JsonSerializerOptions
+    _userPlan.Add(plannedDay);
+  }
+
+  public void DisplayPlan(List<Meal> userMeals)
+  {
+    foreach (PlannedDay plannedDay in _userPlan)
     {
-      // Add indentation to the json data
-      WriteIndented = true
-    };
-
-    // Serialize the current Planner instance
-    string jsonString = JsonSerializer.Serialize(this, options);
-    Console.WriteLine($"PLANNER JSON: \n {jsonString}");
-
-    // Option 1: Write the data in a file (Currently, this overrides the file)
-    File.WriteAllText("planner.json", jsonString);
-
-    // Option 2: Return the JSONString
-    return jsonString;
+      plannedDay.Display(userMeals);
+    }
   }
 
-  public void Deserialize()
-  {
-    // Read the data (Currently, this is only one planner)
-    string jsonString = File.ReadAllText("planner.json");
+  // public string Serialize()
+  // {
+  //   var options = new JsonSerializerOptions
+  //   {
+  //     // Add indentation to the json data
+  //     WriteIndented = true
+  //   };
 
-    var options = new JsonSerializerOptions();
-    options.Converters.Add(new JsonStringEnumConverter());
+  //   // Serialize the current Planner instance
+  //   string jsonString = JsonSerializer.Serialize(this, options);
+  //   Console.WriteLine($"PLANNER JSON: \n {jsonString}");
 
-    Planner deserializedPlanner = JsonSerializer.Deserialize<Planner>(jsonString, options);
+  //   // Option 1: Write the data in a file (Currently, this overrides the file)
+  //   File.WriteAllText("planner.json", jsonString);
 
-    // Option 1: Return the Planner
-    // Return deserializedPlanner;
+  //   // Option 2: Return the JSONString
+  //   return jsonString;
+  // }
 
-    // Option 2: Pass the values to the current Planner
-  }
+  // public void Deserialize()
+  // {
+  //   // Read the data (Currently, this is only one planner)
+  //   string jsonString = File.ReadAllText("planner.json");
+
+  //   var options = new JsonSerializerOptions();
+  //   options.Converters.Add(new JsonStringEnumConverter());
+
+  //   Planner deserializedPlanner = JsonSerializer.Deserialize<Planner>(jsonString, options);
+
+  //   // Option 1: Return the Planner
+  //   // Return deserializedPlanner;
+
+  //   // Option 2: Pass the values to the current Planner
+  // }
 }

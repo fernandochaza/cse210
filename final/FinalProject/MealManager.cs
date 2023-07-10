@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-public class MealManager : ISerializable, IIngredientRepository
+public class MealManager
 {
   private List<Ingredient> _userIngredients = new List<Ingredient>();
   private List<Meal> _userMeals = new List<Meal>();
@@ -39,35 +39,29 @@ public class MealManager : ISerializable, IIngredientRepository
     _userIngredients.Add(ingredient);
   }
 
+  /// <summary>
+  /// Display a list of all the user Meals in the format "(Type) Meal Name"
+  /// </summary>
   public void DisplayMeals()
   {
+    Console.WriteLine("\n");
     foreach (Meal meal in _userMeals)
     {
       meal.Display();
     }
   }
 
+  /// <summary>
+  /// Displays a list of all the user ingredients in the format "Name (type)"
+  /// </summary>
   public void DisplayIngredients()
   {
-    Utils.DisplayText("User Ingredients: \n");
+    Console.WriteLine("\n");
     foreach (Ingredient ingredient in _userIngredients)
     {
       ingredient.Display();
     }
   }
-
-  // public Ingredient GetIngredient(int ingredientId)
-  // {
-  //   foreach (Ingredient ingredient in _userIngredients)
-  //   {
-  //     if (ingredient.Id == ingredientId)
-  //     {
-  //       return ingredient;
-  //     }
-  //   }
-
-  //   return null;
-  // }
 
   public Ingredient GetIngredient(int ingredientId)
   {
@@ -82,38 +76,38 @@ public class MealManager : ISerializable, IIngredientRepository
     return null;
   }
 
-  public string Serialize()
-  {
-    var options = new JsonSerializerOptions
-    {
-      // Add indentation to the json data
-      WriteIndented = true
-    };
+  // public string Serialize()
+  // {
+  //   var options = new JsonSerializerOptions
+  //   {
+  //     // Add indentation to the json data
+  //     WriteIndented = true
+  //   };
 
-    // Serialize the current MealManager instance
-    string jsonString = JsonSerializer.Serialize(this, options);
-    Console.WriteLine($"MEAL MANAGER JSON: \n {jsonString}");
+  //   // Serialize the current MealManager instance
+  //   string jsonString = JsonSerializer.Serialize(this, options);
+  //   Console.WriteLine($"MEAL MANAGER JSON: \n {jsonString}");
 
-    // Option 1: Write the data in a file (Currently, this overrides the file)
-    File.WriteAllText("meal-manager.json", jsonString);
+  //   // Option 1: Write the data in a file (Currently, this overrides the file)
+  //   File.WriteAllText("meal-manager.json", jsonString);
 
-    // Option 2: Return the JSONString
-    return jsonString;
-  }
+  //   // Option 2: Return the JSONString
+  //   return jsonString;
+  // }
 
-  public void Deserialize()
-  {
-    // Read the data (Currently, this is only one meal-manager)
-    string jsonString = File.ReadAllText("meal-manager.json");
+  // public void Deserialize()
+  // {
+  //   // Read the data (Currently, this is only one meal-manager)
+  //   string jsonString = File.ReadAllText("meal-manager.json");
 
-    var options = new JsonSerializerOptions();
-    options.Converters.Add(new JsonStringEnumConverter());
+  //   var options = new JsonSerializerOptions();
+  //   options.Converters.Add(new JsonStringEnumConverter());
 
-    MealManager deserializedMealManager = JsonSerializer.Deserialize<MealManager>(jsonString, options);
+  //   MealManager deserializedMealManager = JsonSerializer.Deserialize<MealManager>(jsonString, options);
 
-    // Option 1: Return the MealManager
-    // Return deserializedMealManager;
+  //   // Option 1: Return the MealManager
+  //   // Return deserializedMealManager;
 
-    // Option 2: Pass the values to the current MealManager
-  }
+  //   // Option 2: Pass the values to the current MealManager
+  // }
 }
