@@ -58,4 +58,45 @@ public static class Utils
     Console.ReadLine();
     Console.Clear();
   }
+
+  public static int HandleOptions(Dictionary<int, string> options)
+  {
+    ConsoleKeyInfo keyInfo;
+
+    int[] keys = options.Keys.ToArray();
+    int selectedIndex = keys[0];
+
+    Console.WriteLine("Select an option:\n");
+
+    do
+    {
+      Console.Clear();
+      foreach (int key in keys)
+      {
+          if (key == selectedIndex)
+              Console.Write("-> ");
+          else
+              Console.Write("   ");
+
+          Console.WriteLine(options[key]);
+      }
+
+      keyInfo = Console.ReadKey();
+
+      if (keyInfo.Key == ConsoleKey.UpArrow)
+      {
+          selectedIndex = Math.Max(0, selectedIndex - 1);
+      }
+      else if (keyInfo.Key == ConsoleKey.DownArrow)
+      {
+          selectedIndex = Math.Min(options.Count - 1, selectedIndex + 1);
+      }
+
+    } while (keyInfo.Key != ConsoleKey.Enter || selectedIndex == options.Count - 1);
+
+
+    // Procesar la opción seleccionada (options[selectedIndex])
+    return selectedIndex;
+  }
+
 }

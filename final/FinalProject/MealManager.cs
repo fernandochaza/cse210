@@ -76,6 +76,44 @@ public class MealManager
     return null;
   }
 
+  public Meal GetMeal(int mealId)
+  {
+    foreach (Meal meal in _userMeals)
+    {
+        if (meal.Id == mealId)
+        {
+            return meal;
+        }
+    }
+
+    return null;
+  }
+
+  public List<string> ListMeals()
+  {
+    List<string> meals = new List<string>();
+    foreach (Meal meal in _userMeals)
+    {
+      string stringMeal = $"({meal.Type}) {meal.Name}";
+      meals.Add(stringMeal);
+    }
+
+    return meals;
+  }
+
+  public Dictionary<int, string> GetMealIdAndString()
+  {
+    Dictionary<int, string> meals = new Dictionary<int, string>();
+    foreach (Meal meal in _userMeals)
+    {
+      int mealId = meal.Id;
+      string stringMeal = $"({meal.Type}) {meal.Name}";
+      meals[mealId] = stringMeal;
+    }
+
+    return meals;
+  }
+
   // public string Serialize()
   // {
   //   var options = new JsonSerializerOptions

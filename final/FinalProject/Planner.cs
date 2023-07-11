@@ -33,6 +33,13 @@ public class Planner
     }
   }
 
+  public void PlanMeal(Dictionary<int, string> userMeals, List<Ingredient> userIngredients)
+  {
+    PlannedDay plannedDay = new PlannedDay();
+    plannedDay.Create(userMeals);
+    _userPlan.Add(plannedDay);
+  }
+
   // public string Serialize()
   // {
   //   var options = new JsonSerializerOptions

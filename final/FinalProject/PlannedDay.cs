@@ -40,17 +40,18 @@ public class PlannedDay
     set { _isSkipped = value; }
   }
 
-  public static PlannedDay Create()
+  public PlannedDay Create(Dictionary<int, string> userMeals)
   {
     PlannedDay plannedDay = new PlannedDay();
 
-    int day = Utils.GetUserInt("Day: ");
-    int month = Utils.GetUserInt("Month: ");
+    int day = Utils.GetUserInt("Insert the day number: ");
+    int month = Utils.GetUserInt("Insert the month number: ");
     int currentYear = DateTime.Today.Year;
 
     DateTime date = new DateTime(currentYear, month, day);
 
-    int meal = 1;
+    Utils.DisplayText("Select a meal: ");
+    int meal = Utils.HandleOptions(userMeals);
 
     plannedDay._date = date;
     plannedDay._mealsID.Add(meal);
