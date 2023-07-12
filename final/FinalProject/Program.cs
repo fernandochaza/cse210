@@ -16,23 +16,18 @@ class Program
     Menu menu = new Menu();
     menu.DisplayWelcome();
 
-    var mainMeals = mealsData.GenerateMainMealsDictionary();
+    var userMeals = mealsData.GenerateMainMealsDictionary();
     var sideDishes = mealsData.GenerateSideDishDictionary();
 
-    plannerData.PlanMeal(mainMeals, sideDishes);
+    plannerData.PlanMeal(userMeals, sideDishes);
 
-    int newId = userProfile.MealsData.GetNewMealId();
-    Console.WriteLine($"NEW ID: {newId}");
-
-
-    mealsData.DisplayMeals();
-    mealsData.DisplayIngredients();
-
-    plannerData.DisplayPlan(userProfile.MealsData.Meals);
-
-    // Console.WriteLine("¨COntinue with serialization...");
-    // Console.ReadLine();
 
     // userProfile.SaveUserData();
   }
 }
+
+
+// ------ PENDING ------- //
+// Add a message to inform keyboard usage
+// Make Esc the default key to go back
+// Arrow up and down navigation

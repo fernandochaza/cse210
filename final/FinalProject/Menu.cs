@@ -40,7 +40,7 @@ public class Menu
 
   public void DisplayWelcome()
   {
-    Utils.TextAnimation("Welcome to the Meal Tracker! \n");
+    Utils.TextAnimation("Welcome to the Meal Tracker! \n\n");
     Utils.TextAnimation("We have prepared a list of meals and ingredients for you to START " +
     "planning your next meals ASAP! \n");
   }

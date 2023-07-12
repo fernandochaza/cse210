@@ -108,7 +108,7 @@ public static class Utils
     return keysList[keyIndex];
   }
 
-  public static int GetSelectedIndexFromList(string prompt, List<string> options)
+  public static int? GetSelectedIndexFromList(string prompt, List<string> options)
   {
     ConsoleKeyInfo keyInfo;
     int selectedIndex = 0;
@@ -143,6 +143,10 @@ public static class Utils
       else if (keyInfo.Key == ConsoleKey.DownArrow)
       {
         selectedIndex = (selectedIndex + 1) % options.Count;
+      }
+      else if (keyInfo.Key == ConsoleKey.Escape)
+      {
+        return null;
       }
 
     } while (keyInfo.Key != ConsoleKey.Enter);

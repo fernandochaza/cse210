@@ -31,16 +31,15 @@ public class PlannedDay
     List<string> options = new List<string>();
     options.Add("Yes");
     options.Add("No");
-    options.Add("(!) Cancel");
 
-    int selectedOptionIndex = Utils.GetSelectedIndexFromList(prompt, options);
+    int? selectedOptionIndex = Utils.GetSelectedIndexFromList(prompt, options);
 
-    string includesSideDish = options[selectedOptionIndex];
-
-    if (includesSideDish == "(!) Cancel")
+    if (selectedOptionIndex == null)
     {
-      return;
+      return; // Exit the method if Escape was pressed
     }
+
+    string includesSideDish = options[selectedOptionIndex.Value];
 
     Utils.TextAnimation("Select a meal: ");
     int meal = Utils.GetSelectedKeyFromDict(userMeals);
