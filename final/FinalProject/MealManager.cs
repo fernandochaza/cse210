@@ -39,6 +39,45 @@ public class MealManager
     _userIngredients.Add(ingredient);
   }
 
+  public void AddIngredient()
+  {
+
+  }
+
+  public int GetNewIngredientId()
+  {
+    int newId = 1;
+    
+    foreach (Ingredient ingredient in _userIngredients)
+    {
+      if (ingredient.Id > newId)
+      {
+        newId = ingredient.Id;
+      } 
+    }
+
+    newId++;
+
+    return newId;
+  }
+
+  public int GetNewMealId()
+  {
+    int newId = 1;
+
+    foreach (Meal meal in _userMeals)
+    {
+      if (meal.Id > newId)
+      {
+        newId = meal.Id;
+      } 
+    }
+
+    newId++;
+
+    return newId;
+  }
+
   /// <summary>
   /// Display a list of all the user Meals in the format "(Type) Meal Name"
   /// </summary>
@@ -86,7 +125,7 @@ public class MealManager
   /// </summary>
   /// <param name="mealId">The meal ID from the database</param>
   /// <returns>Returns a Meal instance or NULL if the are no matching IDs</returns>
-  public Meal GetMeal(int mealId)
+  public Meal GetMealById(int mealId)
   {
     foreach (Meal meal in _userMeals)
     {

@@ -8,20 +8,27 @@ class Program
     Profile userProfile = new Profile();
     userProfile.InitializeProgram();
 
+    // Create references to the data to simplify access
+    MealManager mealsData = userProfile.MealsData;
+    Planner plannerData = userProfile.PlannerData;
+
     // Instantiate the Menu and Display welcome
     Menu menu = new Menu();
     menu.DisplayWelcome();
 
-    var mainMeals = userProfile.MealsData.GenerateMainMealsDictionary();
-    var sideDishes = userProfile.MealsData.GenerateSideDishDictionary();
+    var mainMeals = mealsData.GenerateMainMealsDictionary();
+    var sideDishes = mealsData.GenerateSideDishDictionary();
 
-    userProfile.PlannerData.PlanMeal(mainMeals, sideDishes);
+    plannerData.PlanMeal(mainMeals, sideDishes);
+
+    int newId = userProfile.MealsData.GetNewMealId();
+    Console.WriteLine($"NEW ID: {newId}");
 
 
-    // userProfile.MealsData.DisplayMeals();
-    // userProfile.MealsData.DisplayIngredients();
+    mealsData.DisplayMeals();
+    mealsData.DisplayIngredients();
 
-    userProfile.PlannerData.DisplayPlan(userProfile.MealsData.Meals);
+    plannerData.DisplayPlan(userProfile.MealsData.Meals);
 
     // Console.WriteLine("¨COntinue with serialization...");
     // Console.ReadLine();
