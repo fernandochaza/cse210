@@ -9,6 +9,55 @@ public class PlannedDay
   private bool _isCompleted;
   private bool _isSkipped;
 
+  [JsonConstructor]
+  public PlannedDay()
+  {
+
+  }
+
+  /// <summary>
+  /// Instantiate a new PlannedDay from the user input
+  /// </summary>
+  /// <param name="userMeals"></param>
+  public PlannedDay(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
+  {
+    int day = Utils.GetUserInt("Insert the day number: ");
+    int month = Utils.GetUserInt("Insert the month number: ");
+    int currentYear = DateTime.Today.Year;
+    DateTime date = new DateTime(currentYear, month, day);
+
+    string prompt = "Do you want to include a Side Dish?";
+
+    List<string> options = new List<string>();
+    options.Add("Yes");
+    options.Add("No");
+    options.Add("(!) Cancel");
+
+    int selectedOptionIndex = Utils.GetSelectedIndexFromList(prompt, options);
+
+    string includesSideDish = options[selectedOptionIndex];
+
+    if (includesSideDish == "(!) Cancel")
+    {
+      return;
+    }
+
+    Utils.TextAnimation("Select a meal: ");
+    int meal = Utils.GetSelectedKeyFromDict(userMeals);
+    _mealsID.Add(meal);
+
+    if (includesSideDish == "Yes")
+    {
+      Utils.TextAnimation("Select a Side Dish: ");
+      int sideDish = Utils.GetSelectedKeyFromDict(userSideDishes);
+      _mealsID.Add(sideDish);
+    }
+
+    _date = date;
+    _isCompleted = false;
+    _isSkipped = false;
+  }
+
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
 
@@ -40,33 +89,12 @@ public class PlannedDay
     set { _isSkipped = value; }
   }
 
-  public PlannedDay Create(Dictionary<int, string> userMeals)
-  {
-    PlannedDay plannedDay = new PlannedDay();
-
-    int day = Utils.GetUserInt("Insert the day number: ");
-    int month = Utils.GetUserInt("Insert the month number: ");
-    int currentYear = DateTime.Today.Year;
-
-    DateTime date = new DateTime(currentYear, month, day);
-
-    Utils.DisplayText("Select a meal: ");
-    int meal = Utils.HandleOptions(userMeals);
-
-    plannedDay._date = date;
-    plannedDay._mealsID.Add(meal);
-    plannedDay._isCompleted = false;
-    plannedDay._isSkipped = false;
-    
-    return plannedDay;
-  }
-
   public void Display(List<Meal> userMeals)
   {
     Console.WriteLine();
 
     // Display Date
-    Utils.DisplayText($"{_date.DayOfWeek} - {_date.ToShortDateString()} \n");
+    Utils.TextAnimation($"{_date.DayOfWeek} - {_date.ToShortDateString()} \n");
 
     // Create a new variable containing a list of the User Meals that match the PlannedDay Meals
     IEnumerable<Meal> matchingMeals = userMeals.Where(meal => _mealsID.Contains(meal.Id));
@@ -74,7 +102,7 @@ public class PlannedDay
     // Display the Matching Meals
     foreach (Meal matchingMeal in matchingMeals)
     {
-        matchingMeal.Display();
+      matchingMeal.Display();
     }
 
     Console.WriteLine(_isCompleted);

@@ -12,13 +12,16 @@ class Program
     Menu menu = new Menu();
     menu.DisplayWelcome();
 
-    userProfile.PlannerData.PlanMeal(userProfile.MealsData.GetMealIdAndString(), userProfile.MealsData.Ingredients);
-    
+    var mainMeals = userProfile.MealsData.GenerateMainMealsDictionary();
+    var sideDishes = userProfile.MealsData.GenerateSideDishDictionary();
+
+    userProfile.PlannerData.PlanMeal(mainMeals, sideDishes);
+
 
     // userProfile.MealsData.DisplayMeals();
     // userProfile.MealsData.DisplayIngredients();
 
-    // userProfile.PlannerData.DisplayPlan(userProfile.MealsData.Meals);
+    userProfile.PlannerData.DisplayPlan(userProfile.MealsData.Meals);
 
     // Console.WriteLine("¨COntinue with serialization...");
     // Console.ReadLine();

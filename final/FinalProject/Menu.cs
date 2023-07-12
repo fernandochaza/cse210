@@ -24,12 +24,12 @@ public class Menu
   /// </summary>
   public void DisplayOptions(Dictionary<string, string> options)
   {
-    Utils.DisplayText("\nMenu Options:\n");
+    Utils.TextAnimation("\nMenu Options:\n");
     foreach (KeyValuePair<string, string> option in options)
     {
-      Utils.DisplayText($"{option.Key} - {option.Value} \n");
+      Utils.TextAnimation($"{option.Key} - {option.Value} \n");
     }
-    Utils.DisplayText("\n> Select a choice from the menu: ");
+    Utils.TextAnimation("\n> Select a choice from the menu: ");
   }
 
   public void DisplayOptions()
@@ -40,8 +40,8 @@ public class Menu
 
   public void DisplayWelcome()
   {
-    Utils.DisplayText("Welcome to the Meal Tracker! \n");
-    Utils.DisplayText("We have prepared a list of meals and ingredients for you to START " +
+    Utils.TextAnimation("Welcome to the Meal Tracker! \n");
+    Utils.TextAnimation("We have prepared a list of meals and ingredients for you to START " +
     "planning your next meals ASAP! \n");
   }
 }

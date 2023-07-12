@@ -63,10 +63,10 @@ public class Ingredient
     Ingredient ingredient = new Ingredient();
     ingredient._id = GetNextId();
 
-    Utils.DisplayText("Ingredient name: \n");
+    Utils.TextAnimation("Ingredient name: \n");
     ingredient._name = Console.ReadLine();
 
-    Utils.DisplayText("Ingredient type (main or seasoning): \n");
+    Utils.TextAnimation("Ingredient type (main or seasoning): \n");
     string type = Console.ReadLine();
 
     if (type == "main")
@@ -79,7 +79,7 @@ public class Ingredient
     }
     else
     {
-      Utils.DisplayText("Type error\n");
+      Utils.TextAnimation("Type error\n");
     }
 
     return ingredient;
@@ -92,7 +92,7 @@ public class Ingredient
   {
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
     string name = textInfo.ToTitleCase(_name);
-    Utils.DisplayText($"{name} ({_type}) \n");
+    Utils.TextAnimation($"{name} ({_type}) \n");
   }
 
   // public string Serialize()

@@ -15,7 +15,7 @@ public static class Utils
     while (!isValidNumber)
     {
       // Display the given prompt
-      Utils.DisplayText(prompt);
+      Utils.TextAnimation(prompt);
 
       userInput = Console.ReadLine();
 
@@ -38,7 +38,7 @@ public static class Utils
   /// what is being printed in the console
   /// </summary>
   /// <param name="text">The text to be displayed</param>
-  public static void DisplayText(string text)
+  public static void TextAnimation(string text)
   {
     int textLength = text.Length;
 
@@ -54,49 +54,100 @@ public static class Utils
   /// </summary>
   public static void MessageToContinueAndClear()
   {
-    Utils.DisplayText("\n> Press Any Key to continue...");
+    Utils.TextAnimation("\n> Press Any Key to continue...");
     Console.ReadLine();
     Console.Clear();
   }
 
-  public static int HandleOptions(Dictionary<int, string> options)
+  public static int GetSelectedKeyFromDict(Dictionary<int, string> idsAndDescriptionDict)
   {
     ConsoleKeyInfo keyInfo;
 
-    int[] keys = options.Keys.ToArray();
-    int selectedIndex = keys[0];
+    // Generate a List of the dictionary keys that represents the object ID
+    List<int> keysList = idsAndDescriptionDict.Keys.ToList();
+
+    // This contain the user selected item as an index of the keysList variable
+    int keyIndex = 0;
 
     Console.WriteLine("Select an option:\n");
 
     do
     {
       Console.Clear();
-      foreach (int key in keys)
-      {
-          if (key == selectedIndex)
-              Console.Write("-> ");
-          else
-              Console.Write("   ");
 
-          Console.WriteLine(options[key]);
+      for (int i = 0; i < keysList.Count; i++)
+      {
+        if (i == keyIndex)
+        {
+          Console.Write("-> ");
+        }
+        else
+        {
+          Console.Write("   ");
+        }
+
+        // Display the object description
+        string objectDescription = idsAndDescriptionDict[keysList[i]];
+        Console.WriteLine(objectDescription);
       }
 
       keyInfo = Console.ReadKey();
 
       if (keyInfo.Key == ConsoleKey.UpArrow)
       {
-          selectedIndex = Math.Max(0, selectedIndex - 1);
+        keyIndex = (keyIndex + keysList.Count - 1) % keysList.Count;
       }
       else if (keyInfo.Key == ConsoleKey.DownArrow)
       {
-          selectedIndex = Math.Min(options.Count - 1, selectedIndex + 1);
+        keyIndex = (keyIndex + 1) % keysList.Count;
       }
 
-    } while (keyInfo.Key != ConsoleKey.Enter || selectedIndex == options.Count - 1);
+    } while (keyInfo.Key != ConsoleKey.Enter);
 
-
-    // Procesar la opción seleccionada (options[selectedIndex])
-    return selectedIndex;
+    // return the selected key
+    return keysList[keyIndex];
   }
 
+  public static int GetSelectedIndexFromList(string prompt, List<string> options)
+  {
+    ConsoleKeyInfo keyInfo;
+    int selectedIndex = 0;
+
+    do
+    {
+      Console.Clear();
+      Console.WriteLine($"{prompt}\n");
+
+      for (int i = 0; i < options.Count; i++)
+      {
+        if (i == selectedIndex)
+        {
+          Console.Write("-> ");
+        }
+        else
+        {
+          Console.Write("   ");
+        }
+
+        // Display the option text
+        string optionText = options[i];
+        Console.WriteLine(optionText);
+      }
+
+      keyInfo = Console.ReadKey();
+
+      if (keyInfo.Key == ConsoleKey.UpArrow)
+      {
+        selectedIndex = (selectedIndex + options.Count - 1) % options.Count;
+      }
+      else if (keyInfo.Key == ConsoleKey.DownArrow)
+      {
+        selectedIndex = (selectedIndex + 1) % options.Count;
+      }
+
+    } while (keyInfo.Key != ConsoleKey.Enter);
+
+    // return the selected index
+    return selectedIndex;
+  }
 }

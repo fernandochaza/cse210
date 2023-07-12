@@ -33,11 +33,14 @@ public class Planner
     }
   }
 
-  public void PlanMeal(Dictionary<int, string> userMeals, List<Ingredient> userIngredients)
+  public void PlanMeal(Dictionary<int, string> userMeals, Dictionary<int, string> sideDishes)
   {
-    PlannedDay plannedDay = new PlannedDay();
-    plannedDay.Create(userMeals);
-    _userPlan.Add(plannedDay);
+    PlannedDay plannedDay = new PlannedDay(userMeals, sideDishes);
+
+    if (plannedDay.MealIDs.Count > 0)
+    {
+      _userPlan.Add(plannedDay);
+    }
   }
 
   // public string Serialize()

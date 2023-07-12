@@ -6,11 +6,11 @@ public class MealManager
   private List<Ingredient> _userIngredients = new List<Ingredient>();
   private List<Meal> _userMeals = new List<Meal>();
 
-  public void Create(Ingredient ingredient, Meal meal)
-  {
-    _userIngredients.Add(ingredient);
-    _userMeals.Add(meal);
-  }
+  // public void Create(Ingredient ingredient, Meal meal)
+  // {
+  //   _userIngredients.Add(ingredient);
+  //   _userMeals.Add(meal);
+  // }
 
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
@@ -63,33 +63,47 @@ public class MealManager
     }
   }
 
-  public Ingredient GetIngredient(int ingredientId)
+  /// <summary>
+  /// Get an ingredient given its ingredient ID from the user database
+  /// </summary>
+  /// <param name="ingredientId">The ingredient ID from the database</param>
+  /// <returns>Returns an Ingredient instance or NULL if the are no matching ID</returns>
+  public Ingredient GetIngredientById(int ingredientId)
   {
     foreach (Ingredient ingredient in _userIngredients)
     {
-        if (ingredient.Id == ingredientId)
-        {
-            return ingredient;
-        }
+      if (ingredient.Id == ingredientId)
+      {
+        return ingredient;
+      }
     }
 
     return null;
   }
 
+  /// <summary>
+  /// Get a Meal given its meal ID from the user database
+  /// </summary>
+  /// <param name="mealId">The meal ID from the database</param>
+  /// <returns>Returns a Meal instance or NULL if the are no matching IDs</returns>
   public Meal GetMeal(int mealId)
   {
     foreach (Meal meal in _userMeals)
     {
-        if (meal.Id == mealId)
-        {
-            return meal;
-        }
+      if (meal.Id == mealId)
+      {
+        return meal;
+      }
     }
 
     return null;
   }
 
-  public List<string> ListMeals()
+  /// <summary>
+  /// Returns a List of string in the format "(Type) Meal Name" with all the meals in the user database
+  /// </summary>
+  /// <returns>A list of strings</returns>
+  public List<string> GetMealsList()
   {
     List<string> meals = new List<string>();
     foreach (Meal meal in _userMeals)
@@ -101,17 +115,49 @@ public class MealManager
     return meals;
   }
 
-  public Dictionary<int, string> GetMealIdAndString()
+  public Dictionary<int, string> GenerateMealsDictionary()
   {
-    Dictionary<int, string> meals = new Dictionary<int, string>();
+    Dictionary<int, string> mealsDict = new Dictionary<int, string>();
     foreach (Meal meal in _userMeals)
     {
       int mealId = meal.Id;
       string stringMeal = $"({meal.Type}) {meal.Name}";
-      meals[mealId] = stringMeal;
+      mealsDict[mealId] = stringMeal;
     }
 
-    return meals;
+    return mealsDict;
+  }
+
+  public Dictionary<int, string> GenerateMainMealsDictionary()
+  {
+    Dictionary<int, string> mainMealsDict = new Dictionary<int, string>();
+    foreach (Meal meal in _userMeals)
+    {
+      if (meal.Type == Meal.MealType.Main)
+      {
+        int mealId = meal.Id;
+        string stringMeal = $"({meal.Type}) {meal.Name}";
+        mainMealsDict[mealId] = stringMeal;
+      }
+    }
+
+    return mainMealsDict;
+  }
+
+  public Dictionary<int, string> GenerateSideDishDictionary()
+  {
+    Dictionary<int, string> sideDishDict = new Dictionary<int, string>();
+    foreach (Meal meal in _userMeals)
+    {
+      if (meal.Type == Meal.MealType.Side_Dish)
+      {
+        int mealId = meal.Id;
+        string stringMeal = $"({meal.Type}) {meal.Name}";
+        sideDishDict[mealId] = stringMeal;
+      }
+    }
+
+    return sideDishDict;
   }
 
   // public string Serialize()

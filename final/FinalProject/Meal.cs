@@ -67,10 +67,10 @@ public class Meal
     Meal meal = new Meal();
     meal._id = GetNextId();
 
-    Utils.DisplayText("Meal name: \n");
+    Utils.TextAnimation("Meal name: \n");
     meal._name = Console.ReadLine();
 
-    Utils.DisplayText("Meal type (main or side dish): \n");
+    Utils.TextAnimation("Meal type (main or side dish): \n");
     string type = Console.ReadLine();
 
     if (type == "main")
@@ -83,12 +83,12 @@ public class Meal
     }
     else
     {
-      Utils.DisplayText("Type error\n");
+      Utils.TextAnimation("Type error\n");
     }
 
     // Add ingredients from Ingredients database or create new ingredients
     int quantity;
-    Utils.DisplayText("how many ingredients? ");
+    Utils.TextAnimation("how many ingredients? ");
     quantity = int.Parse(Console.ReadLine());
 
     // ------ ADD CODE TO ADD INGREDIENTS -----
@@ -109,12 +109,12 @@ public class Meal
     string mealName = textInfo.ToTitleCase(_name);
     string mealType = textInfo.ToTitleCase(_type.ToString());
 
-    Utils.DisplayText($"({mealType}) {mealName}\n");
+    Utils.TextAnimation($"({mealType}) {mealName}\n");
   }
 
   public void DisplayIngredients(List<Ingredient> userIngredients)
   {
-    
+
   }
 
   // public string Serialize()

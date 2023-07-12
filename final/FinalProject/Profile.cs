@@ -9,10 +9,11 @@ public class Profile
 
   public Profile() { }
 
-  public Profile(MealManager mealManager, Planner planner) {
+  public Profile(MealManager mealManager, Planner planner)
+  {
     _mealManagerData = mealManager;
     _plannerData = planner;
-   }
+  }
 
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
@@ -41,14 +42,14 @@ public class Profile
     {
       // Code to create a JSON file containing the user data
 
-      Utils.DisplayText(
+      Utils.TextAnimation(
           $"(!) New database created in the main program folder ({_databaseFilename})\n\n"
       );
     }
     else
     {
       LoadUserData();
-      Utils.DisplayText($"(!) Reading data from the existing database ({_databaseFilename})\n\n");
+      Utils.TextAnimation($"(!) Reading data from the existing database ({_databaseFilename})\n\n");
     }
   }
 
