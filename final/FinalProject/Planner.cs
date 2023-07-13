@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ConsoleTables;
 
 public class Planner
 {
@@ -27,10 +28,63 @@ public class Planner
 
   public void DisplayPlan(List<Meal> userMeals)
   {
+    List<string> headers = new List<string>();
+    headers.Add("Date");
+    headers.Add("Meal");
+    headers.Add("Side Dish");
+
+    var table = new ConsoleTable(headers.ToArray());
+
+    List<List<string>> data = GetPlannedDaysForTable(userMeals);
+
+    foreach (List<string> row in data)
+    {
+      table.AddRow(row.ToArray());
+    }
+
+    table.Write(Format.Minimal);
+  }
+
+  public List<List<string>> GetPlannedDaysForTable(List<Meal> userMeals)
+  {
+    List<List<String>> data = new List<List<string>>();
+
+    // int index = 0;
+
     foreach (PlannedDay plannedDay in _userPlan)
     {
-      plannedDay.Display(userMeals);
+      List<string> dataRow = new List<string>();
+
+      string date = plannedDay.Date.ToShortDateString();
+
+      dataRow.Add(date);
+      
+      string meal = "";
+      string sideDish = "";
+
+      foreach (Meal mealToMatch in userMeals)
+      {
+        if (mealToMatch.Id == plannedDay.MealIDs[0])
+        {
+          meal = mealToMatch.Name;
+        }
+
+        if (plannedDay.includesSideDish())
+        { 
+          if (mealToMatch.Id == plannedDay.MealIDs[1])
+          {
+            sideDish = mealToMatch.Name;
+            break;
+          }
+        }
+
+      }
+        dataRow.Add(meal);
+        dataRow.Add(sideDish);
+        data.Add(dataRow);
     }
+
+    return data;
   }
 
   public void PlanMeal(Dictionary<int, string> userMeals, Dictionary<int, string> sideDishes)

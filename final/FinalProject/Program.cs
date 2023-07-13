@@ -19,23 +19,7 @@ class Program
     Menu menu = new Menu();
     menu.DisplayWelcome();
 
-    List<string> options = new List<string>();
-    options.Add("Plan a meal");
-    options.Add("Display plan");
-    options.Add("Plan a meal");
-    options.Add("Display plan");
-
-    List<string> options2 = new List<string>();
-    options2.Add("Plan a meal");
-    options2.Add("Display plan");
-    options2.Add("Plan a meal");
-    options2.Add("Display plan");
-
-    var table = new ConsoleTable(options.ToArray());
-
-    table.AddRow(options2.ToArray());
-    table.Write();
-
+    plannerData.DisplayPlan(mealsData.Meals);
 
     // userProfile.SaveUserData();
   }

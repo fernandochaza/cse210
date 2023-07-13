@@ -118,6 +118,16 @@ public class PlannedDay
     Console.WriteLine(IsSkipped);
   }
 
+  public bool includesSideDish()
+  {
+    if (_mealsID.Count > 1)
+    {
+      return true;
+    }
+
+    return false;
+  }
+
   // public string Serialize()
   // {
   //   var options = new JsonSerializerOptions
