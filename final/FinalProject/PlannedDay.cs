@@ -42,14 +42,24 @@ public class PlannedDay
     string includesSideDish = options[selectedOptionIndex.Value];
 
     Utils.TextAnimation("Select a meal: ");
-    int meal = Utils.GetSelectedKeyFromDict(userMeals);
-    _mealsID.Add(meal);
+    int? selectedMealId = Utils.GetSelectedKeyFromDict(userMeals);
+
+    if (selectedMealId == null)
+    {
+      return;
+    }
+
+    _mealsID.Add(selectedMealId.Value);
 
     if (includesSideDish == "Yes")
     {
       Utils.TextAnimation("Select a Side Dish: ");
-      int sideDish = Utils.GetSelectedKeyFromDict(userSideDishes);
-      _mealsID.Add(sideDish);
+      int? selectedSideDishId = Utils.GetSelectedKeyFromDict(userSideDishes);
+      if (selectedSideDishId == null)
+      {
+        return;
+      }
+      _mealsID.Add(selectedSideDishId.Value);
     }
 
     _date = date;

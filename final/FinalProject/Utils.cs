@@ -1,3 +1,5 @@
+using ConsoleTables;
+
 public static class Utils
 {
   /// <summary>
@@ -59,7 +61,7 @@ public static class Utils
     Console.Clear();
   }
 
-  public static int GetSelectedKeyFromDict(Dictionary<int, string> idsAndDescriptionDict)
+  public static int? GetSelectedKeyFromDict(Dictionary<int, string> idsAndDescriptionDict)
   {
     ConsoleKeyInfo keyInfo;
 
@@ -100,6 +102,10 @@ public static class Utils
       else if (keyInfo.Key == ConsoleKey.DownArrow)
       {
         keyIndex = (keyIndex + 1) % keysList.Count;
+      }
+      else if (keyInfo.Key == ConsoleKey.Escape)
+      {
+        return null;
       }
 
     } while (keyInfo.Key != ConsoleKey.Enter);
@@ -153,5 +159,17 @@ public static class Utils
 
     // return the selected index
     return selectedIndex;
+  } 
+
+  public static void DisplayTable(List<string> headers, List<List<string>> data)
+  {
+    var table = new ConsoleTable(headers.ToArray());
+
+    for (int i=0; i < data.Count; i++)
+    {
+      table.AddRow(data[i].ToArray());
+    }
+
+    table.Write();
   }
 }
