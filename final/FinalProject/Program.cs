@@ -19,7 +19,8 @@ class Program
     Menu menu = new Menu();
     menu.DisplayWelcome();
 
-    plannerData.DisplayPlan(mealsData.Meals);
+    var mealsDict = mealsData.GenerateMealsDictionary();
+    plannerData.DisplayPlan(mealsDict);
 
     // userProfile.SaveUserData();
   }

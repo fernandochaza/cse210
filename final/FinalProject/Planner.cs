@@ -26,9 +26,9 @@ public class Planner
     _userPlan.Add(plannedDay);
   }
 
-  public void DisplayPlan(List<Meal> userMeals)
+  public void DisplayPlan(Dictionary<int, string> userMeals)
   {
-    List<string> headers = new List<string>();
+    var headers = new List<string>();
     headers.Add("Date");
     headers.Add("Meal");
     headers.Add("Side Dish");
@@ -45,43 +45,31 @@ public class Planner
     table.Write(Format.Minimal);
   }
 
-  public List<List<string>> GetPlannedDaysForTable(List<Meal> userMeals)
+  public List<List<string>> GetPlannedDaysForTable(Dictionary<int, string> userMeals)
   {
-    List<List<String>> data = new List<List<string>>();
-
-    // int index = 0;
+    var data = new List<List<string>>();
 
     foreach (PlannedDay plannedDay in _userPlan)
     {
-      List<string> dataRow = new List<string>();
+      var dataRow = new List<string>();
 
       string date = plannedDay.Date.ToShortDateString();
-
-      dataRow.Add(date);
-      
       string meal = "";
       string sideDish = "";
+      
+      int? mealId = plannedDay.MealIDs[0];
+      userMeals.TryGetValue(mealId.Value, out meal);
 
-      foreach (Meal mealToMatch in userMeals)
+      if (plannedDay.includesSideDish())
       {
-        if (mealToMatch.Id == plannedDay.MealIDs[0])
-        {
-          meal = mealToMatch.Name;
-        }
-
-        if (plannedDay.includesSideDish())
-        { 
-          if (mealToMatch.Id == plannedDay.MealIDs[1])
-          {
-            sideDish = mealToMatch.Name;
-            break;
-          }
-        }
-
+        int? sideDishId = plannedDay.MealIDs[1];
+        userMeals.TryGetValue(sideDishId.Value, out sideDish);
       }
-        dataRow.Add(meal);
-        dataRow.Add(sideDish);
-        data.Add(dataRow);
+      
+      dataRow.Add(date);
+      dataRow.Add(meal);
+      dataRow.Add(sideDish);
+      data.Add(dataRow);
     }
 
     return data;
