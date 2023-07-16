@@ -169,7 +169,54 @@ public static class Utils
 
     // return the selected index
     return selectedIndex;
-  } 
+  }
+
+  public static string GetSelectedString(string prompt, List<string> options)
+  {
+    ConsoleKeyInfo keyInfo;
+    int selectedIndex = 0;
+
+    do
+    {
+      Console.Clear();
+      Console.WriteLine($"{prompt}\n");
+
+      for (int i = 0; i < options.Count; i++)
+      {
+        if (i == selectedIndex)
+        {
+          Console.Write("-> ");
+        }
+        else
+        {
+          Console.Write("   ");
+        }
+
+        // Display the option text
+        string optionText = options[i];
+        Console.WriteLine(optionText);
+      }
+
+      keyInfo = Console.ReadKey();
+
+      if (keyInfo.Key == ConsoleKey.UpArrow)
+      {
+        selectedIndex = (selectedIndex + options.Count - 1) % options.Count;
+      }
+      else if (keyInfo.Key == ConsoleKey.DownArrow)
+      {
+        selectedIndex = (selectedIndex + 1) % options.Count;
+      }
+      else if (keyInfo.Key == ConsoleKey.Escape)
+      {
+        return null;
+      }
+
+    } while (keyInfo.Key != ConsoleKey.Enter);
+
+    // return the selected string
+    return options[selectedIndex];
+  }
 
   public static void DisplayTable(List<string> headers, List<List<string>> data)
   {

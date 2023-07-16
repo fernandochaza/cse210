@@ -29,16 +29,16 @@ class Program
     options.Add("Ingredients Database");
     options.Add("Exit");
 
-    int? selectedOption;
+    string selectedOption;
 
     do
     {
       Console.Clear();
-      selectedOption = Utils.GetSelectedIndexFromList(prompt, options);
+      selectedOption = Utils.GetSelectedString(prompt, options);
 
       switch (selectedOption)
       {
-        case 0:
+        case "Plan a meal":
           Console.Clear();
 
           var mealsDict = mealsData.GenerateMealsDictionary();
@@ -46,7 +46,7 @@ class Program
           plannerData.PlanMeal(mealsDict, sideDishesDict);
           break;
 
-        case 1:
+        case "Upcoming meals":
           int? selectedPlannerOption;
 
           do
@@ -77,7 +77,7 @@ class Program
 
           break;
 
-        case 3:
+        case "Meals Database":
           mealsData.DisplayMeals();
           break;
         
