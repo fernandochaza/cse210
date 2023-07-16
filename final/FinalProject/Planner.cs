@@ -6,10 +6,7 @@ public class Planner
 {
   private List<PlannedDay> _userPlan = new List<PlannedDay>();
 
-  public Planner()
-  {
-
-  }
+  public Planner() { }
 
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
@@ -26,53 +23,103 @@ public class Planner
     _userPlan.Add(plannedDay);
   }
 
-  public void DisplayPlan(Dictionary<int, string> userMeals)
+  /// <summary>
+  /// Display the next planned meals in a table format
+  /// </summary>
+  /// <param name="userMeals">A dictionary containing an updated list of the user Meals with the Meal Id and Meal Name</param>
+  public ConsoleTable DisplayPlan(Dictionary<int, string> userMeals)
   {
+    // Generate headers for the table
     var headers = new List<string>();
+    headers.Add("Id");
     headers.Add("Date");
     headers.Add("Meal");
     headers.Add("Side Dish");
-
     var table = new ConsoleTable(headers.ToArray());
 
-    List<List<string>> data = GetPlannedDaysForTable(userMeals);
+    // Get the current planner data as a List of List<string> where the inner List<string> represents a planned day
+    List<List<string>> currentUserPlan = GetPlannedDaysForTable(userMeals);
 
-    foreach (List<string> row in data)
+    // Iterate over current user plan to add each planned day as a new table row
+    foreach (List<string> plannedDay in currentUserPlan)
     {
-      table.AddRow(row.ToArray());
+      table.AddRow(plannedDay.ToArray());
     }
 
+    // Display the table
     table.Write(Format.Minimal);
+
+    return table;
   }
 
+  public void EditPlan(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
+  {
+    DisplayPlan(userMeals);
+    Console.WriteLine();
+
+    int planToChangeId = Utils.GetUserInt("Please, enter the ID of the day you want to change and press Enter: ");
+
+    //ToDO: Extract this logic into a method in PLanneDay class ----!!
+
+    for (int i = 0; i < _userPlan.Count; i++)
+    {
+      
+      if (_userPlan[i].Id == planToChangeId)
+      {
+        _userPlan[i].Edit(userMeals, userSideDishes);
+      }
+    }
+  }
+
+  /// <summary>
+  /// Generate a List of List<string> where the inner List<string> represents a planned day data in the format "[date, meal, side dish]"
+  /// </summary>
+  /// <param name="userMeals">A dictionary containing an updated list of the user Meals with the Meal Id and Meal Name </param>
+  /// <returns>The current planner data</returns>
   public List<List<string>> GetPlannedDaysForTable(Dictionary<int, string> userMeals)
   {
-    var data = new List<List<string>>();
+    // Generate a variable to hold the planner data
+    var plannedDays = new List<List<string>>();
 
+    // Iterate over the current user plan
     foreach (PlannedDay plannedDay in _userPlan)
     {
-      var dataRow = new List<string>();
+      // Generate a variable to hold the planned day data
+      var plannedDayAsList = new List<string>();
 
+      string id = plannedDay.Id.ToString();
       string date = plannedDay.Date.ToShortDateString();
-      string meal = "";
-      string sideDish = "";
-      
+      string mealName = "";
+      string sideDishName = "";
+
+      // Get the meal id from the current iteration of a planned day
       int? mealId = plannedDay.MealIDs[0];
-      userMeals.TryGetValue(mealId.Value, out meal);
+
+      // Try to get the meal name
+      // ToDo: ERROR HANDLING
+      userMeals.TryGetValue(mealId.Value, out mealName);
 
       if (plannedDay.includesSideDish())
       {
+        // Get the Side Dish id from the current iteration of a planned day
         int? sideDishId = plannedDay.MealIDs[1];
-        userMeals.TryGetValue(sideDishId.Value, out sideDish);
+
+        // Try to get the Side Dish name
+        // ToDo: ERROR HANDLING
+        userMeals.TryGetValue(sideDishId.Value, out sideDishName);
       }
-      
-      dataRow.Add(date);
-      dataRow.Add(meal);
-      dataRow.Add(sideDish);
-      data.Add(dataRow);
+
+      // Add the planned day data into the List of string
+      plannedDayAsList.Add(id);
+      plannedDayAsList.Add(date);
+      plannedDayAsList.Add(mealName);
+      plannedDayAsList.Add(sideDishName);
+
+      // Add the List into the general plan List
+      plannedDays.Add(plannedDayAsList);
     }
 
-    return data;
+    return plannedDays;
   }
 
   public void PlanMeal(Dictionary<int, string> userMeals, Dictionary<int, string> sideDishes)

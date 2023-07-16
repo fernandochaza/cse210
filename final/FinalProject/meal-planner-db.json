@@ -610,6 +610,7 @@
   "planner-data": {
     "user-plan": [
       {
+        "planned-day-id": 1,
         "date": "2023-07-05T00:00:00",
         "meals-id": [
           1,
@@ -619,6 +620,7 @@
         "skipped": false
       },
       {
+        "planned-day-id": 2,
         "date": "2023-07-06T00:00:00",
         "meals-id": [
           2,
@@ -628,6 +630,7 @@
         "skipped": false
       },
       {
+        "planned-day-id": 3,
         "date": "2023-07-07T00:00:00",
         "meals-id": [
           3
@@ -636,6 +639,7 @@
         "skipped": false
       },
       {
+        "planned-day-id": 4,
         "date": "2023-07-08T00:00:00",
         "meals-id": [
           4

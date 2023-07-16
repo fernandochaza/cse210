@@ -3,9 +3,10 @@ using System.Text.Json.Serialization;
 
 public class PlannedDay
 {
+  private int _id;
+  private static int _lastId = 0;
   private DateTime _date;
-  // private Meal _plannedMeal;  //This should be an ID referencing to a Meal
-  private List<int> _mealsID = new List<int>();  //This should be an ID referencing to a Meal
+  private List<int> _mealsID = new List<int>();
   private bool _isCompleted;
   private bool _isSkipped;
 
@@ -21,7 +22,7 @@ public class PlannedDay
   /// <param name="userMeals"></param>
   public PlannedDay(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
   {
-    int day = Utils.GetUserInt("Insert the day number: ");
+    int day = Utils.GetUserInt("Insert the day of the month: ");
     int month = Utils.GetUserInt("Insert the month number: ");
     int currentYear = DateTime.Today.Year;
     DateTime date = new DateTime(currentYear, month, day);
@@ -32,6 +33,7 @@ public class PlannedDay
     options.Add("Yes");
     options.Add("No");
 
+    Console.Clear();
     int? selectedOptionIndex = Utils.GetSelectedIndexFromList(prompt, options);
 
     if (selectedOptionIndex == null)
@@ -62,6 +64,7 @@ public class PlannedDay
       _mealsID.Add(selectedSideDishId.Value);
     }
 
+    _id = GetNextId();
     _date = date;
     _isCompleted = false;
     _isSkipped = false;
@@ -69,6 +72,13 @@ public class PlannedDay
 
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
+
+  [JsonPropertyName("planned-day-id")]
+  public int Id
+  {
+    get { return _id; }
+    set { _id = value; }
+  }
 
   [JsonPropertyName("date")]
   public DateTime Date
@@ -98,26 +108,6 @@ public class PlannedDay
     set { _isSkipped = value; }
   }
 
-  public void Display(List<Meal> userMeals)
-  {
-    Console.WriteLine();
-
-    // Display Date
-    Utils.TextAnimation($"{_date.DayOfWeek} - {_date.ToShortDateString()} \n");
-
-    // Create a new variable containing a list of the User Meals that match the PlannedDay Meals
-    IEnumerable<Meal> matchingMeals = userMeals.Where(meal => _mealsID.Contains(meal.Id));
-
-    // Display the Matching Meals
-    foreach (Meal matchingMeal in matchingMeals)
-    {
-      matchingMeal.Display();
-    }
-
-    Console.WriteLine(_isCompleted);
-    Console.WriteLine(IsSkipped);
-  }
-
   public bool includesSideDish()
   {
     if (_mealsID.Count > 1)
@@ -126,6 +116,67 @@ public class PlannedDay
     }
 
     return false;
+  }
+
+  public void Edit(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
+  {
+    string editPlanPrompt = "What do you want to change?";
+    var editPlanOptions = new List<string>();
+    editPlanOptions.Add("Change the date");
+    editPlanOptions.Add("Change Meal");
+    editPlanOptions.Add("Change/Add Side Dish");
+
+    int? selectedEditOption;
+    selectedEditOption = Utils.GetSelectedIndexFromList(editPlanPrompt, editPlanOptions);
+
+    if (selectedEditOption == 0)
+    {
+      Console.WriteLine();
+      int day = Utils.GetUserInt("Please, enter the day number: ");
+      int month = Utils.GetUserInt("Please, enter the month number: ");
+      int currentYear = DateTime.Today.Year;
+      DateTime date = new DateTime(currentYear, month, day);
+
+      this.Date = date;
+
+      Utils.TextAnimation($"Date changed to {date.ToShortDateString()}");
+      Utils.MessageToContinueAndClear();
+    }
+    else if (selectedEditOption == 1)
+    {
+      this.MealIDs.RemoveAt(0);
+
+      Utils.TextAnimation("Select a new meal: ");
+      int? selectedMealId = Utils.GetSelectedKeyFromDict(userMeals);
+
+      if (selectedMealId == null)
+      {
+        return;
+      }
+
+      this.MealIDs.Add(selectedMealId.Value);
+      Utils.TextAnimation($"Meal changed to {userMeals[selectedMealId.Value]}");
+    }
+    else if (selectedEditOption == 2)
+    {
+      if (this.MealIDs.Count > 1)
+      {
+        this.MealIDs.RemoveAt(1);
+      }
+      Utils.TextAnimation("Select a new Side Dish: ");
+      int? selectedSideDishId = Utils.GetSelectedKeyFromDict(userSideDishes);
+      if (selectedSideDishId == null)
+      {
+        return;
+      }
+      this.MealIDs.Add(selectedSideDishId.Value);
+      Utils.TextAnimation($"Side dish changed to {userSideDishes[selectedSideDishId.Value]}");
+    }
+  }
+
+  private static int GetNextId()
+  {
+    return ++_lastId;
   }
 
   // public string Serialize()

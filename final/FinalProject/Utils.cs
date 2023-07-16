@@ -56,7 +56,7 @@ public static class Utils
   /// </summary>
   public static void MessageToContinueAndClear()
   {
-    Utils.TextAnimation("\n> Press Any Key to continue...");
+    Utils.TextAnimation("\n> Press Enter to continue...");
     Console.ReadLine();
     Console.Clear();
   }
@@ -114,7 +114,7 @@ public static class Utils
     return keysList[keyIndex];
   }
 
-  public static int? GetSelectedIndexFromList(string prompt, List<string> options)
+  public static int? GetSelectedIndexFromList(string prompt, List<string> options, ConsoleTable table = null)
   {
     ConsoleKeyInfo keyInfo;
     int selectedIndex = 0;
@@ -122,7 +122,17 @@ public static class Utils
     do
     {
       Console.Clear();
-      Console.WriteLine($"{prompt}\n");
+
+      if (table != null)
+        {
+            table.Write(Format.Minimal);
+            Console.WriteLine();
+        }
+
+      if (prompt != "")
+      {
+        Console.WriteLine($"{prompt}\n");
+      }
 
       for (int i = 0; i < options.Count; i++)
       {
