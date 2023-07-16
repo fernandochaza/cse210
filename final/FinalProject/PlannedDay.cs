@@ -13,7 +13,7 @@ public class PlannedDay
   [JsonConstructor]
   public PlannedDay()
   {
-
+    _lastId++;
   }
 
   /// <summary>
@@ -34,17 +34,16 @@ public class PlannedDay
     options.Add("No");
 
     Console.Clear();
-    int? selectedOptionIndex = Utils.GetSelectedIndexFromList(prompt, options);
+    string includeSideDish = Utils.GetSelectedOption(prompt, options);
 
-    if (selectedOptionIndex == null)
+    if (includeSideDish == null)
     {
       return; // Exit the method if Escape was pressed
     }
 
-    string includesSideDish = options[selectedOptionIndex.Value];
 
-    Utils.TextAnimation("Select a meal: ");
-    int? selectedMealId = Utils.GetSelectedKeyFromDict(userMeals);
+    string mealPrompt = "Select a meal: ";
+    int? selectedMealId = Utils.GetSelectedKeyFromDict(mealPrompt, userMeals);
 
     if (selectedMealId == null)
     {
@@ -53,10 +52,10 @@ public class PlannedDay
 
     _mealsID.Add(selectedMealId.Value);
 
-    if (includesSideDish == "Yes")
+    if (includeSideDish == "Yes")
     {
-      Utils.TextAnimation("Select a Side Dish: ");
-      int? selectedSideDishId = Utils.GetSelectedKeyFromDict(userSideDishes);
+      string sideDishPrompt = "Select a Side Dish: ";
+      int? selectedSideDishId = Utils.GetSelectedKeyFromDict(sideDishPrompt, userSideDishes);
       if (selectedSideDishId == null)
       {
         return;
@@ -120,16 +119,18 @@ public class PlannedDay
 
   public void Edit(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
   {
+    Console.CursorVisible = false;
+
     string editPlanPrompt = "What do you want to change?";
     var editPlanOptions = new List<string>();
     editPlanOptions.Add("Change the date");
     editPlanOptions.Add("Change Meal");
     editPlanOptions.Add("Change/Add Side Dish");
 
-    int? selectedEditOption;
-    selectedEditOption = Utils.GetSelectedIndexFromList(editPlanPrompt, editPlanOptions);
+    string selectedEditOption;
+    selectedEditOption = Utils.GetSelectedOption(editPlanPrompt, editPlanOptions);
 
-    if (selectedEditOption == 0)
+    if (selectedEditOption == "Change the date")
     {
       Console.WriteLine();
       int day = Utils.GetUserInt("Please, enter the day number: ");
@@ -139,13 +140,13 @@ public class PlannedDay
 
       this.Date = date;
 
-      Utils.TextAnimation($"Date changed to {date.ToShortDateString()}");
+      Utils.TextAnimation($"\n(!) Date changed to {date.ToShortDateString()}\n");
       Utils.MessageToContinueAndClear();
     }
-    else if (selectedEditOption == 1)
+    else if (selectedEditOption == "Change Meal")
     {
-      Utils.TextAnimation("Select a new meal: ");
-      int? selectedMealId = Utils.GetSelectedKeyFromDict(userMeals);
+      string mealPrompt = "Select a new meal: ";
+      int? selectedMealId = Utils.GetSelectedKeyFromDict(mealPrompt, userMeals);
 
       if (selectedMealId == null)
       {
@@ -153,22 +154,24 @@ public class PlannedDay
       }
 
       this.MealIDs[0] = selectedMealId.Value;
-      Utils.TextAnimation($"Meal changed to {userMeals[selectedMealId.Value]}");
+      Utils.TextAnimation($"\n(!) Meal changed to {userMeals[selectedMealId.Value]}\n");
       Utils.MessageToContinueAndClear();
     }
-    else if (selectedEditOption == 2)
+    else if (selectedEditOption == "Change/Add Side Dish")
     {
-      if (this.MealIDs.Count > 1)
-      {      
-        Utils.TextAnimation("Select a new Side Dish: ");
-        int? selectedSideDishId = Utils.GetSelectedKeyFromDict(userSideDishes);
-        if (selectedSideDishId == null)
-        {
-          return;
-        }
-        this.MealIDs[1] = selectedSideDishId.Value;
-        Utils.TextAnimation($"Side dish changed to {userSideDishes[selectedSideDishId.Value]}");
+
+      string sideDishPrompt = "Select a new Side Dish: ";
+      int? selectedSideDishId = Utils.GetSelectedKeyFromDict(sideDishPrompt, userSideDishes);
+
+      if (selectedSideDishId == null)
+      {
+        return;
       }
+
+      this.MealIDs[1] = selectedSideDishId.Value;
+
+      Utils.TextAnimation($"\n(!) Side dish changed to {userSideDishes[selectedSideDishId.Value]}\n");
+
       Utils.MessageToContinueAndClear();
     }
   }

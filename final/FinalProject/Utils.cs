@@ -9,6 +9,9 @@ public static class Utils
   /// <returns>A validated integer</returns>
   public static int GetUserInt(string prompt)
   {
+    // Display the cursor
+    Console.CursorVisible = true;
+
     string userInput;
     int validInteger = 0;
     bool isValidNumber = false;
@@ -31,6 +34,9 @@ public static class Utils
         Console.WriteLine("\n(!) Invalid input. Please enter a valid integer.");
       }
     }
+
+    // Hide the cursor again
+    Console.CursorVisible = false;
 
     return validInteger;
   }
@@ -56,12 +62,13 @@ public static class Utils
   /// </summary>
   public static void MessageToContinueAndClear()
   {
+    Console.CursorVisible = false;
     Utils.TextAnimation("\n> Press Enter to continue...");
     Console.ReadLine();
     Console.Clear();
   }
 
-  public static int? GetSelectedKeyFromDict(Dictionary<int, string> idsAndDescriptionDict)
+  public static int? GetSelectedKeyFromDict(string prompt, Dictionary<int, string> idsAndDescriptionDict)
   {
     ConsoleKeyInfo keyInfo;
 
@@ -71,11 +78,10 @@ public static class Utils
     // This contain the user selected item as an index of the keysList variable
     int keyIndex = 0;
 
-    Console.WriteLine("Select an option:\n");
-
     do
     {
       Console.Clear();
+      Utils.TextAnimation($"{prompt}\n\n");
 
       for (int i = 0; i < keysList.Count; i++)
       {
@@ -114,20 +120,22 @@ public static class Utils
     return keysList[keyIndex];
   }
 
-  public static int? GetSelectedIndexFromList(string prompt, List<string> options, ConsoleTable table = null)
+  public static string GetSelectedOption(string prompt, List<string> options, ConsoleTable table = null)
   {
     ConsoleKeyInfo keyInfo;
     int selectedIndex = 0;
+
+    Console.CursorVisible = false;
 
     do
     {
       Console.Clear();
 
       if (table != null)
-        {
-            table.Write(Format.Minimal);
-            Console.WriteLine();
-        }
+      {
+        table.Write(Format.Minimal);
+        Console.WriteLine();
+      }
 
       if (prompt != "")
       {
@@ -167,66 +175,66 @@ public static class Utils
 
     } while (keyInfo.Key != ConsoleKey.Enter);
 
-    // return the selected index
-    return selectedIndex;
-  }
-
-  public static string GetSelectedString(string prompt, List<string> options)
-  {
-    ConsoleKeyInfo keyInfo;
-    int selectedIndex = 0;
-
-    do
-    {
-      Console.Clear();
-      Console.WriteLine($"{prompt}\n");
-
-      for (int i = 0; i < options.Count; i++)
-      {
-        if (i == selectedIndex)
-        {
-          Console.Write("-> ");
-        }
-        else
-        {
-          Console.Write("   ");
-        }
-
-        // Display the option text
-        string optionText = options[i];
-        Console.WriteLine(optionText);
-      }
-
-      keyInfo = Console.ReadKey();
-
-      if (keyInfo.Key == ConsoleKey.UpArrow)
-      {
-        selectedIndex = (selectedIndex + options.Count - 1) % options.Count;
-      }
-      else if (keyInfo.Key == ConsoleKey.DownArrow)
-      {
-        selectedIndex = (selectedIndex + 1) % options.Count;
-      }
-      else if (keyInfo.Key == ConsoleKey.Escape)
-      {
-        return null;
-      }
-
-    } while (keyInfo.Key != ConsoleKey.Enter);
-
-    // return the selected string
+    // Return the selected index
     return options[selectedIndex];
   }
 
-  public static void DisplayTable(List<string> headers, List<List<string>> data)
-  {
-    var table = new ConsoleTable(headers.ToArray());
+  // public static string GetSelectedString(string prompt, List<string> options)
+  // {
+  //   ConsoleKeyInfo keyInfo;
+  //   int selectedIndex = 0;
 
-    for (int i=0; i < data.Count; i++)
-    {
-      table.AddRow(data[i].ToArray());
-    }
+  //   do
+  //   {
+  //     Console.Clear();
+  //     Console.WriteLine($"{prompt}\n");
 
-    table.Write();
-  }
+  //     for (int i = 0; i < options.Count; i++)
+  //     {
+  //       if (i == selectedIndex)
+  //       {
+  //         Console.Write("-> ");
+  //       }
+  //       else
+  //       {
+  //         Console.Write("   ");
+  //       }
+
+  //       // Display the option text
+  //       string optionText = options[i];
+  //       Console.WriteLine(optionText);
+  //     }
+
+  //     keyInfo = Console.ReadKey();
+
+  //     if (keyInfo.Key == ConsoleKey.UpArrow)
+  //     {
+  //       selectedIndex = (selectedIndex + options.Count - 1) % options.Count;
+  //     }
+  //     else if (keyInfo.Key == ConsoleKey.DownArrow)
+  //     {
+  //       selectedIndex = (selectedIndex + 1) % options.Count;
+  //     }
+  //     else if (keyInfo.Key == ConsoleKey.Escape)
+  //     {
+  //       return null;
+  //     }
+
+  //   } while (keyInfo.Key != ConsoleKey.Enter);
+
+  //   // return the selected string
+  //   return options[selectedIndex];
+  // }
+
+  // public static void DisplayTable(List<string> headers, List<List<string>> data)
+  // {
+  //   var table = new ConsoleTable(headers.ToArray());
+
+  //   for (int i = 0; i < data.Count; i++)
+  //   {
+  //     table.AddRow(data[i].ToArray());
+  //   }
+
+  //   table.Write();
+  // }
 }

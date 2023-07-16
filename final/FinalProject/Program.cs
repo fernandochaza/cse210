@@ -7,6 +7,9 @@ class Program
   {
     Console.Clear();
 
+    // Hide the cursor
+    Console.CursorVisible = false;
+
     // Instantiate the user profile and load the database
     Profile userProfile = new Profile();
     userProfile.InitializeProgram();
@@ -14,6 +17,7 @@ class Program
     // Create references to the user data to simplify access
     MealManager mealsData = userProfile.MealsData;
     Planner plannerData = userProfile.PlannerData;
+    plannerData.SetMealManager(mealsData);
 
     // Instantiate the Menu and Display welcome
     Menu menu = new Menu();
@@ -34,59 +38,53 @@ class Program
     do
     {
       Console.Clear();
-      selectedOption = Utils.GetSelectedString(prompt, options);
+      selectedOption = Utils.GetSelectedOption(prompt, options);
 
       switch (selectedOption)
       {
         case "Plan a meal":
           Console.Clear();
-
-          var mealsDict = mealsData.GenerateMealsDictionary();
-          var sideDishesDict = mealsData.GenerateMealsDictionary();
-          plannerData.PlanMeal(mealsDict, sideDishesDict);
+          plannerData.PlanMeal();
           break;
 
         case "Upcoming meals":
-          int? selectedPlannerOption;
+          string selectedPlannerOption;
 
           do
           {
             Console.Clear();
 
-            Dictionary<int, string> mealsDictForPlanner = mealsData.GenerateMealsDictionary();
-            plannerData.DisplayPlan(mealsDictForPlanner);
+            plannerData.DisplayPlan();
 
             var plannerOptions = new List<string>();
             plannerOptions.Add("Change a plan");
             plannerOptions.Add("Go back");
 
-            var table = plannerData.DisplayPlan(mealsDictForPlanner);
+            var table = plannerData.DisplayPlan();
 
-            selectedPlannerOption = Utils.GetSelectedIndexFromList("", plannerOptions, table);
+            selectedPlannerOption = Utils.GetSelectedOption("", plannerOptions, table);
 
-            if (selectedPlannerOption == 0)
+            if (selectedPlannerOption == "Change a plan")
             {
               Console.Clear();
-              Dictionary<int, string> mainMealsForPlanner = mealsData.GenerateMainMealsDictionary();
-              Dictionary<int, string> sideDishesForPlanner = mealsData.GenerateSideDishDictionary();
-              plannerData.DisplayPlan(mealsDictForPlanner);
-              plannerData.EditPlan(mainMealsForPlanner, sideDishesForPlanner);
+              plannerData.DisplayPlan();
+              plannerData.EditPlan();
             }
 
-          } while (selectedPlannerOption == 0);
+          } while (selectedPlannerOption == "Change a plan");
 
           break;
 
         case "Meals Database":
           mealsData.DisplayMeals();
           break;
-        
+
         default:
           break;
       }
     } while (selectedOption != null);
 
-    
+
 
     // DISPLAY PLAN
     // var mealsDict = mealsData.GenerateMealsDictionary();

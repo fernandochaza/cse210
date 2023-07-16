@@ -5,8 +5,18 @@ using ConsoleTables;
 public class Planner
 {
   private List<PlannedDay> _userPlan = new List<PlannedDay>();
+  private MealManager _mealManager;
 
-  public Planner() { }
+  [JsonConstructor]
+  public Planner()
+  {
+
+  }
+
+  public Planner(MealManager mealManager)
+  {
+    _mealManager = mealManager;
+  }
 
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
@@ -18,17 +28,19 @@ public class Planner
     set { _userPlan = value; }
   }
 
-  public void AddDay(PlannedDay plannedDay)
+  public void SetMealManager(MealManager mealManager)
   {
-    _userPlan.Add(plannedDay);
+    _mealManager = mealManager;
   }
 
   /// <summary>
   /// Display the next planned meals in a table format
   /// </summary>
   /// <param name="userMeals">A dictionary containing an updated list of the user Meals with the Meal Id and Meal Name</param>
-  public ConsoleTable DisplayPlan(Dictionary<int, string> userMeals)
+  public ConsoleTable DisplayPlan()
   {
+    var userMeals = _mealManager.GenerateMealsDictionary();
+
     // Generate headers for the table
     var headers = new List<string>();
     headers.Add("Id");
@@ -52,9 +64,15 @@ public class Planner
     return table;
   }
 
-  public void EditPlan(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
+  public void EditPlan()
   {
     Console.WriteLine();
+
+    // Display the cursor
+    Console.CursorVisible = true;
+
+    var userMeals = _mealManager.GenerateMainMealsDictionary();
+    var userSideDishes = _mealManager.GenerateSideDishDictionary();
 
     int planToChangeId = Utils.GetUserInt("Please, enter the ID of the day you want to change and press Enter: ");
 
@@ -120,9 +138,12 @@ public class Planner
     return plannedDays;
   }
 
-  public void PlanMeal(Dictionary<int, string> userMeals, Dictionary<int, string> sideDishes)
+  public void PlanMeal()
   {
-    PlannedDay plannedDay = new PlannedDay(userMeals, sideDishes);
+    var userMeals = _mealManager.GenerateMainMealsDictionary();
+    var userSideDishes = _mealManager.GenerateSideDishDictionary();
+
+    PlannedDay plannedDay = new PlannedDay(userMeals, userSideDishes);
 
     if (plannedDay.MealIDs.Count > 0)
     {
