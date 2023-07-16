@@ -47,26 +47,33 @@ class Program
           break;
 
         case 1:
-          Console.Clear();
-
-          Dictionary<int, string> mealsDictForPlanner = mealsData.GenerateMealsDictionary();
-          plannerData.DisplayPlan(mealsDictForPlanner);
-
-          var plannerOptions = new List<string>();
-          plannerOptions.Add("Change a plan");
-          plannerOptions.Add("Go back");
-
-          var table = plannerData.DisplayPlan(mealsDictForPlanner);
-
           int? selectedPlannerOption;
-          selectedPlannerOption = Utils.GetSelectedIndexFromList("", plannerOptions, table);
 
-          if (selectedPlannerOption == 0)
+          do
           {
             Console.Clear();
-            Dictionary<int, string> sideDishesForPlanner = mealsData.GenerateSideDishDictionary();
-            plannerData.EditPlan(mealsDictForPlanner, sideDishesForPlanner);
-          }
+
+            Dictionary<int, string> mealsDictForPlanner = mealsData.GenerateMealsDictionary();
+            plannerData.DisplayPlan(mealsDictForPlanner);
+
+            var plannerOptions = new List<string>();
+            plannerOptions.Add("Change a plan");
+            plannerOptions.Add("Go back");
+
+            var table = plannerData.DisplayPlan(mealsDictForPlanner);
+
+            selectedPlannerOption = Utils.GetSelectedIndexFromList("", plannerOptions, table);
+
+            if (selectedPlannerOption == 0)
+            {
+              Console.Clear();
+              Dictionary<int, string> mainMealsForPlanner = mealsData.GenerateMainMealsDictionary();
+              Dictionary<int, string> sideDishesForPlanner = mealsData.GenerateSideDishDictionary();
+              plannerData.DisplayPlan(mealsDictForPlanner);
+              plannerData.EditPlan(mainMealsForPlanner, sideDishesForPlanner);
+            }
+
+          } while (selectedPlannerOption == 0);
 
           break;
 

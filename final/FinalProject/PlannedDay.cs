@@ -144,8 +144,6 @@ public class PlannedDay
     }
     else if (selectedEditOption == 1)
     {
-      this.MealIDs.RemoveAt(0);
-
       Utils.TextAnimation("Select a new meal: ");
       int? selectedMealId = Utils.GetSelectedKeyFromDict(userMeals);
 
@@ -154,23 +152,24 @@ public class PlannedDay
         return;
       }
 
-      this.MealIDs.Add(selectedMealId.Value);
+      this.MealIDs[0] = selectedMealId.Value;
       Utils.TextAnimation($"Meal changed to {userMeals[selectedMealId.Value]}");
+      Utils.MessageToContinueAndClear();
     }
     else if (selectedEditOption == 2)
     {
       if (this.MealIDs.Count > 1)
-      {
-        this.MealIDs.RemoveAt(1);
+      {      
+        Utils.TextAnimation("Select a new Side Dish: ");
+        int? selectedSideDishId = Utils.GetSelectedKeyFromDict(userSideDishes);
+        if (selectedSideDishId == null)
+        {
+          return;
+        }
+        this.MealIDs[1] = selectedSideDishId.Value;
+        Utils.TextAnimation($"Side dish changed to {userSideDishes[selectedSideDishId.Value]}");
       }
-      Utils.TextAnimation("Select a new Side Dish: ");
-      int? selectedSideDishId = Utils.GetSelectedKeyFromDict(userSideDishes);
-      if (selectedSideDishId == null)
-      {
-        return;
-      }
-      this.MealIDs.Add(selectedSideDishId.Value);
-      Utils.TextAnimation($"Side dish changed to {userSideDishes[selectedSideDishId.Value]}");
+      Utils.MessageToContinueAndClear();
     }
   }
 

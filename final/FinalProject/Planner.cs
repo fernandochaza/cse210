@@ -54,21 +54,19 @@ public class Planner
 
   public void EditPlan(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
   {
-    DisplayPlan(userMeals);
     Console.WriteLine();
 
     int planToChangeId = Utils.GetUserInt("Please, enter the ID of the day you want to change and press Enter: ");
 
-    //ToDO: Extract this logic into a method in PLanneDay class ----!!
-
     for (int i = 0; i < _userPlan.Count; i++)
     {
-      
       if (_userPlan[i].Id == planToChangeId)
       {
         _userPlan[i].Edit(userMeals, userSideDishes);
       }
     }
+
+    OrderPlanByDate();
   }
 
   /// <summary>
@@ -130,6 +128,17 @@ public class Planner
     {
       _userPlan.Add(plannedDay);
     }
+
+    OrderPlanByDate();
+  }
+
+  private void OrderPlanByDate()
+  {
+    var orderedPlan = new List<PlannedDay>();
+    orderedPlan = _userPlan.OrderBy(plannedDay => plannedDay.Date).ToList();
+
+    _userPlan = orderedPlan;
+
   }
 
   // public string Serialize()
