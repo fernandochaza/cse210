@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ConsoleTables;
 
 public class Meal
 {
@@ -111,8 +112,82 @@ public class Meal
     Utils.TextAnimation($"{mealName}\n");
   }
 
-  public void DisplayIngredients(List<Ingredient> userIngredients)
+  public ConsoleTable DisplayMealIngredientsAsTable(Dictionary<int, string> ingredientsDatabaseDict)
   {
+    var tableHeaders = new List<string>();
+    tableHeaders.Add("Id");
+    tableHeaders.Add("Name");
+    ConsoleTable mealIngredientsTable = new ConsoleTable(tableHeaders.ToArray());
+
+    var ingredientsList = new List<List<string>>();
+
+    foreach (int ingredientId in _ingredientsID)
+    {
+      var ingredientData = new List<string>();
+
+      string ingredientName = ingredientsDatabaseDict[ingredientId];
+
+      ingredientData.Add(ingredientId.ToString());
+      ingredientData.Add(ingredientName);
+      ingredientsList.Add(ingredientData);
+    }
+
+    foreach (List<string> ingredient in ingredientsList)
+    {
+      mealIngredientsTable.AddRow(ingredient.ToArray());
+    }
+
+    mealIngredientsTable.Write();
+
+    return mealIngredientsTable;
+  }
+
+  public void EditIngredients(Dictionary<int, string> ingredientsDatabaseDict)
+  {
+
+    var editIngredientOptions = new List<string>();
+    editIngredientOptions.Add("Add");
+    editIngredientOptions.Add("Remove");
+
+    string selectedEditIngredientOption;
+    do
+    {
+      ConsoleTable mealIngredientsTable = DisplayMealIngredientsAsTable(ingredientsDatabaseDict);
+      selectedEditIngredientOption = Menu.GetSelectedOption(prompt: "", options: editIngredientOptions, displayTableTop: mealIngredientsTable);
+
+      if (selectedEditIngredientOption == "Add")
+      {
+        Console.Clear();
+
+        // Todo: Display all the ingredients with their ID
+
+        int ingredientToAddId = Utils.GetUserInt("\nPlease, enter the ID of the ingredient you want to Add and press Enter: ");
+        _ingredientsID.Add(ingredientToAddId);
+
+        Console.ForegroundColor = ConsoleColor.Red;
+        Utils.TextAnimation($"\n(!) {ingredientsDatabaseDict[ingredientToAddId]} was added...");
+        Console.ResetColor();
+        Utils.MessageToContinueAndClear();
+
+      }
+      else if (selectedEditIngredientOption == "Remove")
+      {
+        Console.Clear();
+        Utils.TextAnimation($"{Name} Ingredients:\n");
+        DisplayMealIngredientsAsTable(ingredientsDatabaseDict);
+
+        int ingredientToRemoveId = Utils.GetUserInt("\nPlease, enter the ID of the ingredient you want to remove and press Enter: ");
+        _ingredientsID.Remove(ingredientToRemoveId);
+
+        Console.ForegroundColor = ConsoleColor.Red;
+        Utils.TextAnimation($"\n(!) {ingredientsDatabaseDict[ingredientToRemoveId]} was removed...");
+        Console.ResetColor();
+        Utils.MessageToContinueAndClear();
+      }
+
+    } while (selectedEditIngredientOption != null);
+
+
 
   }
 

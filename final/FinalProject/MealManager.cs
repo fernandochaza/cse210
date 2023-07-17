@@ -134,7 +134,7 @@ public class MealManager
     }
   }
 
-  public ConsoleTable DisplayMealTable(Meal meal)
+  public ConsoleTable DisplayMealAsTable(Meal meal)
   {
     // Generate headers for the table
     var headers = new List<string>();
@@ -161,7 +161,7 @@ public class MealManager
     return table;
   }
 
-  private string GetMealIngredientsString(Meal meal)
+  public string GetMealIngredientsString(Meal meal)
   {
     string ingredientsString = "";
 
@@ -175,7 +175,69 @@ public class MealManager
       }
     }
 
+    if (!string.IsNullOrEmpty(ingredientsString))
+    {
+      ingredientsString = ingredientsString.TrimEnd(',', ' ');
+    }
+
     return ingredientsString;
+  }
+
+  public ConsoleTable GetMealIngredientsTable(Meal meal)
+  {
+    var headers = new List<string>();
+    headers.Add("Meal");
+    headers.Add("Ingredients");
+
+    var row = new List<string>();
+    string mealName = meal.Name;
+    string mealIngredients = GetMealIngredientsString(meal);
+
+    row.Add(mealName);
+    row.Add(mealIngredients);
+
+    ConsoleTable table = new ConsoleTable(headers.ToArray());
+    table.AddRow(row.ToArray());
+
+    table.Write();
+
+    return table;
+  }
+
+
+  public void VerifyIngredients()
+  {
+    int? selectedMealId;
+    Dictionary<int, string> mainMealsDict = GenerateMainMealsDictionary();
+
+    // Ask the user to select a Meal from a dict to get the Id
+    selectedMealId = Utils.GetSelectedKeyFromDict(prompt: "Select a Meal to verify the ingredients: ", idAndNameDict: mainMealsDict);
+
+    // Get the instance of the Meal to verify
+    Meal selectedMeal = Meals.Find(meal => meal.Id == selectedMealId);
+
+    Console.WriteLine();
+
+    // Get selected option
+    string selectedIngredientOption;
+    do
+    {
+      // Display edit options
+      var ingredientsOptions = new List<string>();
+      ingredientsOptions.Add("Edit Ingredients");
+      ingredientsOptions.Add("Go Back");
+
+      // Meal table to display inside the option selector
+      ConsoleTable mealTable = GetMealIngredientsTable(selectedMeal);
+
+      selectedIngredientOption = Menu.GetSelectedOption(prompt: "", ingredientsOptions, displayTableTop: mealTable);
+
+      if (selectedIngredientOption == "Edit Ingredients")
+      {
+        Dictionary<int, string> ingredientsDatabaseDict = GenerateIngredientsDictionary();
+        selectedMeal.EditIngredients(ingredientsDatabaseDict);
+      }
+    } while (selectedIngredientOption != null);
   }
 
   /// <summary>

@@ -117,7 +117,8 @@ class Program
             var mealDatabaseOptions = new List<string>();
             mealDatabaseOptions.Add("Main Meals");
             mealDatabaseOptions.Add("Side Dishes");
-            mealDatabaseOptions.Add("Meal Ingredients");
+            mealDatabaseOptions.Add("Main Meal Ingredients");
+            mealDatabaseOptions.Add("Side Dish Ingredients");
 
             selectedMealDatabaseOption = Menu.GetSelectedOption(prompt: "Select an Option", options: mealDatabaseOptions);
 
@@ -131,9 +132,11 @@ class Program
               Console.Clear();
               mealsData.DisplaySideDishesList();
             }
-            else if (selectedMealDatabaseOption == "Meal Ingredients")
+            else if (selectedMealDatabaseOption == "Main Meal Ingredients")
             {
+              mealsData.VerifyIngredients();
 
+              Utils.MessageToContinueAndClear();
             }
 
             Utils.MessageToContinueAndClear();
