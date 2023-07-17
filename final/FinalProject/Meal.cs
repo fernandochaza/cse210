@@ -117,39 +117,6 @@ public class Meal
 
   }
 
-  // public string Serialize()
-  // {
-  //   var options = new JsonSerializerOptions
-  //   {
-  //     // Add indentation to the json data
-  //     WriteIndented = true
-  //   };
-
-  //   // Serialize the current Meal instance
-  //   string jsonString = JsonSerializer.Serialize(this, options);
-  //   Console.WriteLine($"MEAL JSON: \n {jsonString}");
-
-  //   // Option 1: Write the data in a file (Currently, this overrides the file)
-  //   // File.WriteAllText("meal.json", jsonString);
-
-  //   // Option 2: Return the JSONString
-  //   return jsonString;
-  // }
-
-  // public void Deserialize()
-  // {
-  //   // Read the data (Currently, this is only one Meal)
-  //   string jsonString = File.ReadAllText("meal.json");
-
-  //   var options = new JsonSerializerOptions();
-  //   options.Converters.Add(new JsonStringEnumConverter());
-
-  //   Meal deserializedMeal = JsonSerializer.Deserialize<Meal>(jsonString, options);
-
-  //   Console.WriteLine($"DESERIALIZED MEAL: \n ${deserializedMeal.ToString()}");
-
-  // }
-
   private static int GetNextId()
   {
     return ++_lastId;

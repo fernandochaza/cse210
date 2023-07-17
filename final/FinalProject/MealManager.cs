@@ -198,39 +198,4 @@ public class MealManager
 
     return sideDishDict;
   }
-
-  // public string Serialize()
-  // {
-  //   var options = new JsonSerializerOptions
-  //   {
-  //     // Add indentation to the json data
-  //     WriteIndented = true
-  //   };
-
-  //   // Serialize the current MealManager instance
-  //   string jsonString = JsonSerializer.Serialize(this, options);
-  //   Console.WriteLine($"MEAL MANAGER JSON: \n {jsonString}");
-
-  //   // Option 1: Write the data in a file (Currently, this overrides the file)
-  //   File.WriteAllText("meal-manager.json", jsonString);
-
-  //   // Option 2: Return the JSONString
-  //   return jsonString;
-  // }
-
-  // public void Deserialize()
-  // {
-  //   // Read the data (Currently, this is only one meal-manager)
-  //   string jsonString = File.ReadAllText("meal-manager.json");
-
-  //   var options = new JsonSerializerOptions();
-  //   options.Converters.Add(new JsonStringEnumConverter());
-
-  //   MealManager deserializedMealManager = JsonSerializer.Deserialize<MealManager>(jsonString, options);
-
-  //   // Option 1: Return the MealManager
-  //   // Return deserializedMealManager;
-
-  //   // Option 2: Pass the values to the current MealManager
-  // }
 }

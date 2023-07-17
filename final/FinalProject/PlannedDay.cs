@@ -195,40 +195,4 @@ public class PlannedDay
   {
     return ++_lastId;
   }
-
-  // public string Serialize()
-  // {
-  //   var options = new JsonSerializerOptions
-  //   {
-  //     // Add indentation to the json data
-  //     WriteIndented = true
-  //   };
-
-  //   // Serialize the current Planned Day instance
-  //   string jsonString = JsonSerializer.Serialize(this, options);
-  //   Console.WriteLine($"PLANNED DAY JSON: \n {jsonString}");
-
-  //   // Option 1: Write the data in a file (Currently, this overrides the file)
-  //   File.WriteAllText("planned-day.json", jsonString);
-
-  //   // Option 2: Return the JSONString
-  //   return jsonString;
-  // }
-
-  // public void Deserialize()
-  // {
-  //   // Read the data (Currently, this is only one planned day)
-  //   string jsonString = File.ReadAllText("planned-day.json");
-
-  //   var options = new JsonSerializerOptions();
-  //   options.Converters.Add(new JsonStringEnumConverter());
-
-  //   PlannedDay deserializedPlannedDay = JsonSerializer.Deserialize<PlannedDay>(jsonString, options);
-
-  //   // Option 1: Return the PlannedDay
-  //   // Return deserializedPlannedDay;
-
-  //   // Option 2: Pass the values to the current PlannedDay
-
-  // }
 }
