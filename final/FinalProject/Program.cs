@@ -7,7 +7,7 @@ class Program
   {
     Console.Clear();
 
-    // Hide the cursor
+    // Hide the cursor for better experience
     Console.CursorVisible = false;
 
     // Instantiate the user profile and load the database
@@ -17,6 +17,8 @@ class Program
     // Create references to the user data to simplify access
     MealManager mealsData = userProfile.MealsData;
     Planner plannerData = userProfile.PlannerData;
+
+    // Use dependency injection for better data management
     plannerData.SetMealManager(mealsData);
 
     // Instantiate the Menu and Display welcome
@@ -29,8 +31,8 @@ class Program
     var options = new List<string>();
     options.Add("Plan a meal");
     options.Add("Upcoming meals");
-    options.Add("Meals Database");
-    options.Add("Ingredients Database");
+    options.Add("My Meals Database");
+    options.Add("My Ingredients Database");
     options.Add("Exit");
 
     string selectedOption;
@@ -45,6 +47,18 @@ class Program
         case "Plan a meal":
           Console.Clear();
           plannerData.PlanMeal();
+
+          if (!plannerData.PlanningCancelled)
+          {
+            userProfile.SaveUserData();
+            Utils.MessageToContinueAndClear();
+          }
+          else
+          {
+            // Reset to default value
+            plannerData.PlanningCancelled = false;
+          }
+
           break;
 
         case "Upcoming meals":
@@ -60,24 +74,36 @@ class Program
             plannerOptions.Add("Change a plan");
             plannerOptions.Add("Go back");
 
+            // I need to pass the Planner table to the GetSelectedOption Method
+            // because the method cleans que console. Not the best practice but for
+            // now is the faster solution to allow the user to see the plan above the options
             var table = plannerData.DisplayPlan();
 
-            selectedPlannerOption = Utils.GetSelectedOption("", plannerOptions, table);
+            selectedPlannerOption = Utils.GetSelectedOption(prompt="", plannerOptions, table);
 
             if (selectedPlannerOption == "Change a plan")
             {
               Console.Clear();
+
               plannerData.DisplayPlan();
               plannerData.EditPlan();
+              userProfile.SaveUserData();
+
+              Utils.MessageToContinueAndClear();
             }
 
           } while (selectedPlannerOption == "Change a plan");
 
           break;
 
-        case "Meals Database":
+        case "My Meals Database":
           mealsData.DisplayMeals();
+
+          Utils.MessageToContinueAndClear();
           break;
+
+        case "Exit":
+          return;
 
         default:
           break;
@@ -85,10 +111,6 @@ class Program
     } while (selectedOption != null);
 
 
-
-    // DISPLAY PLAN
-    // var mealsDict = mealsData.GenerateMealsDictionary();
-    // plannerData.DisplayPlan(mealsDict);
 
     // userProfile.SaveUserData();
   }

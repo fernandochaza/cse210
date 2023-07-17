@@ -9,6 +9,7 @@ public class PlannedDay
   private List<int> _mealsID = new List<int>();
   private bool _isCompleted;
   private bool _isSkipped;
+  private bool _planingCancelled = false;
 
   [JsonConstructor]
   public PlannedDay()
@@ -38,15 +39,16 @@ public class PlannedDay
 
     if (includeSideDish == null)
     {
-      return; // Exit the method if Escape was pressed
+      IsPlanningCancelled = true;
+      return;
     }
-
 
     string mealPrompt = "Select a meal: ";
     int? selectedMealId = Utils.GetSelectedKeyFromDict(mealPrompt, userMeals);
 
     if (selectedMealId == null)
     {
+      IsPlanningCancelled = true;
       return;
     }
 
@@ -58,6 +60,7 @@ public class PlannedDay
       int? selectedSideDishId = Utils.GetSelectedKeyFromDict(sideDishPrompt, userSideDishes);
       if (selectedSideDishId == null)
       {
+        IsPlanningCancelled = true;
         return;
       }
       _mealsID.Add(selectedSideDishId.Value);
@@ -107,6 +110,13 @@ public class PlannedDay
     set { _isSkipped = value; }
   }
 
+  [JsonIgnore]
+  public bool IsPlanningCancelled
+  {
+    get { return _planingCancelled; }
+    set {_planingCancelled = value; }
+  }
+
   public bool includesSideDish()
   {
     if (_mealsID.Count > 1)
@@ -141,7 +151,6 @@ public class PlannedDay
       this.Date = date;
 
       Utils.TextAnimation($"\n(!) Date changed to {date.ToShortDateString()}\n");
-      Utils.MessageToContinueAndClear();
     }
     else if (selectedEditOption == "Change Meal")
     {
@@ -155,7 +164,6 @@ public class PlannedDay
 
       this.MealIDs[0] = selectedMealId.Value;
       Utils.TextAnimation($"\n(!) Meal changed to {userMeals[selectedMealId.Value]}\n");
-      Utils.MessageToContinueAndClear();
     }
     else if (selectedEditOption == "Change/Add Side Dish")
     {
@@ -168,11 +176,18 @@ public class PlannedDay
         return;
       }
 
-      this.MealIDs[1] = selectedSideDishId.Value;
+      if (MealIDs.Count > 1)
+      {
+        this.MealIDs[1] = selectedSideDishId.Value;
+      }
+      else 
+      {
+        this.MealIDs.Add(selectedSideDishId.Value);
+      }
+
+      // ToDo: What if mealsIDs is zero?
 
       Utils.TextAnimation($"\n(!) Side dish changed to {userSideDishes[selectedSideDishId.Value]}\n");
-
-      Utils.MessageToContinueAndClear();
     }
   }
 

@@ -5,17 +5,13 @@ using ConsoleTables;
 public class Planner
 {
   private List<PlannedDay> _userPlan = new List<PlannedDay>();
+  private bool _planingCancelled = false;
   private MealManager _mealManager;
 
   [JsonConstructor]
   public Planner()
   {
 
-  }
-
-  public Planner(MealManager mealManager)
-  {
-    _mealManager = mealManager;
   }
 
   // Declare getters and setters to allow private members serialization
@@ -26,6 +22,13 @@ public class Planner
   {
     get { return _userPlan; }
     set { _userPlan = value; }
+  }
+
+  [JsonIgnore]
+  public bool PlanningCancelled
+  {
+    get { return _planingCancelled; }
+    set { _planingCancelled = value; }
   }
 
   public void SetMealManager(MealManager mealManager)
@@ -92,7 +95,7 @@ public class Planner
   /// </summary>
   /// <param name="userMeals">A dictionary containing an updated list of the user Meals with the Meal Id and Meal Name </param>
   /// <returns>The current planner data</returns>
-  public List<List<string>> GetPlannedDaysForTable(Dictionary<int, string> userMeals)
+  private List<List<string>> GetPlannedDaysForTable(Dictionary<int, string> userMeals)
   {
     // Generate a variable to hold the planner data
     var plannedDays = new List<List<string>>();
@@ -143,11 +146,17 @@ public class Planner
     var userMeals = _mealManager.GenerateMainMealsDictionary();
     var userSideDishes = _mealManager.GenerateSideDishDictionary();
 
+    DisplayPlan();
+
     PlannedDay plannedDay = new PlannedDay(userMeals, userSideDishes);
 
-    if (plannedDay.MealIDs.Count > 0)
+    if (!plannedDay.IsPlanningCancelled)
     {
       _userPlan.Add(plannedDay);
+    }
+    else
+    {
+      PlanningCancelled = true;
     }
 
     OrderPlanByDate();

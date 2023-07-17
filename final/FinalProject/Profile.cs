@@ -71,7 +71,7 @@ public class Profile
   /// <summary>
   /// Read the database JSON file to create and populate instances of MealManager and Planner
   /// </summary>
-  public void LoadUserData()
+  private void LoadUserData()
   {
     // Read the file
     string jsonString = File.ReadAllText(_databaseFilename);
