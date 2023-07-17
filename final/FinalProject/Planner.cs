@@ -48,7 +48,7 @@ public class Planner
     var headers = new List<string>();
     headers.Add("Id");
     headers.Add("Date");
-    headers.Add("Meal");
+    headers.Add("Main");
     headers.Add("Side Dish");
     var table = new ConsoleTable(headers.ToArray());
 
@@ -69,13 +69,13 @@ public class Planner
 
   public void EditPlan()
   {
-    Console.WriteLine();
-
-    // Display the cursor
-    Console.CursorVisible = true;
+    DisplayPlan();
 
     var userMeals = _mealManager.GenerateMainMealsDictionary();
     var userSideDishes = _mealManager.GenerateSideDishDictionary();
+
+    // Display the cursor
+    Console.CursorVisible = true;
 
     int planToChangeId = Utils.GetUserInt("Please, enter the ID of the day you want to change and press Enter: ");
 
@@ -84,10 +84,41 @@ public class Planner
       if (_userPlan[i].Id == planToChangeId)
       {
         _userPlan[i].Edit(userMeals, userSideDishes);
+        if (_userPlan[i].IsPlanningCancelled)
+        {
+          this.PlanningCancelled = true;
+
+          // Reset to default
+          _userPlan[i].IsPlanningCancelled = false;
+        }
       }
     }
 
     OrderPlanByDate();
+  }
+
+  public void RemoveDay()
+  {
+    DisplayPlan();
+
+    var userMeals = _mealManager.GenerateMainMealsDictionary();
+    var userSideDishes = _mealManager.GenerateSideDishDictionary();
+
+    // Display the cursor
+    Console.CursorVisible = true;
+
+    int planToRemoveId = Utils.GetUserInt("Please, enter the ID of the day you want to remove and press Enter: ");
+
+    PlannedDay plannedDay = _userPlan.FirstOrDefault(day => day.Id == planToRemoveId);
+    
+    if (plannedDay != null)
+    {
+        _userPlan.Remove(plannedDay);
+        Utils.TextAnimation("\n(!) The selected planned day was successfully removed...\n");
+        plannedDay.Display(userMeals, userSideDishes);
+
+        Utils.MessageToContinueAndClear();
+    }
   }
 
   /// <summary>

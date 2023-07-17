@@ -402,7 +402,7 @@
       {
         "meal-id": 8,
         "meal-name": "Roasted Vegetables",
-        "meal-type": 0,
+        "meal-type": 1,
         "meal-ingredients": [
           26,
           27,
@@ -577,7 +577,7 @@
       {
         "meal-id": 19,
         "meal-name": "Vegetable Stir-Fry",
-        "meal-type": 0,
+        "meal-type": 1,
         "meal-ingredients": [
           88,
           89,
@@ -604,27 +604,77 @@
           7,
           8
         ]
+      },
+      {
+        "meal-id": 21,
+        "meal-name": "Mashed Potatoes",
+        "meal-type": 1,
+        "meal-ingredients": [
+          27,
+          19,
+          7,
+          8
+        ]
+      },
+      {
+        "meal-id": 22,
+        "meal-name": "Cornbread",
+        "meal-type": 1,
+        "meal-ingredients": [
+          21,
+          22,
+          19,
+          7,
+          8
+        ]
+      },
+      {
+        "meal-id": 23,
+        "meal-name": "Green Bean Casserole",
+        "meal-type": 1,
+        "meal-ingredients": [
+          26,
+          35,
+          36,
+          37,
+          7,
+          8
+        ]
+      },
+      {
+        "meal-id": 24,
+        "meal-name": "Sweet Potato Casserole",
+        "meal-type": 1,
+        "meal-ingredients": [
+          27,
+          19,
+          37,
+          38,
+          39,
+          7,
+          8
+        ]
+      },
+      {
+        "meal-id": 25,
+        "meal-name": "Creamed Spinach",
+        "meal-type": 1,
+        "meal-ingredients": [
+          9,
+          7,
+          8
+        ]
       }
     ]
   },
   "planner-data": {
     "user-plan": [
       {
-        "planned-day-id": 1,
-        "date": "2023-07-05T00:00:00",
-        "meals-id": [
-          1,
-          6
-        ],
-        "completed": false,
-        "skipped": false
-      },
-      {
         "planned-day-id": 2,
         "date": "2023-07-06T00:00:00",
         "meals-id": [
-          2,
-          3
+          16,
+          2
         ],
         "completed": false,
         "skipped": false
@@ -643,7 +693,7 @@
         "planned-day-id": 4,
         "date": "2023-07-08T00:00:00",
         "meals-id": [
-          7,
+          8,
           2
         ],
         "completed": false,
@@ -675,6 +725,16 @@
         "meals-id": [
           8,
           10
+        ],
+        "completed": false,
+        "skipped": false
+      },
+      {
+        "planned-day-id": 8,
+        "date": "2023-07-12T00:00:00",
+        "meals-id": [
+          5,
+          6
         ],
         "completed": false,
         "skipped": false

@@ -70,6 +70,9 @@ public class PlannedDay
     _date = date;
     _isCompleted = false;
     _isSkipped = false;
+
+    Utils.TextAnimation("\n(!) Meal successfully planned!\n");
+    Display(userMeals, userSideDishes);
   }
 
   // Declare getters and setters to allow private members serialization
@@ -159,6 +162,7 @@ public class PlannedDay
 
       if (selectedMealId == null)
       {
+        this.IsPlanningCancelled = true;
         return;
       }
 
@@ -173,6 +177,7 @@ public class PlannedDay
 
       if (selectedSideDishId == null)
       {
+        this.IsPlanningCancelled = true;
         return;
       }
 
@@ -188,6 +193,20 @@ public class PlannedDay
       // ToDo: What if mealsIDs is zero?
 
       Utils.TextAnimation($"\n(!) Side dish changed to {userSideDishes[selectedSideDishId.Value]}\n");
+    }
+    else if (selectedEditOption == null)
+    {
+      this.IsPlanningCancelled = true;
+    }
+  }
+
+  public void Display(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
+  {
+    Utils.TextAnimation($"- Date: {Date.ToShortDateString()}\n");
+    Utils.TextAnimation($"- Main: {userMeals[MealIDs[0]]}\n");
+    if (MealIDs.Count > 1)
+    {
+      Utils.TextAnimation($"- Side Dish: {userSideDishes[MealIDs[1]]}\n");
     }
   }
 

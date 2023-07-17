@@ -101,15 +101,14 @@ public class Meal
   }
 
   /// <summary>
-  /// Display the Meal in the format "(Type) Meal Name"
+  /// Display the Meal Name
   /// </summary>
   public void Display()
   {
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
     string mealName = textInfo.ToTitleCase(_name);
-    string mealType = textInfo.ToTitleCase(_type.ToString());
 
-    Utils.TextAnimation($"({mealType}) {mealName}\n");
+    Utils.TextAnimation($"{mealName}\n");
   }
 
   public void DisplayIngredients(List<Ingredient> userIngredients)

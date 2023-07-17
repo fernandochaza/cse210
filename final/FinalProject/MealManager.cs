@@ -3,14 +3,8 @@ using System.Text.Json.Serialization;
 
 public class MealManager
 {
-  private List<Ingredient> _userIngredients = new List<Ingredient>();
-  private List<Meal> _userMeals = new List<Meal>();
-
-  // public void Create(Ingredient ingredient, Meal meal)
-  // {
-  //   _userIngredients.Add(ingredient);
-  //   _userMeals.Add(meal);
-  // }
+  private List<Ingredient> _ingredients = new List<Ingredient>();
+  private List<Meal> _meals = new List<Meal>();
 
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
@@ -18,25 +12,25 @@ public class MealManager
   [JsonPropertyName("user-ingredients")]
   public List<Ingredient> Ingredients
   {
-    get { return _userIngredients; }
-    set { _userIngredients = value; }
+    get { return _ingredients; }
+    set { _ingredients = value; }
   }
 
   [JsonPropertyName("user-meals")]
   public List<Meal> Meals
   {
-    get { return _userMeals; }
-    set { _userMeals = value; }
+    get { return _meals; }
+    set { _meals = value; }
   }
 
   public void AddMeal(Meal meal)
   {
-    _userMeals.Add(meal);
+    _meals.Add(meal);
   }
 
   public void AddIngredient(Ingredient ingredient)
   {
-    _userIngredients.Add(ingredient);
+    _ingredients.Add(ingredient);
   }
 
   public void AddIngredient()
@@ -48,7 +42,7 @@ public class MealManager
   {
     int newId = 1;
     
-    foreach (Ingredient ingredient in _userIngredients)
+    foreach (Ingredient ingredient in _ingredients)
     {
       if (ingredient.Id > newId)
       {
@@ -65,7 +59,7 @@ public class MealManager
   {
     int newId = 1;
 
-    foreach (Meal meal in _userMeals)
+    foreach (Meal meal in _meals)
     {
       if (meal.Id > newId)
       {
@@ -79,14 +73,51 @@ public class MealManager
   }
 
   /// <summary>
-  /// Display a list of all the user Meals in the format "(Type) Meal Name"
+  /// Display a list of all the user Meal Names. Separating Main Meals from Side Dishes
   /// </summary>
   public void DisplayMeals()
   {
-    Console.WriteLine("\n");
-    foreach (Meal meal in _userMeals)
+    List<Meal> mainMeals = GetMainMealsList();
+    List<Meal> sideDishes = GetSideDishList();
+
+    Utils.TextAnimation("Main Meals:\n");
+    foreach (Meal meal in mainMeals)
     {
       meal.Display();
+    }
+
+    Utils.TextAnimation("Side Dishes:\n");
+    foreach (Meal sideDish in sideDishes)
+    {
+      sideDish.Display();
+    }
+  }
+
+  /// <summary>
+  /// Display a list of the user Main Meal Names
+  /// </summary>
+  public void DisplayMainMeals()
+  {
+    List<Meal> mainMeals = GetMainMealsList();
+
+    Utils.TextAnimation("Main Meals:\n");
+    foreach (Meal meal in mainMeals)
+    {
+      meal.Display();
+    }
+  }
+
+  /// <summary>
+  /// Display a list of the user Side Dishes Names
+  /// </summary>
+  public void DisplaySideDishes()
+  {
+    List<Meal> sideDishes = GetSideDishList();
+
+    Utils.TextAnimation("Side Dishes:\n");
+    foreach (Meal sideDish in sideDishes)
+    {
+      sideDish.Display();
     }
   }
 
@@ -96,7 +127,7 @@ public class MealManager
   public void DisplayIngredients()
   {
     Console.WriteLine("\n");
-    foreach (Ingredient ingredient in _userIngredients)
+    foreach (Ingredient ingredient in _ingredients)
     {
       ingredient.Display();
     }
@@ -109,7 +140,7 @@ public class MealManager
   /// <returns>Returns an Ingredient instance or NULL if the are no matching ID</returns>
   public Ingredient GetIngredientById(int ingredientId)
   {
-    foreach (Ingredient ingredient in _userIngredients)
+    foreach (Ingredient ingredient in _ingredients)
     {
       if (ingredient.Id == ingredientId)
       {
@@ -127,7 +158,7 @@ public class MealManager
   /// <returns>Returns a Meal instance or NULL if the are no matching IDs</returns>
   public Meal GetMealById(int mealId)
   {
-    foreach (Meal meal in _userMeals)
+    foreach (Meal meal in _meals)
     {
       if (meal.Id == mealId)
       {
@@ -138,6 +169,24 @@ public class MealManager
     return null;
   }
 
+  private List<Meal> GetMainMealsList()
+  {
+    var mainMeals = new List<Meal>();
+
+    mainMeals = _meals.Where(meal => meal.Type == Meal.MealType.Main).ToList();
+
+    return mainMeals;
+  }
+
+  private List<Meal> GetSideDishList()
+  {
+    var sideDishes = new List<Meal>();
+
+    sideDishes = _meals.Where(meal => meal.Type == Meal.MealType.Side_Dish).ToList();
+
+    return sideDishes;
+  }
+
   /// <summary>
   /// Returns a List of string in the format "(Type) Meal Name" with all the meals in the user database
   /// </summary>
@@ -145,7 +194,7 @@ public class MealManager
   public List<string> GetMealsList()
   {
     List<string> meals = new List<string>();
-    foreach (Meal meal in _userMeals)
+    foreach (Meal meal in _meals)
     {
       string stringMeal = $"({meal.Type}) {meal.Name}";
       meals.Add(stringMeal);
@@ -157,10 +206,10 @@ public class MealManager
   public Dictionary<int, string> GenerateMealsDictionary()
   {
     Dictionary<int, string> mealsDict = new Dictionary<int, string>();
-    foreach (Meal meal in _userMeals)
+    foreach (Meal meal in _meals)
     {
       int mealId = meal.Id;
-      string stringMeal = $"({meal.Type}) {meal.Name}";
+      string stringMeal = $"{meal.Name}";
       mealsDict[mealId] = stringMeal;
     }
 
@@ -170,13 +219,12 @@ public class MealManager
   public Dictionary<int, string> GenerateMainMealsDictionary()
   {
     Dictionary<int, string> mainMealsDict = new Dictionary<int, string>();
-    foreach (Meal meal in _userMeals)
+    foreach (Meal meal in _meals)
     {
       if (meal.Type == Meal.MealType.Main)
       {
         int mealId = meal.Id;
-        string stringMeal = $"({meal.Type}) {meal.Name}";
-        mainMealsDict[mealId] = stringMeal;
+        mainMealsDict[mealId] = meal.Name;
       }
     }
 
@@ -186,13 +234,12 @@ public class MealManager
   public Dictionary<int, string> GenerateSideDishDictionary()
   {
     Dictionary<int, string> sideDishDict = new Dictionary<int, string>();
-    foreach (Meal meal in _userMeals)
+    foreach (Meal meal in _meals)
     {
       if (meal.Type == Meal.MealType.Side_Dish)
       {
         int mealId = meal.Id;
-        string stringMeal = $"({meal.Type}) {meal.Name}";
-        sideDishDict[mealId] = stringMeal;
+        sideDishDict[mealId] = meal.Name;
       }
     }
 

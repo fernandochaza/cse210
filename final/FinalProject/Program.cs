@@ -27,7 +27,6 @@ class Program
 
     Utils.MessageToContinueAndClear();
 
-    string prompt = "Select an Option:";
     var options = new List<string>();
     options.Add("Plan a meal");
     options.Add("Upcoming meals");
@@ -40,6 +39,7 @@ class Program
     do
     {
       Console.Clear();
+      string prompt = "Select an Option:";
       selectedOption = Utils.GetSelectedOption(prompt, options);
 
       switch (selectedOption)
@@ -71,35 +71,70 @@ class Program
             plannerData.DisplayPlan();
 
             var plannerOptions = new List<string>();
-            plannerOptions.Add("Change a plan");
-            plannerOptions.Add("Go back");
+            plannerOptions.Add("Change a planned day");
+            plannerOptions.Add("Remove a planned day");
 
             // I need to pass the Planner table to the GetSelectedOption Method
             // because the method cleans que console. Not the best practice but for
             // now is the faster solution to allow the user to see the plan above the options
             var table = plannerData.DisplayPlan();
 
-            selectedPlannerOption = Utils.GetSelectedOption(prompt="", plannerOptions, table);
+            selectedPlannerOption = Utils.GetSelectedOption(prompt = "", plannerOptions, table);
 
-            if (selectedPlannerOption == "Change a plan")
+            if (selectedPlannerOption == "Change a planned day")
             {
               Console.Clear();
 
-              plannerData.DisplayPlan();
               plannerData.EditPlan();
-              userProfile.SaveUserData();
 
-              Utils.MessageToContinueAndClear();
+              if (!plannerData.PlanningCancelled)
+              {
+                userProfile.SaveUserData();
+                Utils.MessageToContinueAndClear();
+              }
+              else
+              {
+                // Reset to default value
+                plannerData.PlanningCancelled = false;
+              }
+            }
+            else if (selectedPlannerOption == "Remove a planned day")
+            {
+              Console.Clear();
+
+              plannerData.RemoveDay();
+              userProfile.SaveUserData();
             }
 
-          } while (selectedPlannerOption == "Change a plan");
+          } while (selectedPlannerOption != null);
 
           break;
 
         case "My Meals Database":
-          mealsData.DisplayMeals();
+          string selectedMealDatabaseOption;
 
-          Utils.MessageToContinueAndClear();
+          do
+          {
+            var mealDatabaseOptions = new List<string>();
+            mealDatabaseOptions.Add("Main Meals");
+            mealDatabaseOptions.Add("Side Dishes");
+
+            selectedMealDatabaseOption = Utils.GetSelectedOption(prompt = "Select an Option", mealDatabaseOptions);
+
+            if (selectedMealDatabaseOption == "Main Meals")
+            {
+              Console.Clear();
+              mealsData.DisplayMainMeals();
+            }
+            else if (selectedMealDatabaseOption == "Side Dishes")
+            {
+              Console.Clear();
+              mealsData.DisplaySideDishes();
+            }
+
+            Utils.MessageToContinueAndClear();
+          } while (selectedMealDatabaseOption != null);
+
           break;
 
         case "Exit":
