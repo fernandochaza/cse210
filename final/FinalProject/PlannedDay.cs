@@ -20,22 +20,21 @@ public class PlannedDay
   /// <summary>
   /// Instantiate a new PlannedDay from the user input
   /// </summary>
-  /// <param name="userMeals"></param>
-  public PlannedDay(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
+  /// <param name="mainMealsDict">Dictionary containing the Main meals ID and Name</param>
+  /// <param name="sideDishesDict">Dictionary containing the Side Dishes ID and Name</param>
+  public PlannedDay(Dictionary<int, string> mainMealsDict, Dictionary<int, string> sideDishesDict)
   {
     int day = Utils.GetUserInt("Insert the day of the month: ");
     int month = Utils.GetUserInt("Insert the month number: ");
     int currentYear = DateTime.Today.Year;
     DateTime date = new DateTime(currentYear, month, day);
 
-    string prompt = "Do you want to include a Side Dish?";
-
     List<string> options = new List<string>();
     options.Add("Yes");
     options.Add("No");
 
     Console.Clear();
-    string includeSideDish = Menu.GetSelectedOption(prompt, options);
+    string includeSideDish = Menu.GetSelectedOption(prompt: "Do you want to include a Side Dish?", options);
 
     if (includeSideDish == null)
     {
@@ -43,8 +42,7 @@ public class PlannedDay
       return;
     }
 
-    string mealPrompt = "Select a meal: ";
-    int? selectedMealId = Utils.GetSelectedKeyFromDict(mealPrompt, userMeals);
+    int? selectedMealId = Utils.GetSelectedKeyFromDict(prompt: "Select a meal: ", idAndNameDict: mainMealsDict);
 
     if (selectedMealId == null)
     {
@@ -56,8 +54,7 @@ public class PlannedDay
 
     if (includeSideDish == "Yes")
     {
-      string sideDishPrompt = "Select a Side Dish: ";
-      int? selectedSideDishId = Utils.GetSelectedKeyFromDict(sideDishPrompt, userSideDishes);
+      int? selectedSideDishId = Utils.GetSelectedKeyFromDict(prompt: "Select a Side Dish: ", idAndNameDict: sideDishesDict);
       if (selectedSideDishId == null)
       {
         IsPlanningCancelled = true;
@@ -72,7 +69,7 @@ public class PlannedDay
     _isSkipped = false;
 
     Utils.TextAnimation("\n(!) Meal successfully planned!\n");
-    Display(userMeals, userSideDishes);
+    DisplayPlannedDay(mainMealsDict: mainMealsDict, sideDishesDict: sideDishesDict);
   }
 
   // Declare getters and setters to allow private members serialization
@@ -117,9 +114,13 @@ public class PlannedDay
   public bool IsPlanningCancelled
   {
     get { return _planingCancelled; }
-    set {_planingCancelled = value; }
+    set { _planingCancelled = value; }
   }
 
+  /// <summary>
+  /// Verify if the meal includes a Side Dish
+  /// </summary>
+  /// <returns></returns>
   public bool includesSideDish()
   {
     if (_mealsID.Count > 1)
@@ -130,6 +131,11 @@ public class PlannedDay
     return false;
   }
 
+  /// <summary>
+  /// Edit one of the planned day parameters (Date, Main Meal, Side Dish)
+  /// </summary>
+  /// <param name="mainMealsDict">Dictionary containing the Main meals ID and Name</param>
+  /// <param name="sideDishesDict">Dictionary containing the Side Dishes ID and Name</param>
   public void Edit(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
   {
     Console.CursorVisible = false;
@@ -158,7 +164,7 @@ public class PlannedDay
     else if (selectedEditOption == "Change Meal")
     {
       string mealPrompt = "Select a new meal: ";
-      int? selectedMealId = Utils.GetSelectedKeyFromDict(mealPrompt, userMeals);
+      int? selectedMealId = Utils.GetSelectedKeyFromDict(prompt: mealPrompt, idAndNameDict: userMeals);
 
       if (selectedMealId == null)
       {
@@ -173,7 +179,7 @@ public class PlannedDay
     {
 
       string sideDishPrompt = "Select a new Side Dish: ";
-      int? selectedSideDishId = Utils.GetSelectedKeyFromDict(sideDishPrompt, userSideDishes);
+      int? selectedSideDishId = Utils.GetSelectedKeyFromDict(prompt: sideDishPrompt, idAndNameDict: userSideDishes);
 
       if (selectedSideDishId == null)
       {
@@ -185,7 +191,7 @@ public class PlannedDay
       {
         this.MealIDs[1] = selectedSideDishId.Value;
       }
-      else 
+      else
       {
         this.MealIDs.Add(selectedSideDishId.Value);
       }
@@ -200,16 +206,25 @@ public class PlannedDay
     }
   }
 
-  public void Display(Dictionary<int, string> userMeals, Dictionary<int, string> userSideDishes)
+  /// <summary>
+  /// Display the planned day data in the console
+  /// </summary>
+  /// <param name="mainMealsDict">Dictionary containing the Main meals ID and Name</param>
+  /// <param name="sideDishesDict">Dictionary containing the Side Dishes ID and Name</param>
+  public void DisplayPlannedDay(Dictionary<int, string> mainMealsDict, Dictionary<int, string> sideDishesDict)
   {
     Utils.TextAnimation($"- Date: {Date.ToShortDateString()}\n");
-    Utils.TextAnimation($"- Main: {userMeals[MealIDs[0]]}\n");
+    Utils.TextAnimation($"- Main: {mainMealsDict[MealIDs[0]]}\n");
     if (MealIDs.Count > 1)
     {
-      Utils.TextAnimation($"- Side Dish: {userSideDishes[MealIDs[1]]}\n");
+      Utils.TextAnimation($"- Side Dish: {sideDishesDict[MealIDs[1]]}\n");
     }
   }
 
+  /// <summary>
+  /// Get the next available id for a planned day
+  /// </summary>
+  /// <returns></returns>
   private static int GetNextId()
   {
     return ++_lastId;

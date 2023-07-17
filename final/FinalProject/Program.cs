@@ -39,7 +39,7 @@ class Program
     {
       Console.Clear();
       var planTableMain = plannerData.DisplayPlanTable();
-      selectedOption = Menu.GetSelectedOption(prompt:"Select an Option:", options:mainOptions, displayTableBottom:planTableMain);
+      selectedOption = Menu.GetSelectedOption(prompt: "Select an Option:", options: mainOptions, displayTableBottom: planTableMain);
 
       switch (selectedOption)
       {
@@ -78,7 +78,7 @@ class Program
             // now is the faster solution to allow the user to see the plan above the options
             var planTable = plannerData.DisplayPlanTable();
 
-            selectedPlannerOption = Menu.GetSelectedOption(prompt:"", options:plannerOptions, displayTableTop:planTable);
+            selectedPlannerOption = Menu.GetSelectedOption(prompt: "", options: plannerOptions, displayTableTop: planTable);
 
             if (selectedPlannerOption == "Change a planned day")
             {
@@ -117,8 +117,9 @@ class Program
             var mealDatabaseOptions = new List<string>();
             mealDatabaseOptions.Add("Main Meals");
             mealDatabaseOptions.Add("Side Dishes");
+            mealDatabaseOptions.Add("Meal Ingredients");
 
-            selectedMealDatabaseOption = Menu.GetSelectedOption(prompt:"Select an Option", options:mealDatabaseOptions);
+            selectedMealDatabaseOption = Menu.GetSelectedOption(prompt: "Select an Option", options: mealDatabaseOptions);
 
             if (selectedMealDatabaseOption == "Main Meals")
             {
@@ -129,6 +130,10 @@ class Program
             {
               Console.Clear();
               mealsData.DisplaySideDishesList();
+            }
+            else if (selectedMealDatabaseOption == "Meal Ingredients")
+            {
+
             }
 
             Utils.MessageToContinueAndClear();

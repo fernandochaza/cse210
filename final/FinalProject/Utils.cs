@@ -62,18 +62,20 @@ public static class Utils
   /// </summary>
   public static void MessageToContinueAndClear()
   {
+    Console.ForegroundColor = ConsoleColor.Green;
     Console.CursorVisible = false;
     Utils.TextAnimation("\n> Press Enter to continue...");
     Console.ReadLine();
     Console.Clear();
+    Console.ResetColor();
   }
 
-  public static int? GetSelectedKeyFromDict(string prompt, Dictionary<int, string> idsAndDescriptionDict)
+  public static int? GetSelectedKeyFromDict(string prompt, Dictionary<int, string> idAndNameDict)
   {
     ConsoleKeyInfo keyInfo;
 
     // Generate a List of the dictionary keys that represents the object ID
-    List<int> keysList = idsAndDescriptionDict.Keys.ToList();
+    List<int> keysList = idAndNameDict.Keys.ToList();
 
     // This contain the user selected item as an index of the keysList variable
     int keyIndex = 0;
@@ -95,7 +97,7 @@ public static class Utils
         }
 
         // Display the object description
-        string objectDescription = idsAndDescriptionDict[keysList[i]];
+        string objectDescription = idAndNameDict[keysList[i]];
         Console.WriteLine(objectDescription);
       }
 

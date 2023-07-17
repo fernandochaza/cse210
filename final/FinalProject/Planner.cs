@@ -115,7 +115,7 @@ public class Planner
     {
       _userPlan.Remove(plannedDay);
       Utils.TextAnimation("\n(!) The selected planned day was successfully removed...\n");
-      plannedDay.Display(userMeals, userSideDishes);
+      plannedDay.DisplayPlannedDay(mainMealsDict: userMeals, sideDishesDict: userSideDishes);
 
       Utils.MessageToContinueAndClear();
     }

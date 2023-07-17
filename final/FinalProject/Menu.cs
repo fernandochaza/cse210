@@ -39,9 +39,11 @@ public static class Menu
     Utils.TextAnimation("- Use ARROW UP / ARROW DOWN to navigate the options\n");
     Utils.TextAnimation("- Use ESC to CANCEL or GO BACK to the previous menu\n");
     Utils.TextAnimation("- Use Enter to confirm an input\n");
+    Console.ResetColor();
 
-    Utils.TextAnimation("\n-> We have prepared a list of meals and ingredients for you to" +
+    Utils.TextAnimation("\n-> We have prepared a list of meals and ingredients for you to " +
     "START planning your next meals ASAP! \n");
+    Console.ResetColor();
   }
 
   public static string GetSelectedOption(string prompt, List<string> options, ConsoleTable displayTableTop = null, ConsoleTable displayTableBottom = null)
