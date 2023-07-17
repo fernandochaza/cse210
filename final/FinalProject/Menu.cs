@@ -1,28 +1,15 @@
+using ConsoleTables;
+
 /// <summary>
 /// Construct a Menu to display a list of options to the user ///---and handle the selected Option---///
 /// </summary>
-public class Menu
+public static class Menu
 {
-  private Dictionary<string, string> _options = new Dictionary<string, string>();
-
-  public Menu()
-  {
-
-  }
-
-  /// <summary>
-  /// Instantiate a Menu with the given options
-  /// </summary>
-  /// <param name="options">A Dictionary containing a list of options</param>
-  public Menu(Dictionary<string, string> options)
-  {
-    _options = options;
-  }
 
   /// <summary>
   /// Display the menu options
   /// </summary>
-  public void DisplayOptions(Dictionary<string, string> options)
+  public static void DisplayOptions(Dictionary<string, string> options)
   {
     Utils.TextAnimation("\nMenu Options:\n");
     foreach (KeyValuePair<string, string> option in options)
@@ -32,16 +19,94 @@ public class Menu
     Utils.TextAnimation("\n> Select a choice from the menu: ");
   }
 
-  public void DisplayOptions()
+  public static void DisplayOptions()
   {
     List<string> _options = new List<string>();
     _options.Add("");
   }
 
-  public void DisplayWelcome()
+  public static void DisplayWelcome()
   {
-    Utils.TextAnimation("Welcome to the Meal Tracker! \n\n");
-    Utils.TextAnimation("We have prepared a list of meals and ingredients for you to START " +
-    "planning your next meals ASAP! \n");
+    Utils.TextAnimation("--------------------------------------\n\n");
+    Utils.TextAnimation("---- WELCOME TO MEAL PLANNING APP ----\n\n");
+    Utils.TextAnimation("--------------------------------------\n\n");
+
+
+    Console.ForegroundColor = ConsoleColor.Red;
+    Utils.TextAnimation("(!) Keyboard navigation:\n");
+
+    Console.ForegroundColor = ConsoleColor.Green;
+    Utils.TextAnimation("- Use ARROW UP / ARROW DOWN to navigate the options\n");
+    Utils.TextAnimation("- Use ESC to CANCEL or GO BACK to the previous menu\n");
+    Utils.TextAnimation("- Use Enter to confirm an input\n");
+
+    Utils.TextAnimation("\n-> We have prepared a list of meals and ingredients for you to" +
+    "START planning your next meals ASAP! \n");
+  }
+
+  public static string GetSelectedOption(string prompt, List<string> options, ConsoleTable displayTableTop = null, ConsoleTable displayTableBottom = null)
+  {
+    ConsoleKeyInfo keyInfo;
+    int selectedIndex = 0;
+
+    Console.CursorVisible = false;
+
+    do
+    {
+      Console.Clear();
+
+      if (displayTableTop != null)
+      {
+        displayTableTop.Write(Format.Minimal);
+        Console.WriteLine();
+      }
+
+      if (prompt != "")
+      {
+        Console.WriteLine($"{prompt}\n");
+      }
+
+      for (int i = 0; i < options.Count; i++)
+      {
+        if (i == selectedIndex)
+        {
+          Console.Write("-> ");
+        }
+        else
+        {
+          Console.Write("   ");
+        }
+
+        // Display the option text
+        string optionText = options[i];
+        Console.WriteLine(optionText);
+      }
+
+      // Display bottom table
+      if (displayTableBottom != null)
+      {
+        Console.WriteLine("\n");
+        displayTableBottom.Write(Format.Minimal);
+      }
+
+      keyInfo = Console.ReadKey();
+
+      if (keyInfo.Key == ConsoleKey.UpArrow)
+      {
+        selectedIndex = (selectedIndex + options.Count - 1) % options.Count;
+      }
+      else if (keyInfo.Key == ConsoleKey.DownArrow)
+      {
+        selectedIndex = (selectedIndex + 1) % options.Count;
+      }
+      else if (keyInfo.Key == ConsoleKey.Escape)
+      {
+        return null;
+      }
+
+    } while (keyInfo.Key != ConsoleKey.Enter);
+
+    // Return the selected index
+    return options[selectedIndex];
   }
 }

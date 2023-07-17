@@ -21,26 +21,25 @@ class Program
     // Use dependency injection for better data management
     plannerData.SetMealManager(mealsData);
 
-    // Instantiate the Menu and Display welcome
-    Menu menu = new Menu();
-    menu.DisplayWelcome();
+    // Display welcome
+    Menu.DisplayWelcome();
 
     Utils.MessageToContinueAndClear();
 
-    var options = new List<string>();
-    options.Add("Plan a meal");
-    options.Add("Upcoming meals");
-    options.Add("My Meals Database");
-    options.Add("My Ingredients Database");
-    options.Add("Exit");
+    var mainOptions = new List<string>();
+    mainOptions.Add("Plan a meal");
+    mainOptions.Add("Edit my plan");
+    mainOptions.Add("My Meals Database");
+    mainOptions.Add("My Ingredients Database");
+    mainOptions.Add("Exit");
 
     string selectedOption;
 
     do
     {
       Console.Clear();
-      string prompt = "Select an Option:";
-      selectedOption = Utils.GetSelectedOption(prompt, options);
+      var planTableMain = plannerData.DisplayPlanTable();
+      selectedOption = Menu.GetSelectedOption(prompt:"Select an Option:", options:mainOptions, displayTableBottom:planTableMain);
 
       switch (selectedOption)
       {
@@ -61,14 +60,14 @@ class Program
 
           break;
 
-        case "Upcoming meals":
+        case "Edit my plan":
           string selectedPlannerOption;
 
           do
           {
             Console.Clear();
 
-            plannerData.DisplayPlan();
+            plannerData.DisplayPlanTable();
 
             var plannerOptions = new List<string>();
             plannerOptions.Add("Change a planned day");
@@ -77,9 +76,9 @@ class Program
             // I need to pass the Planner table to the GetSelectedOption Method
             // because the method cleans que console. Not the best practice but for
             // now is the faster solution to allow the user to see the plan above the options
-            var table = plannerData.DisplayPlan();
+            var planTable = plannerData.DisplayPlanTable();
 
-            selectedPlannerOption = Utils.GetSelectedOption(prompt = "", plannerOptions, table);
+            selectedPlannerOption = Menu.GetSelectedOption(prompt:"", options:plannerOptions, displayTableTop:planTable);
 
             if (selectedPlannerOption == "Change a planned day")
             {
@@ -119,17 +118,17 @@ class Program
             mealDatabaseOptions.Add("Main Meals");
             mealDatabaseOptions.Add("Side Dishes");
 
-            selectedMealDatabaseOption = Utils.GetSelectedOption(prompt = "Select an Option", mealDatabaseOptions);
+            selectedMealDatabaseOption = Menu.GetSelectedOption(prompt:"Select an Option", options:mealDatabaseOptions);
 
             if (selectedMealDatabaseOption == "Main Meals")
             {
               Console.Clear();
-              mealsData.DisplayMainMeals();
+              mealsData.DisplayMainMealsList();
             }
             else if (selectedMealDatabaseOption == "Side Dishes")
             {
               Console.Clear();
-              mealsData.DisplaySideDishes();
+              mealsData.DisplaySideDishesList();
             }
 
             Utils.MessageToContinueAndClear();

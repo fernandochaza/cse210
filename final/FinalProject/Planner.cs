@@ -40,7 +40,7 @@ public class Planner
   /// Display the next planned meals in a table format
   /// </summary>
   /// <param name="userMeals">A dictionary containing an updated list of the user Meals with the Meal Id and Meal Name</param>
-  public ConsoleTable DisplayPlan()
+  public ConsoleTable DisplayPlanTable()
   {
     var userMeals = _mealManager.GenerateMealsDictionary();
 
@@ -69,7 +69,7 @@ public class Planner
 
   public void EditPlan()
   {
-    DisplayPlan();
+    DisplayPlanTable();
 
     var userMeals = _mealManager.GenerateMainMealsDictionary();
     var userSideDishes = _mealManager.GenerateSideDishDictionary();
@@ -99,7 +99,7 @@ public class Planner
 
   public void RemoveDay()
   {
-    DisplayPlan();
+    DisplayPlanTable();
 
     var userMeals = _mealManager.GenerateMainMealsDictionary();
     var userSideDishes = _mealManager.GenerateSideDishDictionary();
@@ -110,14 +110,14 @@ public class Planner
     int planToRemoveId = Utils.GetUserInt("Please, enter the ID of the day you want to remove and press Enter: ");
 
     PlannedDay plannedDay = _userPlan.FirstOrDefault(day => day.Id == planToRemoveId);
-    
+
     if (plannedDay != null)
     {
-        _userPlan.Remove(plannedDay);
-        Utils.TextAnimation("\n(!) The selected planned day was successfully removed...\n");
-        plannedDay.Display(userMeals, userSideDishes);
+      _userPlan.Remove(plannedDay);
+      Utils.TextAnimation("\n(!) The selected planned day was successfully removed...\n");
+      plannedDay.Display(userMeals, userSideDishes);
 
-        Utils.MessageToContinueAndClear();
+      Utils.MessageToContinueAndClear();
     }
   }
 
@@ -177,7 +177,7 @@ public class Planner
     var userMeals = _mealManager.GenerateMainMealsDictionary();
     var userSideDishes = _mealManager.GenerateSideDishDictionary();
 
-    DisplayPlan();
+    DisplayPlanTable();
 
     PlannedDay plannedDay = new PlannedDay(userMeals, userSideDishes);
 

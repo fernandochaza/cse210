@@ -40,16 +40,19 @@ public class Profile
     // If the database file doesn't exists, create one
     if (!File.Exists(_databaseFilename))
     {
-      // Code to create a JSON file containing the user data
+      SaveUserData();
 
-      Utils.TextAnimation(
-          $"(!) New database created in the main program folder ({_databaseFilename})\n\n"
-      );
+      Console.ForegroundColor = ConsoleColor.Red;
+      Utils.TextAnimation($"(!) New database created in the main program folder ({_databaseFilename})\n\n");
+      Console.ResetColor();
     }
     else
     {
       LoadUserData();
+
+      Console.ForegroundColor = ConsoleColor.Red;
       Utils.TextAnimation($"(!) Reading data from the existing database ({_databaseFilename})\n\n");
+      Console.ResetColor();
     }
   }
 

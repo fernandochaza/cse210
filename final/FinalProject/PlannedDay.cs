@@ -35,7 +35,7 @@ public class PlannedDay
     options.Add("No");
 
     Console.Clear();
-    string includeSideDish = Utils.GetSelectedOption(prompt, options);
+    string includeSideDish = Menu.GetSelectedOption(prompt, options);
 
     if (includeSideDish == null)
     {
@@ -141,7 +141,7 @@ public class PlannedDay
     editPlanOptions.Add("Change/Add Side Dish");
 
     string selectedEditOption;
-    selectedEditOption = Utils.GetSelectedOption(editPlanPrompt, editPlanOptions);
+    selectedEditOption = Menu.GetSelectedOption(editPlanPrompt, editPlanOptions);
 
     if (selectedEditOption == "Change the date")
     {

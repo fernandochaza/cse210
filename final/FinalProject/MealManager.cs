@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ConsoleTables;
 
 public class MealManager
 {
@@ -41,13 +42,13 @@ public class MealManager
   public int GetNewIngredientId()
   {
     int newId = 1;
-    
+
     foreach (Ingredient ingredient in _ingredients)
     {
       if (ingredient.Id > newId)
       {
         newId = ingredient.Id;
-      } 
+      }
     }
 
     newId++;
@@ -64,7 +65,7 @@ public class MealManager
       if (meal.Id > newId)
       {
         newId = meal.Id;
-      } 
+      }
     }
 
     newId++;
@@ -75,7 +76,7 @@ public class MealManager
   /// <summary>
   /// Display a list of all the user Meal Names. Separating Main Meals from Side Dishes
   /// </summary>
-  public void DisplayMeals()
+  public void DisplayMealsList()
   {
     List<Meal> mainMeals = GetMainMealsList();
     List<Meal> sideDishes = GetSideDishList();
@@ -96,7 +97,7 @@ public class MealManager
   /// <summary>
   /// Display a list of the user Main Meal Names
   /// </summary>
-  public void DisplayMainMeals()
+  public void DisplayMainMealsList()
   {
     List<Meal> mainMeals = GetMainMealsList();
 
@@ -110,7 +111,7 @@ public class MealManager
   /// <summary>
   /// Display a list of the user Side Dishes Names
   /// </summary>
-  public void DisplaySideDishes()
+  public void DisplaySideDishesList()
   {
     List<Meal> sideDishes = GetSideDishList();
 
@@ -124,13 +125,57 @@ public class MealManager
   /// <summary>
   /// Displays a list of all the user ingredients in the format "Name (type)"
   /// </summary>
-  public void DisplayIngredients()
+  public void DisplayIngredientsList()
   {
     Console.WriteLine("\n");
     foreach (Ingredient ingredient in _ingredients)
     {
       ingredient.Display();
     }
+  }
+
+  public ConsoleTable DisplayMealTable(Meal meal)
+  {
+    // Generate headers for the table
+    var headers = new List<string>();
+    headers.Add("Meal");
+    headers.Add("Type");
+    headers.Add("Ingredients");
+    var table = new ConsoleTable(headers.ToArray());
+
+    var mealData = new List<string>();
+    string mealName = meal.Name;
+    string mealType = meal.Type.ToString();
+    string ingredients = GetMealIngredientsString(meal);
+
+    mealData.Add(mealName);
+    mealData.Add(mealType);
+    mealData.Add(ingredients);
+
+    table.AddRow(mealData.ToArray());
+
+    table.Write(Format.Minimal);
+
+    Utils.MessageToContinueAndClear();
+
+    return table;
+  }
+
+  private string GetMealIngredientsString(Meal meal)
+  {
+    string ingredientsString = "";
+
+    foreach (int ingredientId in meal.IngredientsID)
+    {
+      Ingredient ingredient = _ingredients.FirstOrDefault(ingredient => ingredient.Id == ingredientId);
+
+      if (ingredient != null)
+      {
+        ingredientsString += ingredient.Name + ", ";
+      }
+    }
+
+    return ingredientsString;
   }
 
   /// <summary>
@@ -193,7 +238,7 @@ public class MealManager
   /// <returns>A list of strings</returns>
   public List<string> GetMealsList()
   {
-    List<string> meals = new List<string>();
+    var meals = new List<string>();
     foreach (Meal meal in _meals)
     {
       string stringMeal = $"({meal.Type}) {meal.Name}";
@@ -205,12 +250,11 @@ public class MealManager
 
   public Dictionary<int, string> GenerateMealsDictionary()
   {
-    Dictionary<int, string> mealsDict = new Dictionary<int, string>();
+    var mealsDict = new Dictionary<int, string>();
     foreach (Meal meal in _meals)
     {
       int mealId = meal.Id;
-      string stringMeal = $"{meal.Name}";
-      mealsDict[mealId] = stringMeal;
+      mealsDict[mealId] = meal.Name;
     }
 
     return mealsDict;
@@ -218,7 +262,7 @@ public class MealManager
 
   public Dictionary<int, string> GenerateMainMealsDictionary()
   {
-    Dictionary<int, string> mainMealsDict = new Dictionary<int, string>();
+    var mainMealsDict = new Dictionary<int, string>();
     foreach (Meal meal in _meals)
     {
       if (meal.Type == Meal.MealType.Main)
@@ -233,7 +277,7 @@ public class MealManager
 
   public Dictionary<int, string> GenerateSideDishDictionary()
   {
-    Dictionary<int, string> sideDishDict = new Dictionary<int, string>();
+    var sideDishDict = new Dictionary<int, string>();
     foreach (Meal meal in _meals)
     {
       if (meal.Type == Meal.MealType.Side_Dish)
@@ -245,4 +289,17 @@ public class MealManager
 
     return sideDishDict;
   }
+
+  public Dictionary<int, string> GenerateIngredientsDictionary()
+  {
+    var ingredientsDict = new Dictionary<int, string>();
+    foreach (Ingredient ingredient in _ingredients)
+    {
+      int ingredientId = ingredient.Id;
+      ingredientsDict[ingredientId] = ingredient.Name;
+    }
+
+    return ingredientsDict;
+  }
+
 }
