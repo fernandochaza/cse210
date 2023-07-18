@@ -17,6 +17,7 @@ class Program
     // Create references to the user data to simplify access
     MealManager mealsData = userProfile.MealsData;
     Planner plannerData = userProfile.PlannerData;
+    plannerData.SetIngredientsData(mealsData.Ingredients);
 
     // Use dependency injection for better data management
     plannerData.SetMealManager(mealsData);
@@ -170,6 +171,13 @@ class Program
               userProfile.SaveUserData();
             }
           } while (selectedMealDatabaseOption != null);
+
+          break;
+
+        case "Generate Grocery List":
+
+          plannerData.GenerateGroceryList();
+          Utils.MessageToContinueAndClear();
 
           break;
 

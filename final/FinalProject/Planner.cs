@@ -7,6 +7,7 @@ public class Planner
   private List<PlannedDay> _userPlan = new List<PlannedDay>();
   private bool _planingCancelled = false;
   private MealManager _mealManager;
+  private List<Ingredient> _ingredientsData;
 
   [JsonConstructor]
   public Planner()
@@ -34,6 +35,11 @@ public class Planner
   public void SetMealManager(MealManager mealManager)
   {
     _mealManager = mealManager;
+  }
+
+  public void SetIngredientsData(List<Ingredient> ingredients)
+  {
+    _ingredientsData = ingredients;
   }
 
   /// <summary>
@@ -273,5 +279,50 @@ public class Planner
     }
 
     return newId;
+  }
+
+  public void GenerateGroceryList()
+  {
+    Console.Clear();
+    Console.SetCursorPosition(0, 0);
+    Console.ForegroundColor = ConsoleColor.Red;
+
+    Utils.TextAnimation("Grocery List: \n");
+    Console.ResetColor();
+
+    var mealsList = new List<Meal>();
+    foreach (PlannedDay plannedDay in _userPlan)
+    {
+      if (!plannedDay.IsCompleted)
+      {
+        foreach (int mealId in plannedDay.MealIDs)
+        {
+          Meal mealInstance = _mealManager.Meals.Find(meal => meal.Id == mealId);
+          mealsList.Add(mealInstance);
+        }
+      }
+    }
+
+    var ingredientsList = new List<Ingredient>();
+    foreach (Meal meal in mealsList)
+    {
+      foreach (int ingredientId in meal.IngredientsID)
+      {
+        Ingredient ingredientInstance = _ingredientsData.Find(ingredient => ingredient.Id == ingredientId);
+        ingredientsList.Add(ingredientInstance);
+      }
+    }
+
+    Console.ForegroundColor = ConsoleColor.Green;
+    var groceryList = new List<string>();
+    foreach (Ingredient ingredient in ingredientsList)
+    {
+      if (!groceryList.Contains(ingredient.Name))
+      {
+        groceryList.Add(ingredient.Name);
+        Utils.TextAnimation($"\n{ingredient.Name}");
+      }
+    }
+    Console.ResetColor();
   }
 }
