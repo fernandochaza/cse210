@@ -11,10 +11,43 @@ public class Ingredient
   private static int _lastId = 0;
   private string _name;
   private IngredientType _type;
+  private bool _ingredientCreationCanceled = false;
+
 
   public Ingredient()
   {
 
+  }
+
+  public Ingredient(int ingredientId)
+  {
+    Console.CursorVisible = true;
+    Id = ingredientId;
+
+    Utils.DisplayMessage("\nPlease. Enter the ingredient name: ");
+    Name = Console.ReadLine();
+
+    Utils.DisplayMessage("\nInsert the Ingredient type (main or seasoning): ");
+    string type = Console.ReadLine();
+
+    type = type.ToLower();
+
+    if (type.Contains("main"))
+    {
+      Type = IngredientType.Main;
+    }
+    else if (type.Contains("seasoning"))
+    {
+      Type = IngredientType.Seasoning;
+    }
+    else
+    {
+      Utils.DisplayMessage("\n(!) Type error. Please, enter a valid type...\n\n", type: "warning", speed: 1);
+      Utils.MessageToContinueAndClear();
+      IsIngredientCreationCanceled = true;
+      Console.CursorVisible = false;
+      return;
+    }
   }
 
   // Declare getters and setters to allow private members serialization
@@ -48,41 +81,19 @@ public class Ingredient
     }
   }
 
+  [JsonIgnore]
+  public bool IsIngredientCreationCanceled
+  {
+    get { return _ingredientCreationCanceled; }
+    set { _ingredientCreationCanceled = value; }
+  }
+
+
   // Define custom ingredient types
   public enum IngredientType
   {
     Main,
     Seasoning
-  }
-
-  /// <summary>
-  /// Instantiate a Ingredient, populate its data from the user input and return it
-  /// </summary>
-  public static Ingredient Create()
-  {
-    Ingredient ingredient = new Ingredient();
-    ingredient._id = GetNextId();
-
-    Utils.DisplayMessage("Ingredient name: \n");
-    ingredient._name = Console.ReadLine();
-
-    Utils.DisplayMessage("Ingredient type (main or seasoning): \n");
-    string type = Console.ReadLine();
-
-    if (type == "main")
-    {
-      ingredient._type = IngredientType.Main;
-    }
-    else if (type == "seasoning")
-    {
-      ingredient._type = IngredientType.Seasoning;
-    }
-    else
-    {
-      Utils.DisplayMessage("Type error\n");
-    }
-
-    return ingredient;
   }
 
   /// <summary>

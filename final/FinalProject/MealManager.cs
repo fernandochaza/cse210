@@ -89,14 +89,50 @@ public class MealManager
     }
   }
 
-  public void AddIngredient(Ingredient ingredient)
+  public void AddNewIngredient()
   {
-    _ingredients.Add(ingredient);
+    int id = GetNewIngredientId();
+
+    Ingredient newIngredient = new Ingredient(id);
+
+    if (!newIngredient.IsIngredientCreationCanceled)
+    {
+      _ingredients.Add(newIngredient);
+      Utils.DisplayMessage("\nNew Ingredient:\n");
+      newIngredient.Display();
+    }
+    else
+    {
+      IsAddingCancelled = true;
+    }
   }
 
-  public void AddIngredient()
+  public void RemoveIngredient()
   {
+    DisplayIngredientsTable();
 
+    // Display the cursor
+    Console.CursorVisible = true;
+
+    int ingredientToRemoveId = Utils.GetUserInt("Please, enter the ID of the Ingredient you want to remove: ");
+
+    // Get ingredients ids to verify user input
+    Dictionary<int, string> ingredientsDict = GenerateIngredientsDictionary();
+    if (!ingredientsDict.Keys.Contains(ingredientToRemoveId))
+    {
+      Utils.DisplayMessage($"\n(!) The id {ingredientToRemoveId} doesn't match an existing Ingredient!...\n", type: "warning", speed: 2);
+      Utils.MessageToContinueAndClear();
+      return;
+    }
+
+    Ingredient ingredientToRemove = _ingredients.FirstOrDefault(ingredient => ingredient.Id == ingredientToRemoveId);
+
+    if (ingredientToRemove != null)
+    {
+      _ingredients.Remove(ingredientToRemove);
+      Utils.DisplayMessage("\n(!) The selected Ingredient was successfully removed...\n", type: "info", speed: 1);
+      ingredientToRemove.Display();
+    }
   }
 
   public int GetNewIngredientId()

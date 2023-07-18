@@ -222,6 +222,24 @@ class Program
               Console.WriteLine();
               Utils.MessageToContinueAndClear();
             }
+            else if (selectedIngredientDatabaseOption == "Add Ingredient")
+            {
+              Console.Clear();
+              mealsData.AddNewIngredient();
+              if (!mealsData.IsAddingCancelled)
+              {
+                userProfile.SaveUserData();
+                Utils.DisplayMessage("\n\n(!) New Ingredient added to the database...\n", type: "success", speed: 3);
+                Utils.MessageToContinueAndClear();
+              }
+            }
+            else if (selectedIngredientDatabaseOption == "Remove Ingredient")
+            {
+              Console.Clear();
+              mealsData.RemoveIngredient();
+              userProfile.SaveUserData();
+              Utils.MessageToContinueAndClear();
+            }
           } while (selectedIngredientDatabaseOption != null);
 
           break;
