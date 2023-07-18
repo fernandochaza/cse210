@@ -102,6 +102,7 @@ class Program
               if (!plannerData.PlanningCancelled)
               {
                 userProfile.SaveUserData();
+                Utils.MessageToContinueAndClear();
               }
               else
               {
@@ -135,15 +136,15 @@ class Program
           do
           {
             var mealDatabaseOptions = new List<string>();
+            mealDatabaseOptions.Add("Add a new Meal");
+            mealDatabaseOptions.Add("Remove a Meal \n");
             mealDatabaseOptions.Add("Main Meals List");
-            mealDatabaseOptions.Add("Side Dishes List");
+            mealDatabaseOptions.Add("Side Dishes List\n");
             mealDatabaseOptions.Add("Main Meal Ingredients");
             mealDatabaseOptions.Add("Side Dish Ingredients");
-            mealDatabaseOptions.Add("Add a new Meal");
-            mealDatabaseOptions.Add("Remove a Meal");
 
 
-            selectedMealDatabaseOption = Menu.GetSelectedOption(prompt: "Select an Option", options: mealDatabaseOptions);
+            selectedMealDatabaseOption = Menu.GetSelectedOption(prompt: "Select an Option: ", options: mealDatabaseOptions);
 
             if (selectedMealDatabaseOption == "Main Meals List")
             {
@@ -152,7 +153,7 @@ class Program
 
               Utils.MessageToContinueAndClear();
             }
-            else if (selectedMealDatabaseOption == "Side Dishes List")
+            else if (selectedMealDatabaseOption == "Side Dishes List\n")
             {
               Console.Clear();
               mealsData.DisplaySideDishesList();
@@ -206,14 +207,5 @@ class Program
           break;
       }
     } while (selectedOption != null);
-
-
-
-    // userProfile.SaveUserData();
   }
 }
-
-
-// ------ PENDING ------- //
-// Validate month and date inputs
-// Check methods VISIBILITY (encapsulate)

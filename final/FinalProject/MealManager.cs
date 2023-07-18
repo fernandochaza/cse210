@@ -106,34 +106,13 @@ public class MealManager
   }
 
   /// <summary>
-  /// Display a list of all the user Meal Names. Separating Main Meals from Side Dishes
-  /// </summary>
-  public void DisplayMealsList()
-  {
-    List<Meal> mainMeals = GetMainMealsList();
-    List<Meal> sideDishes = GetSideDishList();
-
-    Utils.DisplayMessage("Main Meals:\n");
-    foreach (Meal meal in mainMeals)
-    {
-      meal.Display();
-    }
-
-    Utils.DisplayMessage("Side Dishes:\n");
-    foreach (Meal sideDish in sideDishes)
-    {
-      sideDish.Display();
-    }
-  }
-
-  /// <summary>
   /// Display a list of the user Main Meal Names
   /// </summary>
   public void DisplayMainMealsList()
   {
     List<Meal> mainMeals = GetMainMealsList();
 
-    Utils.DisplayMessage("Main Meals:\n");
+    Utils.DisplayMessage("Main Meals:\n\n", type: "info");
     foreach (Meal meal in mainMeals)
     {
       meal.Display();
@@ -147,7 +126,7 @@ public class MealManager
   {
     List<Meal> sideDishes = GetSideDishList();
 
-    Utils.DisplayMessage("Side Dishes:\n");
+    Utils.DisplayMessage("Side Dishes:\n\n", type: "info");
     foreach (Meal sideDish in sideDishes)
     {
       sideDish.Display();

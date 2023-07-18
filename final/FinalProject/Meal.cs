@@ -6,7 +6,6 @@ using ConsoleTables;
 public class Meal
 {
   private int _id;
-  private static int _lastId = 0;
   private string _name;
   private bool _mealCreationCanceled = false;
   private MealType _type;
@@ -131,12 +130,7 @@ public class Meal
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
     string mealName = textInfo.ToTitleCase(_name);
 
-    Utils.DisplayMessage($"{mealName}\n");
-  }
-
-  private static int GetNextId()
-  {
-    return ++_lastId;
+    Utils.DisplayMessage($"- {mealName}\n", type: "info", speed: 1);
   }
 
   internal void EditMealIngredients(Dictionary<int, string> ingredientsDatabaseDict)

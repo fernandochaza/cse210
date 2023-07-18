@@ -68,7 +68,6 @@ public class PlannedDay
     _isCompleted = false;
 
     Utils.DisplayMessage("\n(!) Meal successfully planned!\n");
-    DisplayPlannedDay(mainMealsDict: mainMealsDict, sideDishesDict: sideDishesDict);
   }
 
   // Declare getters and setters to allow private members serialization
@@ -209,15 +208,14 @@ public class PlannedDay
   /// <summary>
   /// Display the planned day data in the console
   /// </summary>
-  /// <param name="mainMealsDict">Dictionary containing the Main meals ID and Name</param>
-  /// <param name="sideDishesDict">Dictionary containing the Side Dishes ID and Name</param>
-  public void DisplayPlannedDay(Dictionary<int, string> mainMealsDict, Dictionary<int, string> sideDishesDict)
+  /// <param name="mealsDict">Dictionary containing the meals ID and Name</param>
+  public void DisplayPlannedDay(Dictionary<int, string> mealsDict)
   {
     Utils.DisplayMessage($"- Date: {Date.ToShortDateString()}\n");
-    Utils.DisplayMessage($"- Main: {mainMealsDict[MealIDs[0]]}\n");
+    Utils.DisplayMessage($"- Main: {mealsDict[MealIDs[0]]}\n");
     if (MealIDs.Count > 1)
     {
-      Utils.DisplayMessage($"- Side Dish: {sideDishesDict[MealIDs[1]]}\n");
+      Utils.DisplayMessage($"- Side Dish: {mealsDict[MealIDs[1]]}\n");
     }
   }
 

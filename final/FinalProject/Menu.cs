@@ -64,6 +64,7 @@ public static class Menu
         Console.WriteLine($"{prompt}\n");
       }
 
+      Console.ForegroundColor = ConsoleColor.Blue;
       for (int i = 0; i < options.Count; i++)
       {
         if (i == selectedIndex)
@@ -79,6 +80,7 @@ public static class Menu
         string optionText = options[i];
         Console.WriteLine(optionText);
       }
+      Console.ResetColor();
 
       // Display bottom table
       if (displayTableBottom != null)

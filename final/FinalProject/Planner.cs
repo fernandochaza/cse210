@@ -113,7 +113,6 @@ public class Planner
     return table;
   }
 
-
   public void EditPlan()
   {
     DisplayPlanTable();
@@ -178,8 +177,7 @@ public class Planner
   {
     DisplayPlanTable();
 
-    var userMeals = _mealManager.GenerateMainMealsDictionary();
-    var userSideDishes = _mealManager.GenerateSideDishDictionary();
+    var userMeals = _mealManager.GenerateMealsDictionary();
 
     // Display the cursor
     Console.CursorVisible = true;
@@ -199,8 +197,8 @@ public class Planner
 
     _userPlan.Remove(plannedDayToRemove);
     Utils.DisplayMessage("\n(!) The selected planned day was successfully removed...\n", type: "info", speed: 1);
+    plannedDayToRemove.DisplayPlannedDay(mealsDict: userMeals);
 
-    plannedDayToRemove.DisplayPlannedDay(mainMealsDict: userMeals, sideDishesDict: userSideDishes);
     Utils.MessageToContinueAndClear();
   }
 
@@ -339,8 +337,11 @@ public class Planner
       {
         foreach (int mealId in plannedDay.MealIDs)
         {
-          Meal mealInstance = _mealManager.Meals.Find(meal => meal.Id == mealId);
-          mealsList.Add(mealInstance);
+          Meal mealInstance = _mealManager.Meals.FirstOrDefault(meal => meal.Id == mealId);
+          if (mealInstance != null)
+          {
+            mealsList.Add(mealInstance);
+          }
         }
       }
     }
@@ -365,7 +366,7 @@ public class Planner
       }
     }
 
-    Utils.DisplayMessage("\n\nThose are the ingredients you need for the nex meals\n");
+    Utils.DisplayMessage("\n\nThose are the ingredients you need for the next meals\n");
     Utils.DisplayMessage("Please make sure you have everything you need!...\n");
 
   }
