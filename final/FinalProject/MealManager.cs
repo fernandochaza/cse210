@@ -6,6 +6,7 @@ public class MealManager
 {
   private List<Ingredient> _ingredients = new List<Ingredient>();
   private List<Meal> _meals = new List<Meal>();
+  private bool _addingCancelled = false;
   private Planner _planner;
 
   // Declare getters and setters to allow private members serialization
@@ -25,6 +26,13 @@ public class MealManager
     set { _meals = value; }
   }
 
+  [JsonIgnore]
+  public bool IsAddingCancelled
+  {
+    get { return _addingCancelled; }
+    set { _addingCancelled = value; }
+  }
+
   /// <summary>
   /// Set a Planner instance to use dependency injection
   /// </summary>
@@ -34,9 +42,23 @@ public class MealManager
     _planner = planner;
   }
 
-  public void AddMeal(Meal meal)
+  public void AddNewMeal()
   {
-    _meals.Add(meal);
+    int id = GetNewMealId();
+    List<Ingredient> ingredientsData = _ingredients;
+
+    Meal newMeal = new Meal(id, ingredientsData);
+    if (!newMeal.IsMealCreationCanceled)
+    {
+      _meals.Add(newMeal);
+      Utils.DisplayMessage($"New Meal:");
+      newMeal.Display();
+      newMeal.DisplayMealIngredientsAsTable();
+    }
+    else
+    {
+      IsAddingCancelled = true;
+    }
   }
 
   public void AddIngredient(Ingredient ingredient)
@@ -142,13 +164,13 @@ public class MealManager
 
       if (ingredient != null)
       {
-        ingredientsString += ingredient.Name + ", ";
+        ingredientsString += ingredient.Name + " | ";
       }
     }
 
     if (!string.IsNullOrEmpty(ingredientsString))
     {
-      ingredientsString = ingredientsString.TrimEnd(',', ' ');
+      ingredientsString = ingredientsString.TrimEnd('|', ' ');
     }
 
     return ingredientsString;
@@ -283,11 +305,5 @@ public class MealManager
     }
 
     return ingredientsDict;
-  }
-
-  public List<Ingredient> FindIngredientByName(string searchString)
-  {
-    List<Ingredient> ingredientSearched = _ingredients.FindAll(ingredient => ingredient.Name.Contains(searchString));
-    return ingredientSearched;
   }
 }

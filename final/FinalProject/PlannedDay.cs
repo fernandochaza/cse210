@@ -153,16 +153,12 @@ public class PlannedDay
     if (selectedEditOption == "Change the date")
     {
       Console.WriteLine();
-      int day = Utils.GetUserInt("Please, enter the day number: ");
-      int month = Utils.GetUserInt("Please, enter the month number: ");
-      int currentYear = DateTime.Today.Year;
-      DateTime date = new DateTime(currentYear, month, day);
 
-      this.Date = date;
+      DateTime? date = Utils.GetDate();
 
-      Console.ForegroundColor = ConsoleColor.Red;
-      Utils.DisplayMessage($"\n(!) Date changed to {date.ToShortDateString()}\n");
-      Console.ResetColor();
+      this.Date = date.Value;
+
+      Utils.DisplayMessage($"\n(!) Date changed to {date.Value.ToShortDateString()}\n", type: "info", speed: 2);
     }
     else if (selectedEditOption == "Change Meal")
     {
@@ -177,9 +173,7 @@ public class PlannedDay
 
       this.MealIDs[0] = selectedMealId.Value;
 
-      Console.ForegroundColor = ConsoleColor.Red;
-      Utils.DisplayMessage($"\n(!) Meal changed to {userMeals[selectedMealId.Value]}\n");
-      Console.ResetColor();
+      Utils.DisplayMessage($"\n(!) Meal changed to {userMeals[selectedMealId.Value]}\n", type: "info", speed: 2);
     }
     else if (selectedEditOption == "Change/Add Side Dish")
     {
@@ -204,9 +198,7 @@ public class PlannedDay
 
       // ToDo: What if mealsIDs is zero?
 
-      Console.ForegroundColor = ConsoleColor.Red;
-      Utils.DisplayMessage($"\n(!) Side dish changed to {userSideDishes[selectedSideDishId.Value]}\n");
-      Console.ResetColor();
+      Utils.DisplayMessage($"\n(!) Side dish changed to {userSideDishes[selectedSideDishId.Value]}\n", type: "info", speed: 2);
     }
     else if (selectedEditOption == null)
     {

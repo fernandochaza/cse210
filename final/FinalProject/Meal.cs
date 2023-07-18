@@ -8,13 +8,86 @@ public class Meal
   private int _id;
   private static int _lastId = 0;
   private string _name;
+  private bool _mealCreationCanceled = false;
   private MealType _type;
   private List<int> _ingredientsID = new List<int>();
   private List<Ingredient> _ingredientsData;
 
+  [JsonConstructor]
   public Meal()
   {
 
+  }
+
+  public Meal(int mealId, List<Ingredient> ingredientsData)
+  {
+    SetIngredientsData(ingredientsData);
+    Console.CursorVisible = true;
+    Id = mealId;
+
+    Utils.DisplayMessage("Please, insert the Meal name: ");
+    Name = Console.ReadLine();
+
+    Utils.DisplayMessage("Insert the Meal type (main or side dish): ");
+    string type = Console.ReadLine();
+
+    type = type.ToLower();
+
+    if (type.Contains("main"))
+    {
+      Type = MealType.Main;
+    }
+    else if (type.Contains("side"))
+    {
+      Type = MealType.Side_Dish;
+    }
+    else
+    {
+      Utils.DisplayMessage("\n(!) Type error. Please, enter a valid type...\n\n", type: "warning", speed: 1);
+      Utils.MessageToContinueAndClear();
+      IsMealCreationCanceled = true;
+      Console.CursorVisible = false;
+      return;
+    }
+
+    // Add ingredients from Ingredients database or create new ingredients
+    int ingredientsQuantity = Utils.GetUserInt("How many ingredients do you want to add to this meal? ");
+
+    // ADD INGREDIENTS
+    for (int i=0; i < ingredientsQuantity; i++)
+    {
+      string ingredientName = "";
+
+      Console.CursorVisible = true;
+      Utils.DisplayMessage("\nPlease, enter the name of the ingredient you want to Add: ");
+      string searchedIngredient = Console.ReadLine();
+      Console.CursorVisible = false;
+
+      List<Ingredient> ingredientsFound = FindIngredientByName(searchedIngredient);
+
+      int? selectedIngredientId = null;
+      if (ingredientsFound.Count > 0)
+      {
+        var ingredientOptions = new Dictionary<int, string>();
+        foreach (Ingredient ingredient in ingredientsFound)
+        {
+          ingredientOptions[ingredient.Id] = ingredient.Name;
+        }
+
+        selectedIngredientId = Utils.GetSelectedKeyFromDict(prompt: "Select the ingredient you want to add", idAndNameDict: ingredientOptions);
+        if (selectedIngredientId == null)
+        {
+          IsMealCreationCanceled = true;
+          Console.CursorVisible = false;
+          return;
+        }
+        IngredientsID.Add(selectedIngredientId.Value);
+        ingredientName = ingredientOptions[selectedIngredientId.Value];
+      }
+
+      Utils.DisplayMessage($"\n(!) {ingredientName} was added...");
+      Utils.MessageToContinueAndClear();
+    }
   }
 
   // Declare getters and setters to allow private members serialization
@@ -55,6 +128,13 @@ public class Meal
     set { _ingredientsID = value; }
   }
 
+  [JsonIgnore]
+  public bool IsMealCreationCanceled
+  {
+    get { return _mealCreationCanceled; }
+    set { _mealCreationCanceled = value; }
+  }
+
   public enum MealType
   {
     Main,
@@ -68,47 +148,6 @@ public class Meal
   public void SetIngredientsData(List<Ingredient> ingredients)
   {
     _ingredientsData = ingredients;
-  }
-
-  /// <summary>
-  /// Instantiate a Meal object, populate its data from the user input and return it
-  /// </summary>
-  public static Meal Create()
-  {
-    Meal meal = new Meal();
-    meal._id = GetNextId();
-
-    Utils.DisplayMessage("Meal name: \n");
-    meal._name = Console.ReadLine();
-
-    Utils.DisplayMessage("Meal type (main or side dish): \n");
-    string type = Console.ReadLine();
-
-    if (type == "main")
-    {
-      meal._type = MealType.Main;
-    }
-    else if (type == "side dish")
-    {
-      meal._type = MealType.Side_Dish;
-    }
-    else
-    {
-      Utils.DisplayMessage("Type error\n");
-    }
-
-    // Add ingredients from Ingredients database or create new ingredients
-    int quantity;
-    Utils.DisplayMessage("how many ingredients? ");
-    quantity = int.Parse(Console.ReadLine());
-
-    // ------ ADD CODE TO ADD INGREDIENTS -----
-
-    meal._ingredientsID.Add(1);
-    meal._ingredientsID.Add(2);
-    meal._ingredientsID.Add(3);
-
-    return meal;
   }
 
   /// <summary>
@@ -147,7 +186,7 @@ public class Meal
 
         Console.CursorVisible = true;
         Utils.DisplayMessage("\nPlease, enter the name of the ingredient you want to Add: ");
-        string searchedIngredient = Console.ReadLine().ToLower();
+        string searchedIngredient = Console.ReadLine();
         Console.CursorVisible = false;
 
         List<Ingredient> ingredientsFound = FindIngredientByName(searchedIngredient);
@@ -224,7 +263,7 @@ public class Meal
   public List<Ingredient> FindIngredientByName(string searchString)
   {
     string lowerSearchString = searchString.ToLower();
-    List<Ingredient> ingredientSearched = _ingredientsData.FindAll(ingredient => ingredient.Name.ToLower().Contains(searchString));
+    List<Ingredient> ingredientSearched = _ingredientsData.FindAll(ingredient => ingredient.Name.ToLower().Contains(lowerSearchString));
     return ingredientSearched;
   }
 }

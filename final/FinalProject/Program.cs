@@ -135,21 +135,24 @@ class Program
           do
           {
             var mealDatabaseOptions = new List<string>();
-            mealDatabaseOptions.Add("Main Meals");
-            mealDatabaseOptions.Add("Side Dishes");
+            mealDatabaseOptions.Add("Main Meals List");
+            mealDatabaseOptions.Add("Side Dishes List");
             mealDatabaseOptions.Add("Main Meal Ingredients");
             mealDatabaseOptions.Add("Side Dish Ingredients");
+            mealDatabaseOptions.Add("Add a new Meal");
+            mealDatabaseOptions.Add("Remove a Meal");
+
 
             selectedMealDatabaseOption = Menu.GetSelectedOption(prompt: "Select an Option", options: mealDatabaseOptions);
 
-            if (selectedMealDatabaseOption == "Main Meals")
+            if (selectedMealDatabaseOption == "Main Meals List")
             {
               Console.Clear();
               mealsData.DisplayMainMealsList();
 
               Utils.MessageToContinueAndClear();
             }
-            else if (selectedMealDatabaseOption == "Side Dishes")
+            else if (selectedMealDatabaseOption == "Side Dishes List")
             {
               Console.Clear();
               mealsData.DisplaySideDishesList();
@@ -168,6 +171,22 @@ class Program
               Dictionary<int, string> mealsToCheck = mealsData.GenerateSideDishDictionary();
               mealsData.VerifyIngredients(mealsToCheck);
               userProfile.SaveUserData();
+            }
+            else if (selectedMealDatabaseOption == "Add a new Meal")
+            {
+              Console.Clear();
+              mealsData.AddNewMeal();
+              if (!mealsData.IsAddingCancelled)
+              {
+                userProfile.SaveUserData();
+                Utils.DisplayMessage("\n\n(!) New Meal Added to the database...\n", type: "success", speed: 3);
+                Utils.MessageToContinueAndClear();
+              }
+              else
+              {
+                // Reset default value
+                mealsData.IsAddingCancelled = false;
+              }
             }
           } while (selectedMealDatabaseOption != null);
 
