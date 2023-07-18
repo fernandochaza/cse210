@@ -760,17 +760,6 @@
           8,
           27
         ]
-      },
-      {
-        "meal-id": 25,
-        "meal-name": "Creamed Spinach",
-        "meal-type": 1,
-        "meal-ingredients": [
-          60,
-          7,
-          8,
-          24
-        ]
       }
     ]
   },
@@ -845,6 +834,15 @@
         "meals-id": [
           1,
           2
+        ],
+        "completed": false
+      },
+      {
+        "planned-day-id": 18,
+        "date": "2023-09-20T00:00:00",
+        "meals-id": [
+          20,
+          24
         ],
         "completed": false
       }

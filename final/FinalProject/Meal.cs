@@ -229,7 +229,7 @@ public class Meal
       mealIngredientsTable.AddRow(ingredient.ToArray());
     }
 
-    mealIngredientsTable.Write();
+    mealIngredientsTable.Write(Format.Minimal);
 
     return mealIngredientsTable;
   }

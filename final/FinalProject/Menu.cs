@@ -27,9 +27,9 @@ public static class Menu
 
   public static void DisplayWelcome()
   {
-    Utils.DisplayMessage("--------------------------------------\n\n", type: "info", speed: 1);
-    Utils.DisplayMessage("---------- MEAL PLANNING APP ---------\n\n", type: "info", speed: 1);
-    Utils.DisplayMessage("--------------------------------------\n\n", type: "info", speed: 1);
+    Utils.DisplayMessage("--------------------------------------\n\n", type: "info");
+    Utils.DisplayMessage("---------- MEAL PLANNING APP ---------\n\n", type: "info");
+    Utils.DisplayMessage("--------------------------------------\n\n", type: "info");
 
 
     Utils.DisplayMessage("(!) Keyboard navigation:\n", type: "info", speed: 4);

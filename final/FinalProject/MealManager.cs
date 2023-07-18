@@ -61,6 +61,34 @@ public class MealManager
     }
   }
 
+  public void RemoveMeal()
+  {
+    DisplayMealsTable();
+
+    // Display the cursor
+    Console.CursorVisible = true;
+
+    int mealToRemoveId = Utils.GetUserInt("Please, enter the ID of the Meal you want to remove: ");
+
+    // Get meals ids to verify user input
+    Dictionary<int, string> mealsDict = GenerateMealsDictionary();
+    if (!mealsDict.Keys.Contains(mealToRemoveId))
+    {
+      Utils.DisplayMessage($"\n(!) The id {mealToRemoveId} doesn't match an existing Meal!...\n", type: "warning", speed: 2);
+      Utils.MessageToContinueAndClear();
+      return;
+    }
+
+    Meal mealToRemove = _meals.FirstOrDefault(meal => meal.Id == mealToRemoveId);
+
+    if (mealToRemove != null)
+    {
+      _meals.Remove(mealToRemove);
+      Utils.DisplayMessage("\n(!) The selected Meal was successfully removed...\n", type: "info", speed: 1);
+      mealToRemove.Display();
+    }
+  }
+
   public void AddIngredient(Ingredient ingredient)
   {
     _ingredients.Add(ingredient);
@@ -171,12 +199,61 @@ public class MealManager
     ConsoleTable table = new ConsoleTable(headers.ToArray());
     table.AddRow(row.ToArray());
 
-    table.Write();
+    table.Write(Format.Minimal);
 
     return table;
   }
 
-  public void VerifyIngredients(Dictionary<int, string> mealsToCheckDict)
+  private void DisplayMealsTable()
+  {
+    var headers = new List<string>();
+    headers.Add("Id");
+    headers.Add("Meal");
+
+    ConsoleTable mealsTable = new ConsoleTable(headers.ToArray());
+
+    foreach (Meal meal in _meals)
+    {
+      var mealRow = new List<string>();
+
+      string mealId = meal.Id.ToString();
+      string mealName = meal.Name;
+
+      mealRow.Add(mealId);
+      mealRow.Add(mealName);
+      mealsTable.AddRow(mealRow.ToArray());
+
+    }
+
+    mealsTable.Write(Format.Minimal);
+  }
+
+  public void DisplayIngredientsTable()
+  {
+    var headers = new List<string>();
+    headers.Add("Id");
+    headers.Add("Ingredient");
+
+    ConsoleTable ingredientsTable = new ConsoleTable(headers.ToArray());
+
+    foreach (Ingredient ingredient in _ingredients)
+    {
+      var ingredientRow = new List<string>();
+
+      string ingredientId = ingredient.Id.ToString();
+      string ingredientName = ingredient.Name;
+
+      ingredientRow.Add(ingredientId);
+      ingredientRow.Add(ingredientName);
+      ingredientsTable.AddRow(ingredientRow.ToArray());
+
+    }
+
+    ingredientsTable.Write(Format.Minimal);
+  }
+
+
+  public void VerifyMealIngredients(Dictionary<int, string> mealsToCheckDict)
   {
     int? selectedMealId;
 

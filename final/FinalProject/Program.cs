@@ -40,9 +40,10 @@ class Program
 
     var mainOptions = new List<string>();
     mainOptions.Add("Plan a meal");
-    mainOptions.Add("Edit my plan");
+    mainOptions.Add("Edit my plan\n");
     mainOptions.Add("My Meals Database");
-    mainOptions.Add("Generate Grocery List");
+    mainOptions.Add("Ingredients Database\n");
+    mainOptions.Add("Generate Grocery List\n");
     mainOptions.Add("Exit");
 
     string selectedOption;
@@ -72,14 +73,12 @@ class Program
 
           break;
 
-        case "Edit my plan":
+        case "Edit my plan\n":
           string selectedPlannerOption;
 
           do
           {
             Console.Clear();
-
-
 
             var plannerOptions = new List<string>();
             plannerOptions.Add("Change a planned day");
@@ -133,47 +132,19 @@ class Program
         case "My Meals Database":
           string selectedMealDatabaseOption;
 
+          var mealDatabaseOptions = new List<string>();
+          mealDatabaseOptions.Add("Add a new Meal");
+          mealDatabaseOptions.Add("Remove a Meal \n");
+          mealDatabaseOptions.Add("Main Meals List");
+          mealDatabaseOptions.Add("Side Dishes List\n");
+          mealDatabaseOptions.Add("Main Meal Ingredients");
+          mealDatabaseOptions.Add("Side Dish Ingredients");
+
           do
           {
-            var mealDatabaseOptions = new List<string>();
-            mealDatabaseOptions.Add("Add a new Meal");
-            mealDatabaseOptions.Add("Remove a Meal \n");
-            mealDatabaseOptions.Add("Main Meals List");
-            mealDatabaseOptions.Add("Side Dishes List\n");
-            mealDatabaseOptions.Add("Main Meal Ingredients");
-            mealDatabaseOptions.Add("Side Dish Ingredients");
-
-
             selectedMealDatabaseOption = Menu.GetSelectedOption(prompt: "Select an Option: ", options: mealDatabaseOptions);
 
-            if (selectedMealDatabaseOption == "Main Meals List")
-            {
-              Console.Clear();
-              mealsData.DisplayMainMealsList();
-
-              Utils.MessageToContinueAndClear();
-            }
-            else if (selectedMealDatabaseOption == "Side Dishes List\n")
-            {
-              Console.Clear();
-              mealsData.DisplaySideDishesList();
-
-              Utils.MessageToContinueAndClear();
-            }
-            else if (selectedMealDatabaseOption == "Main Meal Ingredients")
-            {
-              Dictionary<int, string> mealsToCheck = mealsData.GenerateMainMealsDictionary();
-              mealsData.VerifyIngredients(mealsToCheck);
-              userProfile.SaveUserData();
-
-            }
-            else if (selectedMealDatabaseOption == "Side Dish Ingredients")
-            {
-              Dictionary<int, string> mealsToCheck = mealsData.GenerateSideDishDictionary();
-              mealsData.VerifyIngredients(mealsToCheck);
-              userProfile.SaveUserData();
-            }
-            else if (selectedMealDatabaseOption == "Add a new Meal")
+            if (selectedMealDatabaseOption == "Add a new Meal")
             {
               Console.Clear();
               mealsData.AddNewMeal();
@@ -189,7 +160,69 @@ class Program
                 mealsData.IsAddingCancelled = false;
               }
             }
+
+            else if (selectedMealDatabaseOption == "Remove a Meal \n")
+            {
+              Console.Clear();
+              mealsData.RemoveMeal();
+              userProfile.SaveUserData();
+              Utils.MessageToContinueAndClear();
+            }
+
+            else if (selectedMealDatabaseOption == "Main Meals List")
+            {
+              Console.Clear();
+              mealsData.DisplayMainMealsList();
+
+              Utils.MessageToContinueAndClear();
+            }
+
+            else if (selectedMealDatabaseOption == "Side Dishes List\n")
+            {
+              Console.Clear();
+              mealsData.DisplaySideDishesList();
+
+              Utils.MessageToContinueAndClear();
+            }
+
+            else if (selectedMealDatabaseOption == "Main Meal Ingredients")
+            {
+              Dictionary<int, string> mealsToCheck = mealsData.GenerateMainMealsDictionary();
+              mealsData.VerifyMealIngredients(mealsToCheck);
+              userProfile.SaveUserData();
+
+            }
+
+            else if (selectedMealDatabaseOption == "Side Dish Ingredients")
+            {
+              Dictionary<int, string> mealsToCheck = mealsData.GenerateSideDishDictionary();
+              mealsData.VerifyMealIngredients(mealsToCheck);
+              userProfile.SaveUserData();
+            }
+
           } while (selectedMealDatabaseOption != null);
+
+          break;
+
+        case "Ingredients Database\n":
+          string selectedIngredientDatabaseOption;
+
+          var ingredientDatabaseOptions = new List<string>();
+          ingredientDatabaseOptions.Add("Ingredients List");
+          ingredientDatabaseOptions.Add("Add Ingredient");
+          ingredientDatabaseOptions.Add("Remove Ingredient");
+
+          do
+          {
+            selectedIngredientDatabaseOption = Menu.GetSelectedOption(prompt: "Select an Option: ", options: ingredientDatabaseOptions);
+
+            if (selectedIngredientDatabaseOption == "Ingredients List")
+            {
+              mealsData.DisplayIngredientsTable();
+              Console.WriteLine();
+              Utils.MessageToContinueAndClear();
+            }
+          } while (selectedIngredientDatabaseOption != null);
 
           break;
 
