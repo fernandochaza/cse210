@@ -50,44 +50,17 @@ public class Meal
       return;
     }
 
-    // Add ingredients from Ingredients database or create new ingredients
-    int ingredientsQuantity = Utils.GetUserInt("How many ingredients do you want to add to this meal? ");
+    Dictionary<int, string> ingredientsDict = GenerateIngredientsDictionary(ingredientsData);
 
-    // ADD INGREDIENTS
-    for (int i=0; i < ingredientsQuantity; i++)
-    {
-      string ingredientName = "";
+    Utils.DisplayMessage("\nTime to add the meal ingredients!\n\n", type: "success", speed: 1);
 
-      Console.CursorVisible = true;
-      Utils.DisplayMessage("\nPlease, enter the name of the ingredient you want to Add: ");
-      string searchedIngredient = Console.ReadLine();
-      Console.CursorVisible = false;
+    Utils.DisplayMessage("Please, continue to the next screen. Then ", speed: 1);
+    Utils.DisplayMessage("press Esc ", type: "warning", speed: 1);
+    Utils.DisplayMessage("when you finish adding the ingredients\n\n", speed: 1);
 
-      List<Ingredient> ingredientsFound = FindIngredientByName(searchedIngredient);
-
-      int? selectedIngredientId = null;
-      if (ingredientsFound.Count > 0)
-      {
-        var ingredientOptions = new Dictionary<int, string>();
-        foreach (Ingredient ingredient in ingredientsFound)
-        {
-          ingredientOptions[ingredient.Id] = ingredient.Name;
-        }
-
-        selectedIngredientId = Utils.GetSelectedKeyFromDict(prompt: "Select the ingredient you want to add", idAndNameDict: ingredientOptions);
-        if (selectedIngredientId == null)
-        {
-          IsMealCreationCanceled = true;
-          Console.CursorVisible = false;
-          return;
-        }
-        IngredientsID.Add(selectedIngredientId.Value);
-        ingredientName = ingredientOptions[selectedIngredientId.Value];
-      }
-
-      Utils.DisplayMessage($"\n(!) {ingredientName} was added...");
-      Utils.MessageToContinueAndClear();
-    }
+    Utils.DisplayMessage("(!) If you can't find the ingredient. Go to the ingredients Database to add it...\n\n", type: "info", speed: 1);
+    Utils.MessageToContinueAndClear();
+    EditMealIngredients(ingredientsDict);
   }
 
   // Declare getters and setters to allow private members serialization
@@ -201,6 +174,13 @@ public class Meal
           }
 
           selectedIngredientId = Utils.GetSelectedKeyFromDict(prompt: "Select the ingredient you want to add", idAndNameDict: ingredientOptions);
+          if (selectedIngredientId == null)
+          {
+            IsMealCreationCanceled = true;
+            Utils.DisplayMessage("(!) The meal creation was canceled...", type: "warning");
+            Utils.MessageToContinueAndClear();
+            return;
+          }
           IngredientsID.Add(selectedIngredientId.Value);
         }
 
@@ -265,5 +245,17 @@ public class Meal
     string lowerSearchString = searchString.ToLower();
     List<Ingredient> ingredientSearched = _ingredientsData.FindAll(ingredient => ingredient.Name.ToLower().Contains(lowerSearchString));
     return ingredientSearched;
+  }
+
+  private Dictionary<int, string> GenerateIngredientsDictionary(List<Ingredient> ingredients)
+  {
+    var ingredientsDict = new Dictionary<int, string>();
+    foreach (Ingredient ingredient in ingredients)
+    {
+      int ingredientId = ingredient.Id;
+      ingredientsDict[ingredientId] = ingredient.Name;
+    }
+
+    return ingredientsDict;
   }
 }

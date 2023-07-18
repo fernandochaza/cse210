@@ -27,23 +27,19 @@ public static class Menu
 
   public static void DisplayWelcome()
   {
-    Utils.DisplayMessage("--------------------------------------\n\n");
-    Utils.DisplayMessage("---------- MEAL PLANNING APP ---------\n\n");
-    Utils.DisplayMessage("--------------------------------------\n\n");
+    Utils.DisplayMessage("--------------------------------------\n\n", type: "info", speed: 1);
+    Utils.DisplayMessage("---------- MEAL PLANNING APP ---------\n\n", type: "info", speed: 1);
+    Utils.DisplayMessage("--------------------------------------\n\n", type: "info", speed: 1);
 
 
-    Console.ForegroundColor = ConsoleColor.Red;
-    Utils.DisplayMessage("(!) Keyboard navigation:\n");
+    Utils.DisplayMessage("(!) Keyboard navigation:\n", type: "info", speed: 4);
 
-    Console.ForegroundColor = ConsoleColor.Green;
-    Utils.DisplayMessage("- Use ARROW UP / ARROW DOWN to navigate the options\n");
-    Utils.DisplayMessage("- Use ESC to CANCEL or GO BACK to the previous menu\n");
-    Utils.DisplayMessage("- Use Enter to confirm an input\n");
-    Console.ResetColor();
+    Utils.DisplayMessage("- Use ARROW UP / ARROW DOWN to navigate the options\n", type: "success", speed: 4);
+    Utils.DisplayMessage("- Use ESC to CANCEL or GO BACK to the previous menu\n", type: "success", speed: 4);
+    Utils.DisplayMessage("- Use Enter to confirm an input\n", type: "success", speed: 4);
 
-    Utils.DisplayMessage("\n-> We have prepared a list of meals and ingredients for you to " +
-    "START planning your next meals ASAP! \n");
-    Console.ResetColor();
+    Utils.DisplayMessage("\n(!) We have prepared a list of meals and ingredients for you to " +
+    "START planning your next meals ASAP! \n", type: "info", speed: 6);
   }
 
   public static string GetSelectedOption(string prompt, List<string> options, ConsoleTable displayTableTop = null, ConsoleTable displayTableBottom = null)

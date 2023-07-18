@@ -51,7 +51,7 @@ public class MealManager
     if (!newMeal.IsMealCreationCanceled)
     {
       _meals.Add(newMeal);
-      Utils.DisplayMessage($"New Meal:");
+      Utils.DisplayMessage("\nNew Meal:\n");
       newMeal.Display();
       newMeal.DisplayMealIngredientsAsTable();
     }
