@@ -132,65 +132,6 @@ public class MealManager
     }
   }
 
-  // public ConsoleTable DisplayMealAsTable(Meal meal)
-  // {
-  //   // Generate headers for the table
-  //   var headers = new List<string>();
-  //   headers.Add("Meal");
-  //   headers.Add("Type");
-  //   headers.Add("Ingredients");
-  //   var table = new ConsoleTable(headers.ToArray());
-
-  //   var mealData = new List<string>();
-  //   string mealName = meal.Name;
-  //   string mealType = meal.Type.ToString();
-  //   string ingredients = GetMealIngredientsString(meal);
-
-  //   mealData.Add(mealName);
-  //   mealData.Add(mealType);
-  //   mealData.Add(ingredients);
-
-  //   table.AddRow(mealData.ToArray());
-
-  //   table.Write(Format.Minimal);
-
-  //   Utils.MessageToContinueAndClear();
-
-  //   return table;
-  // }
-
-  // public ConsoleTable DisplayMealIngredientsAsTable(Meal meal)
-  // {
-  //   var ingredientsDatabaseDict = GenerateIngredientsDictionary();
-
-  //   var tableHeaders = new List<string>();
-  //   tableHeaders.Add("Id");
-  //   tableHeaders.Add("Name");
-  //   ConsoleTable mealIngredientsTable = new ConsoleTable(tableHeaders.ToArray());
-
-  //   var ingredientsList = new List<List<string>>();
-
-  //   foreach (int ingredientId in meal.IngredientsID)
-  //   {
-  //     var ingredientData = new List<string>();
-
-  //     string ingredientName = ingredientsDatabaseDict[ingredientId];
-
-  //     ingredientData.Add(ingredientId.ToString());
-  //     ingredientData.Add(ingredientName);
-  //     ingredientsList.Add(ingredientData);
-  //   }
-
-  //   foreach (List<string> ingredient in ingredientsList)
-  //   {
-  //     mealIngredientsTable.AddRow(ingredient.ToArray());
-  //   }
-
-  //   mealIngredientsTable.Write();
-
-  //   return mealIngredientsTable;
-  // }
-
   private string GetMealIngredientsString(Meal meal)
   {
     string ingredientsString = "";

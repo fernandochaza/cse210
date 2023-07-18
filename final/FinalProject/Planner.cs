@@ -56,8 +56,6 @@ public class Planner
   /// <param name="userMeals">A dictionary containing an updated list of the user Meals with the Meal Id and Meal Name</param>
   public ConsoleTable DisplayPlanTable()
   {
-    var userMeals = _mealManager.GenerateMealsDictionary();
-
     // Generate headers for the table
     var headers = new List<string>();
     headers.Add("Id");
@@ -68,7 +66,7 @@ public class Planner
     var table = new ConsoleTable(headers.ToArray());
 
     // Get the current planner data as a List of List<string> where the inner List<string> represents a planned day
-    List<List<string>> currentUserPlan = GetPlannedDaysForTable(userMeals);
+    List<List<string>> currentUserPlan = GetPlannedDaysForTable();
 
     // Iterate over current user plan to add each planned day as a new table row
     foreach (List<string> plannedDay in currentUserPlan)
@@ -173,9 +171,7 @@ public class Planner
 
     plannedDayToComplete.IsCompleted = true;
 
-    Console.ForegroundColor = ConsoleColor.Red;
-    Utils.DisplayMessage($"\n(!) Congratulations for completing your {plannedDayToComplete.Date.ToShortDateString()} meal plan!\n");
-    Console.ResetColor();
+    Utils.DisplayMessage($"\n(!) Congratulations for completing your {plannedDayToComplete.Date.ToShortDateString()} meal plan!\n", type: "success", speed: 1);
   }
 
   public void RemovePlannedDay()
@@ -209,11 +205,11 @@ public class Planner
   }
 
   /// <summary>
-  /// Generate a List of List<string> where the inner List<string> represents a planned day data in the format "[date, meal, side dish]"
+  /// Generate a List of List<string> where the inner List<string> represents a planned day data in the format "[id, date, meal, side dish, completed(X, "")]"
   /// </summary>
   /// <param name="userMeals">A dictionary containing an updated list of the user Meals with the Meal Id and Meal Name </param>
   /// <returns>The current planner data</returns>
-  private List<List<string>> GetPlannedDaysForTable(Dictionary<int, string> userMeals)
+  private List<List<string>> GetPlannedDaysForTable()
   {
     // Generate a variable to hold the planner data
     var plannedDays = new List<List<string>>();
@@ -234,8 +230,12 @@ public class Planner
       int? mealId = plannedDay.MealIDs[0];
 
       // Try to get the meal name
-      // ToDo: ERROR HANDLING
-      userMeals.TryGetValue(mealId.Value, out mealName);
+      Meal mealToGetName = _mealManager.Meals.FirstOrDefault(meal => meal.Id == mealId);
+
+      if (mealToGetName != null)
+      {
+        mealName = mealToGetName.Name;
+      }
 
       if (plannedDay.includesSideDish())
       {
@@ -243,8 +243,12 @@ public class Planner
         int? sideDishId = plannedDay.MealIDs[1];
 
         // Try to get the Side Dish name
-        // ToDo: ERROR HANDLING
-        userMeals.TryGetValue(sideDishId.Value, out sideDishName);
+        Meal sideDishToGetName = _mealManager.Meals.FirstOrDefault(sideDish => sideDish.Id == sideDishId);
+
+        if (sideDishToGetName != null)
+        {
+          sideDishName = sideDishToGetName.Name;
+        }
       }
 
       // Add the planned day data into the List of string
@@ -261,6 +265,9 @@ public class Planner
     return plannedDays;
   }
 
+  /// <summary>
+  /// Plan a new meal
+  /// </summary>
   public void PlanMeal()
   {
     var userMeals = _mealManager.GenerateMainMealsDictionary();
@@ -269,6 +276,7 @@ public class Planner
     DisplayPlanTable();
 
     PlannedDay plannedDay = new PlannedDay(userMeals, userSideDishes);
+    plannedDay.SetMealsData(_mealManager.Meals);
 
     if (!plannedDay.IsPlanningCancelled)
     {
@@ -283,6 +291,9 @@ public class Planner
     OrderPlanByDate();
   }
 
+  /// <summary>
+  /// Order meals planned by date
+  /// </summary>
   private void OrderPlanByDate()
   {
     var orderedPlan = new List<PlannedDay>();
@@ -291,6 +302,10 @@ public class Planner
     _userPlan = orderedPlan;
   }
 
+  /// <summary>
+  /// Get the last available ID to use in a new planned day
+  /// </summary>
+  /// <returns></returns>
   public int GetNewPlannedDayId()
   {
     int newId = 0;
@@ -307,14 +322,15 @@ public class Planner
     return newId;
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
   public void GenerateGroceryList()
   {
     Console.Clear();
     Console.SetCursorPosition(0, 0);
-    Console.ForegroundColor = ConsoleColor.Red;
 
-    Utils.DisplayMessage("Grocery List: \n");
-    Console.ResetColor();
+    Utils.DisplayMessage("Grocery List: \n", type: "info");
 
     var mealsList = new List<Meal>();
     foreach (PlannedDay plannedDay in _userPlan)
@@ -339,17 +355,19 @@ public class Planner
       }
     }
 
-    Console.ForegroundColor = ConsoleColor.Green;
     var groceryList = new List<string>();
     foreach (Ingredient ingredient in ingredientsList)
     {
       if (!groceryList.Contains(ingredient.Name))
       {
         groceryList.Add(ingredient.Name);
-        Utils.DisplayMessage($"\n{ingredient.Name}");
+        Utils.DisplayMessage($"\n- {ingredient.Name}", type: "success", speed:4);
       }
     }
-    Console.ResetColor();
+
+    Utils.DisplayMessage("\n\nThose are the ingredients you need for the nex meals\n");
+    Utils.DisplayMessage("Please make sure you have everything you need!...\n");
+
   }
 
   /// <summary>

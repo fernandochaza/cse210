@@ -7,7 +7,7 @@ public class PlannedDay
   private DateTime _date;
   private List<int> _mealsID = new List<int>();
   private bool _isCompleted;
-  private bool _isSkipped;
+
   private bool _planingCancelled = false;
   private List<Meal> _mealsData;
 
@@ -23,10 +23,12 @@ public class PlannedDay
   /// <param name="sideDishesDict">Dictionary containing the Side Dishes ID and Name</param>
   public PlannedDay(Dictionary<int, string> mainMealsDict, Dictionary<int, string> sideDishesDict)
   {
-    int day = Utils.GetUserInt("Insert the day of the month: ");
-    int month = Utils.GetUserInt("Insert the month number: ");
-    int currentYear = DateTime.Today.Year;
-    DateTime date = new DateTime(currentYear, month, day);
+    DateTime? date = Utils.GetDate();
+    if (date == null)
+    {
+      IsPlanningCancelled = true;
+      return;
+    }
 
     List<string> options = new List<string>();
     options.Add("Yes");
@@ -62,9 +64,8 @@ public class PlannedDay
       _mealsID.Add(selectedSideDishId.Value);
     }
 
-    _date = date;
+    _date = date.Value;
     _isCompleted = false;
-    _isSkipped = false;
 
     Utils.DisplayMessage("\n(!) Meal successfully planned!\n");
     DisplayPlannedDay(mainMealsDict: mainMealsDict, sideDishesDict: sideDishesDict);
@@ -99,13 +100,6 @@ public class PlannedDay
   {
     get { return _isCompleted; }
     set { _isCompleted = value; }
-  }
-
-  [JsonPropertyName("skipped")]
-  public bool IsSkipped
-  {
-    get { return _isSkipped; }
-    set { _isSkipped = value; }
   }
 
   [JsonIgnore]
@@ -239,13 +233,13 @@ public class PlannedDay
   {
     var plannedDayDataList = new List<string>();
 
-    var mainMeal = _mealsData.Find(meal => meal.Id == MealIDs[0]);
+    Meal mainMeal = _mealsData.Find(meal => meal.Id == MealIDs[0]);
     string mealName = mainMeal.Name;
 
     string sideDishName = "";
     if (MealIDs.Count > 1)
     {
-      var sideDish = _mealsData.Find(meal => meal.Id == MealIDs[1]);
+      Meal sideDish = _mealsData.Find(meal => meal.Id == MealIDs[1]);
       sideDishName = sideDish.Name;
     }
 

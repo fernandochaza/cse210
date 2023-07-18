@@ -143,4 +143,44 @@ public static class Utils
     // return the selected key
     return keysList[keyIndex];
   }
+
+  public static DateTime? GetDate()
+  {
+    Console.CursorVisible = true;
+    int month, day, year;
+    bool isValidInput = false;
+
+    do
+    {
+      Console.Write("Enter the month number: ");
+      string monthInput = Console.ReadLine();
+      Console.Write("Enter the day of the month: ");
+      string dayInput = Console.ReadLine();
+      Console.Write("Enter the year: ");
+      string yearInput = Console.ReadLine();
+
+      if (int.TryParse(monthInput, out month) && int.TryParse(dayInput, out day) && int.TryParse(yearInput, out year))
+      {
+        try
+        {
+          DateTime date = new DateTime(year, month, day);
+          isValidInput = true;
+          Console.CursorVisible = false;
+          return date;
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+          DisplayMessage("(!) Invalid date. Please enter a valid date...\n\n", type: "warning");
+          Utils.MessageToContinueAndClear();
+          return null;
+        }
+      }
+      else
+      {
+        DisplayMessage("(!) Invalid input. Please enter numeric values...\n\n", type: "warning");
+        Utils.MessageToContinueAndClear();
+        return null;
+      }
+    } while (!isValidInput);
+  }
 }

@@ -783,8 +783,7 @@
           8,
           21
         ],
-        "completed": true,
-        "skipped": false
+        "completed": true
       },
       {
         "planned-day-id": 5,
@@ -793,8 +792,7 @@
           1,
           2
         ],
-        "completed": true,
-        "skipped": false
+        "completed": true
       },
       {
         "planned-day-id": 6,
@@ -803,8 +801,7 @@
           4,
           6
         ],
-        "completed": false,
-        "skipped": false
+        "completed": false
       },
       {
         "planned-day-id": 7,
@@ -813,8 +810,7 @@
           8,
           22
         ],
-        "completed": false,
-        "skipped": false
+        "completed": false
       },
       {
         "planned-day-id": 8,
@@ -823,8 +819,7 @@
           9,
           24
         ],
-        "completed": true,
-        "skipped": false
+        "completed": true
       },
       {
         "planned-day-id": 9,
@@ -833,8 +828,16 @@
           4,
           21
         ],
-        "completed": false,
-        "skipped": false
+        "completed": false
+      },
+      {
+        "planned-day-id": 14,
+        "date": "2023-07-19T00:00:00",
+        "meals-id": [
+          3,
+          6
+        ],
+        "completed": false
       },
       {
         "planned-day-id": 10,
@@ -843,8 +846,7 @@
           1,
           8
         ],
-        "completed": false,
-        "skipped": false
+        "completed": false
       },
       {
         "planned-day-id": 11,
@@ -853,8 +855,25 @@
           1,
           24
         ],
-        "completed": false,
-        "skipped": false
+        "completed": true
+      },
+      {
+        "planned-day-id": 16,
+        "date": "2023-07-22T00:00:00",
+        "meals-id": [
+          9,
+          23
+        ],
+        "completed": false
+      },
+      {
+        "planned-day-id": 13,
+        "date": "2023-07-23T00:00:00",
+        "meals-id": [
+          1,
+          2
+        ],
+        "completed": false
       }
     ]
   }
