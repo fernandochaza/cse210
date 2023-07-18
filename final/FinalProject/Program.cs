@@ -22,7 +22,7 @@ class Program
     // Use dependency injection for better data management
     plannerData.SetMealManager(mealsData);
     mealsData.SetPlanner(plannerData);
-    
+
     foreach (Meal meal in mealsData.Meals)
     {
       meal.SetIngredientsData(mealsData.Ingredients);
@@ -79,7 +79,7 @@ class Program
           {
             Console.Clear();
 
-            
+
 
             var plannerOptions = new List<string>();
             plannerOptions.Add("Change a planned day");
@@ -113,7 +113,7 @@ class Program
             {
               Console.Clear();
 
-              plannerData.RemoveDay();
+              plannerData.RemovePlannedDay();
               userProfile.SaveUserData();
             }
             else if (selectedPlannerOption == "Mark Completed")

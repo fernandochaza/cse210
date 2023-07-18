@@ -837,16 +837,6 @@
         "skipped": false
       },
       {
-        "planned-day-id": 2,
-        "date": "2023-07-19T00:00:00",
-        "meals-id": [
-          16,
-          2
-        ],
-        "completed": true,
-        "skipped": false
-      },
-      {
         "planned-day-id": 10,
         "date": "2023-07-20T00:00:00",
         "meals-id": [

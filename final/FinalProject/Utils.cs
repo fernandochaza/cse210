@@ -48,16 +48,21 @@ public static class Utils
   /// <param name="text">The text to be displayed</param>
   public static void DisplayMessage(string text, int speed = 0, string type = null)
   {
+    if (type != null)
+    {
+      type = type.ToLower();
+    }
+
     // Set the message color
-    if (type == "Warning")
+    if (type == "warning")
     {
       Console.ForegroundColor = ConsoleColor.Red;
     }
-    else if (type == "Success")
+    else if (type == "success")
     {
       Console.ForegroundColor = ConsoleColor.Green;
     }
-    else if (type == "Information")
+    else if (type == "info")
     {
       Console.ForegroundColor = ConsoleColor.Yellow;
     }

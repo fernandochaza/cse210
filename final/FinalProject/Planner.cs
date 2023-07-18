@@ -132,7 +132,7 @@ public class Planner
     List<int> userPlanIds = GetPlanedDaysIdList();
     if (!userPlanIds.Contains(planToChangeId))
     {
-      Utils.DisplayMessage($"\n(!) The id \"{planToChangeId}\" doesn't match an existing plan!...\n", type: "Warning", speed: 2);
+      Utils.DisplayMessage($"\n(!) The id \"{planToChangeId}\" doesn't match an existing plan!...\n", type: "warning", speed: 2);
       Utils.MessageToContinueAndClear();
       return;
     }
@@ -164,9 +164,7 @@ public class Planner
     List<int> userPlanIds = GetPlanedDaysIdList();
     if (!userPlanIds.Contains(planToCompleteId))
     {
-      Console.ForegroundColor = ConsoleColor.Red;
-      Utils.DisplayMessage($"\n(!) The id {planToCompleteId} doesn't match an existing plan!\n");
-      Console.ResetColor();
+      Utils.DisplayMessage($"\n(!) The id {planToCompleteId} doesn't match an existing plan!...\n", type: "warning", speed: 2);
       Utils.MessageToContinueAndClear();
       return;
     }
@@ -180,7 +178,7 @@ public class Planner
     Console.ResetColor();
   }
 
-  public void RemoveDay()
+  public void RemovePlannedDay()
   {
     DisplayPlanTable();
 
@@ -190,18 +188,24 @@ public class Planner
     // Display the cursor
     Console.CursorVisible = true;
 
-    int? planToRemoveId = Utils.GetUserInt("Please, enter the ID of the day you want to remove: ");
+    int planToRemoveId = Utils.GetUserInt("Please, enter the ID of the day you want to remove: ");
 
-    PlannedDay plannedDay = _userPlan.FirstOrDefault(day => day.Id == planToRemoveId);
-
-    if (plannedDay != null)
+    // List ids to verify user input
+    List<int> userPlanIds = GetPlanedDaysIdList();
+    if (!userPlanIds.Contains(planToRemoveId))
     {
-      _userPlan.Remove(plannedDay);
-      Utils.DisplayMessage("\n(!) The selected planned day was successfully removed...\n");
-      plannedDay.DisplayPlannedDay(mainMealsDict: userMeals, sideDishesDict: userSideDishes);
-
+      Utils.DisplayMessage($"\n(!) The id {planToRemoveId} doesn't match an existing plan!...\n", type: "warning", speed: 2);
       Utils.MessageToContinueAndClear();
+      return;
     }
+
+    PlannedDay plannedDayToRemove = _userPlan.Find(plannedDay => plannedDay.Id == planToRemoveId);
+
+    _userPlan.Remove(plannedDayToRemove);
+    Utils.DisplayMessage("\n(!) The selected planned day was successfully removed...\n", type: "info", speed: 1);
+
+    plannedDayToRemove.DisplayPlannedDay(mainMealsDict: userMeals, sideDishesDict: userSideDishes);
+    Utils.MessageToContinueAndClear();
   }
 
   /// <summary>
