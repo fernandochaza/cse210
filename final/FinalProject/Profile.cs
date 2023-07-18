@@ -43,7 +43,7 @@ public class Profile
       SaveUserData();
 
       Console.ForegroundColor = ConsoleColor.Red;
-      Utils.TextAnimation($"(!) New database created in the main program folder ({_databaseFilename})\n\n");
+      Utils.DisplayMessage($"(!) New database created in the main program folder ({_databaseFilename})\n\n");
       Console.ResetColor();
     }
     else
@@ -51,7 +51,7 @@ public class Profile
       LoadUserData();
 
       Console.ForegroundColor = ConsoleColor.Red;
-      Utils.TextAnimation($"(!) Reading data from the existing database ({_databaseFilename})\n\n");
+      Utils.DisplayMessage($"(!) Reading data from the existing database ({_databaseFilename})\n\n");
       Console.ResetColor();
     }
   }

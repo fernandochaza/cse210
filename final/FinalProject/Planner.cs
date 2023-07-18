@@ -126,8 +126,16 @@ public class Planner
     // Display the cursor
     Console.CursorVisible = true;
 
-    // ToDo: Verify the ID
     int planToChangeId = Utils.GetUserInt("Please, enter the ID of the day you want to change: ");
+
+    // List ids to verify user input
+    List<int> userPlanIds = GetPlanedDaysIdList();
+    if (!userPlanIds.Contains(planToChangeId))
+    {
+      Utils.DisplayMessage($"\n(!) The id \"{planToChangeId}\" doesn't match an existing plan!...\n", type: "Warning", speed: 2);
+      Utils.MessageToContinueAndClear();
+      return;
+    }
 
     PlannedDay plannedDayToEdit = _userPlan.Find(plannedDay => plannedDay.Id == planToChangeId);
 
@@ -146,21 +154,30 @@ public class Planner
   public void MarkPlanCompleted()
   {
     DisplayUncompletedPlansTable();
+
     // Display the cursor
     Console.CursorVisible = true;
 
-    int? planToCompleteId = Utils.GetUserInt("\n> Please, enter the ID of the day you want to mark completed: ");
+    int planToCompleteId = Utils.GetUserInt("\n> Please, enter the ID of the day you want to mark completed: ");
 
-    for (int i = 0; i < _userPlan.Count; i++)
+    // List ids to verify user input
+    List<int> userPlanIds = GetPlanedDaysIdList();
+    if (!userPlanIds.Contains(planToCompleteId))
     {
-      if (_userPlan[i].Id == planToCompleteId)
-      {
-        _userPlan[i].IsCompleted = true;
-        Console.ForegroundColor = ConsoleColor.Red;
-        Utils.TextAnimation($"\n(!) Congratulations for completing your {_userPlan[i].Date.ToShortDateString()} meal plan!\n");
-        Console.ResetColor();
-      }
+      Console.ForegroundColor = ConsoleColor.Red;
+      Utils.DisplayMessage($"\n(!) The id {planToCompleteId} doesn't match an existing plan!\n");
+      Console.ResetColor();
+      Utils.MessageToContinueAndClear();
+      return;
     }
+
+    PlannedDay plannedDayToComplete = _userPlan.Find(plannedDay => plannedDay.Id == planToCompleteId);
+
+    plannedDayToComplete.IsCompleted = true;
+
+    Console.ForegroundColor = ConsoleColor.Red;
+    Utils.DisplayMessage($"\n(!) Congratulations for completing your {plannedDayToComplete.Date.ToShortDateString()} meal plan!\n");
+    Console.ResetColor();
   }
 
   public void RemoveDay()
@@ -180,7 +197,7 @@ public class Planner
     if (plannedDay != null)
     {
       _userPlan.Remove(plannedDay);
-      Utils.TextAnimation("\n(!) The selected planned day was successfully removed...\n");
+      Utils.DisplayMessage("\n(!) The selected planned day was successfully removed...\n");
       plannedDay.DisplayPlannedDay(mainMealsDict: userMeals, sideDishesDict: userSideDishes);
 
       Utils.MessageToContinueAndClear();
@@ -207,7 +224,7 @@ public class Planner
       string date = plannedDay.Date.ToShortDateString();
       string mealName = "";
       string sideDishName = "";
-      string completed = plannedDay.IsCompleted ? "X": "";
+      string completed = plannedDay.IsCompleted ? "X" : "";
 
       // Get the meal id from the current iteration of a planned day
       int? mealId = plannedDay.MealIDs[0];
@@ -292,7 +309,7 @@ public class Planner
     Console.SetCursorPosition(0, 0);
     Console.ForegroundColor = ConsoleColor.Red;
 
-    Utils.TextAnimation("Grocery List: \n");
+    Utils.DisplayMessage("Grocery List: \n");
     Console.ResetColor();
 
     var mealsList = new List<Meal>();
@@ -325,9 +342,24 @@ public class Planner
       if (!groceryList.Contains(ingredient.Name))
       {
         groceryList.Add(ingredient.Name);
-        Utils.TextAnimation($"\n{ingredient.Name}");
+        Utils.DisplayMessage($"\n{ingredient.Name}");
       }
     }
     Console.ResetColor();
+  }
+
+  /// <summary>
+  /// Create a List of the planned day's IDs
+  /// </summary>
+  /// <returns>A List of integers</returns>
+  private List<int> GetPlanedDaysIdList()
+  {
+    var plannedDaysIdsList = new List<int>();
+    foreach (PlannedDay plannedDay in _userPlan)
+    {
+      plannedDaysIdsList.Add(plannedDay.Id);
+    }
+
+    return plannedDaysIdsList;
   }
 }

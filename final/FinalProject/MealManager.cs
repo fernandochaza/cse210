@@ -24,7 +24,7 @@ public class MealManager
     get { return _meals; }
     set { _meals = value; }
   }
-  
+
   /// <summary>
   /// Set a Planner instance to use dependency injection
   /// </summary>
@@ -91,13 +91,13 @@ public class MealManager
     List<Meal> mainMeals = GetMainMealsList();
     List<Meal> sideDishes = GetSideDishList();
 
-    Utils.TextAnimation("Main Meals:\n");
+    Utils.DisplayMessage("Main Meals:\n");
     foreach (Meal meal in mainMeals)
     {
       meal.Display();
     }
 
-    Utils.TextAnimation("Side Dishes:\n");
+    Utils.DisplayMessage("Side Dishes:\n");
     foreach (Meal sideDish in sideDishes)
     {
       sideDish.Display();
@@ -111,7 +111,7 @@ public class MealManager
   {
     List<Meal> mainMeals = GetMainMealsList();
 
-    Utils.TextAnimation("Main Meals:\n");
+    Utils.DisplayMessage("Main Meals:\n");
     foreach (Meal meal in mainMeals)
     {
       meal.Display();
@@ -125,7 +125,7 @@ public class MealManager
   {
     List<Meal> sideDishes = GetSideDishList();
 
-    Utils.TextAnimation("Side Dishes:\n");
+    Utils.DisplayMessage("Side Dishes:\n");
     foreach (Meal sideDish in sideDishes)
     {
       sideDish.Display();

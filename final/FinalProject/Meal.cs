@@ -78,10 +78,10 @@ public class Meal
     Meal meal = new Meal();
     meal._id = GetNextId();
 
-    Utils.TextAnimation("Meal name: \n");
+    Utils.DisplayMessage("Meal name: \n");
     meal._name = Console.ReadLine();
 
-    Utils.TextAnimation("Meal type (main or side dish): \n");
+    Utils.DisplayMessage("Meal type (main or side dish): \n");
     string type = Console.ReadLine();
 
     if (type == "main")
@@ -94,12 +94,12 @@ public class Meal
     }
     else
     {
-      Utils.TextAnimation("Type error\n");
+      Utils.DisplayMessage("Type error\n");
     }
 
     // Add ingredients from Ingredients database or create new ingredients
     int quantity;
-    Utils.TextAnimation("how many ingredients? ");
+    Utils.DisplayMessage("how many ingredients? ");
     quantity = int.Parse(Console.ReadLine());
 
     // ------ ADD CODE TO ADD INGREDIENTS -----
@@ -119,7 +119,7 @@ public class Meal
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
     string mealName = textInfo.ToTitleCase(_name);
 
-    Utils.TextAnimation($"{mealName}\n");
+    Utils.DisplayMessage($"{mealName}\n");
   }
 
   private static int GetNextId()
@@ -146,7 +146,7 @@ public class Meal
         Console.Clear();
 
         Console.CursorVisible = true;
-        Utils.TextAnimation("\nPlease, enter the name of the ingredient you want to Add: ");
+        Utils.DisplayMessage("\nPlease, enter the name of the ingredient you want to Add: ");
         string searchedIngredient = Console.ReadLine().ToLower();
         Console.CursorVisible = false;
 
@@ -166,7 +166,7 @@ public class Meal
         }
 
         Console.ForegroundColor = ConsoleColor.Red;
-        Utils.TextAnimation($"\n(!) {ingredientsDatabaseDict[selectedIngredientId.Value]} was added...");
+        Utils.DisplayMessage($"\n(!) {ingredientsDatabaseDict[selectedIngredientId.Value]} was added...");
         Console.ResetColor();
         Utils.MessageToContinueAndClear();
 
@@ -174,14 +174,14 @@ public class Meal
       else if (selectedEditIngredientOption == "Remove")
       {
         Console.Clear();
-        Utils.TextAnimation($"{Name} Ingredients:\n");
+        Utils.DisplayMessage($"{Name} Ingredients:\n");
         DisplayMealIngredientsAsTable();
 
         int ingredientToRemoveId = Utils.GetUserInt("\nPlease, enter the ID of the ingredient you want to remove and press Enter: ");
         IngredientsID.Remove(ingredientToRemoveId);
 
         Console.ForegroundColor = ConsoleColor.Red;
-        Utils.TextAnimation($"\n(!) {ingredientsDatabaseDict[ingredientToRemoveId]} was removed...");
+        Utils.DisplayMessage($"\n(!) {ingredientsDatabaseDict[ingredientToRemoveId]} was removed...");
         Console.ResetColor();
         Utils.MessageToContinueAndClear();
       }

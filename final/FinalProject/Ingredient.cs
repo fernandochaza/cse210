@@ -14,7 +14,7 @@ public class Ingredient
 
   public Ingredient()
   {
-    
+
   }
 
   // Declare getters and setters to allow private members serialization
@@ -63,10 +63,10 @@ public class Ingredient
     Ingredient ingredient = new Ingredient();
     ingredient._id = GetNextId();
 
-    Utils.TextAnimation("Ingredient name: \n");
+    Utils.DisplayMessage("Ingredient name: \n");
     ingredient._name = Console.ReadLine();
 
-    Utils.TextAnimation("Ingredient type (main or seasoning): \n");
+    Utils.DisplayMessage("Ingredient type (main or seasoning): \n");
     string type = Console.ReadLine();
 
     if (type == "main")
@@ -79,7 +79,7 @@ public class Ingredient
     }
     else
     {
-      Utils.TextAnimation("Type error\n");
+      Utils.DisplayMessage("Type error\n");
     }
 
     return ingredient;
@@ -92,7 +92,7 @@ public class Ingredient
   {
     TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
     string name = textInfo.ToTitleCase(_name);
-    Utils.TextAnimation($"{name} ({_type}) \n");
+    Utils.DisplayMessage($"{name} ({_type}) \n");
   }
 
   private static int GetNextId()

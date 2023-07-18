@@ -20,7 +20,7 @@ public static class Utils
     while (!isValidNumber)
     {
       // Display the given prompt
-      Utils.TextAnimation(prompt);
+      Utils.DisplayMessage(prompt);
 
       userInput = Console.ReadLine();
 
@@ -46,15 +46,32 @@ public static class Utils
   /// what is being printed in the console
   /// </summary>
   /// <param name="text">The text to be displayed</param>
-  public static void TextAnimation(string text)
+  public static void DisplayMessage(string text, int speed = 0, string type = null)
   {
-    int textLength = text.Length;
+    // Set the message color
+    if (type == "Warning")
+    {
+      Console.ForegroundColor = ConsoleColor.Red;
+    }
+    else if (type == "Success")
+    {
+      Console.ForegroundColor = ConsoleColor.Green;
+    }
+    else if (type == "Information")
+    {
+      Console.ForegroundColor = ConsoleColor.Yellow;
+    }
 
+    // Display the message
+    int textLength = text.Length;
     for (int i = 0; i < textLength; i++)
     {
       Console.Write(text[i]);
-      Thread.Sleep(0);
+      Thread.Sleep(speed);
     }
+
+    // Reset console color to default
+    Console.ResetColor();
   }
 
   /// <summary>
@@ -64,7 +81,7 @@ public static class Utils
   {
     Console.ForegroundColor = ConsoleColor.Green;
     Console.CursorVisible = false;
-    Utils.TextAnimation("\n> Press Enter to continue...");
+    Utils.DisplayMessage("\n> Press Enter to continue...");
     Console.ReadLine();
     Console.Clear();
     Console.ResetColor();
@@ -83,7 +100,7 @@ public static class Utils
     do
     {
       Console.Clear();
-      Utils.TextAnimation($"{prompt}\n\n");
+      Utils.DisplayMessage($"{prompt}\n\n");
 
       for (int i = 0; i < keysList.Count; i++)
       {

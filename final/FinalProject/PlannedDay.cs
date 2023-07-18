@@ -66,7 +66,7 @@ public class PlannedDay
     _isCompleted = false;
     _isSkipped = false;
 
-    Utils.TextAnimation("\n(!) Meal successfully planned!\n");
+    Utils.DisplayMessage("\n(!) Meal successfully planned!\n");
     DisplayPlannedDay(mainMealsDict: mainMealsDict, sideDishesDict: sideDishesDict);
   }
 
@@ -167,7 +167,7 @@ public class PlannedDay
       this.Date = date;
 
       Console.ForegroundColor = ConsoleColor.Red;
-      Utils.TextAnimation($"\n(!) Date changed to {date.ToShortDateString()}\n");
+      Utils.DisplayMessage($"\n(!) Date changed to {date.ToShortDateString()}\n");
       Console.ResetColor();
     }
     else if (selectedEditOption == "Change Meal")
@@ -184,7 +184,7 @@ public class PlannedDay
       this.MealIDs[0] = selectedMealId.Value;
 
       Console.ForegroundColor = ConsoleColor.Red;
-      Utils.TextAnimation($"\n(!) Meal changed to {userMeals[selectedMealId.Value]}\n");
+      Utils.DisplayMessage($"\n(!) Meal changed to {userMeals[selectedMealId.Value]}\n");
       Console.ResetColor();
     }
     else if (selectedEditOption == "Change/Add Side Dish")
@@ -211,7 +211,7 @@ public class PlannedDay
       // ToDo: What if mealsIDs is zero?
 
       Console.ForegroundColor = ConsoleColor.Red;
-      Utils.TextAnimation($"\n(!) Side dish changed to {userSideDishes[selectedSideDishId.Value]}\n");
+      Utils.DisplayMessage($"\n(!) Side dish changed to {userSideDishes[selectedSideDishId.Value]}\n");
       Console.ResetColor();
     }
     else if (selectedEditOption == null)
@@ -227,11 +227,11 @@ public class PlannedDay
   /// <param name="sideDishesDict">Dictionary containing the Side Dishes ID and Name</param>
   public void DisplayPlannedDay(Dictionary<int, string> mainMealsDict, Dictionary<int, string> sideDishesDict)
   {
-    Utils.TextAnimation($"- Date: {Date.ToShortDateString()}\n");
-    Utils.TextAnimation($"- Main: {mainMealsDict[MealIDs[0]]}\n");
+    Utils.DisplayMessage($"- Date: {Date.ToShortDateString()}\n");
+    Utils.DisplayMessage($"- Main: {mainMealsDict[MealIDs[0]]}\n");
     if (MealIDs.Count > 1)
     {
-      Utils.TextAnimation($"- Side Dish: {sideDishesDict[MealIDs[1]]}\n");
+      Utils.DisplayMessage($"- Side Dish: {sideDishesDict[MealIDs[1]]}\n");
     }
   }
 
@@ -249,7 +249,7 @@ public class PlannedDay
       sideDishName = sideDish.Name;
     }
 
-    string completed = IsCompleted ? "X": "";
+    string completed = IsCompleted ? "X" : "";
 
     plannedDayDataList.Add(Id.ToString());
     plannedDayDataList.Add(Date.ToShortDateString());
