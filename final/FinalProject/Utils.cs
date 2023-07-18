@@ -7,10 +7,8 @@ public static class Utils
   /// </summary>
   /// <param name="message">The prompt displayed to the user to ask for an integer input</param>
   /// <returns>A validated integer</returns>
-  public static int? GetUserInt(string prompt)
+  public static int GetUserInt(string prompt)
   {
-    ConsoleKeyInfo keyInfo;
-
     // Display the cursor
     Console.CursorVisible = true;
 
@@ -23,13 +21,6 @@ public static class Utils
     {
       // Display the given prompt
       Utils.TextAnimation(prompt);
-
-      keyInfo = Console.ReadKey();
-
-      if (keyInfo.Key == ConsoleKey.Escape)
-        {
-          return null;
-        }
 
       userInput = Console.ReadLine();
 

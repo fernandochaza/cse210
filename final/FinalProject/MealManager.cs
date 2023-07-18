@@ -25,6 +25,10 @@ public class MealManager
     set { _meals = value; }
   }
   
+  /// <summary>
+  /// Set a Planner instance to use dependency injection
+  /// </summary>
+  /// <param name="planner">The main Planner Class instance containing the user data</param>
   public void SetPlanner(Planner planner)
   {
     _planner = planner;

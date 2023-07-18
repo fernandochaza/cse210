@@ -61,6 +61,10 @@ public class Meal
     Side_Dish
   }
 
+  /// <summary>
+  /// Set a List<Ingredient> instance to use dependency injection
+  /// </summary>
+  /// <param name="ingredients">A List<Ingredient> containing all the user Ingredients</param>
   public void SetIngredientsData(List<Ingredient> ingredients)
   {
     _ingredientsData = ingredients;
@@ -173,11 +177,11 @@ public class Meal
         Utils.TextAnimation($"{Name} Ingredients:\n");
         DisplayMealIngredientsAsTable();
 
-        int? ingredientToRemoveId = Utils.GetUserInt("\nPlease, enter the ID of the ingredient you want to remove and press Enter: ");
-        IngredientsID.Remove(ingredientToRemoveId.Value);
+        int ingredientToRemoveId = Utils.GetUserInt("\nPlease, enter the ID of the ingredient you want to remove and press Enter: ");
+        IngredientsID.Remove(ingredientToRemoveId);
 
         Console.ForegroundColor = ConsoleColor.Red;
-        Utils.TextAnimation($"\n(!) {ingredientsDatabaseDict[ingredientToRemoveId.Value]} was removed...");
+        Utils.TextAnimation($"\n(!) {ingredientsDatabaseDict[ingredientToRemoveId]} was removed...");
         Console.ResetColor();
         Utils.MessageToContinueAndClear();
       }

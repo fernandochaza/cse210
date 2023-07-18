@@ -102,7 +102,6 @@ class Program
               if (!plannerData.PlanningCancelled)
               {
                 userProfile.SaveUserData();
-                Utils.MessageToContinueAndClear();
               }
               else
               {

@@ -32,11 +32,19 @@ public class Planner
     set { _planingCancelled = value; }
   }
 
+  /// <summary>
+  /// Set a MealManager instance to use dependency injection
+  /// </summary>
+  /// <param name="mealManager">The main MealManager Class instance containing the user data</param>
   public void SetMealManager(MealManager mealManager)
   {
     _mealManager = mealManager;
   }
 
+  /// <summary>
+  /// Set a List<Ingredient> instance to use dependency injection
+  /// </summary>
+  /// <param name="ingredients">A List<Ingredient> containing all the user Ingredients</param>
   public void SetIngredientsData(List<Ingredient> ingredients)
   {
     _ingredientsData = ingredients;
@@ -75,10 +83,10 @@ public class Planner
   }
 
   /// <summary>
-  /// Display only the NOT completed planned meals in a table format
+  /// Display only the uncompleted planned meals in a table format
   /// </summary>
   /// <param name="userMeals">A dictionary containing an updated list of the user Meals with the Meal Id and Meal Name</param>
-  public ConsoleTable DisplayPlanToCompleteTable()
+  public ConsoleTable DisplayUncompletedPlansTable()
   {
     var userMeals = _mealManager.GenerateMealsDictionary();
 
@@ -118,21 +126,18 @@ public class Planner
     // Display the cursor
     Console.CursorVisible = true;
 
-    int? planToChangeId = Utils.GetUserInt("Please, enter the ID of the day you want to change: ");
+    // ToDo: Verify the ID
+    int planToChangeId = Utils.GetUserInt("Please, enter the ID of the day you want to change: ");
 
-    for (int i = 0; i < _userPlan.Count; i++)
+    PlannedDay plannedDayToEdit = _userPlan.Find(plannedDay => plannedDay.Id == planToChangeId);
+
+    plannedDayToEdit.Edit(userMeals, userSideDishes);
+    if (plannedDayToEdit.IsPlanningCancelled)
     {
-      if (_userPlan[i].Id == planToChangeId)
-      {
-        _userPlan[i].Edit(userMeals, userSideDishes);
-        if (_userPlan[i].IsPlanningCancelled)
-        {
-          this.PlanningCancelled = true;
+      this.PlanningCancelled = true;
 
-          // Reset to default
-          _userPlan[i].IsPlanningCancelled = false;
-        }
-      }
+      // Reset to default
+      plannedDayToEdit.IsPlanningCancelled = false;
     }
 
     OrderPlanByDate();
@@ -140,7 +145,7 @@ public class Planner
 
   public void MarkPlanCompleted()
   {
-    DisplayPlanToCompleteTable();
+    DisplayUncompletedPlansTable();
     // Display the cursor
     Console.CursorVisible = true;
 

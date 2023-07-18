@@ -820,7 +820,8 @@
         "planned-day-id": 8,
         "date": "2023-07-18T00:00:00",
         "meals-id": [
-          9
+          9,
+          24
         ],
         "completed": true,
         "skipped": false

@@ -23,10 +23,10 @@ public class PlannedDay
   /// <param name="sideDishesDict">Dictionary containing the Side Dishes ID and Name</param>
   public PlannedDay(Dictionary<int, string> mainMealsDict, Dictionary<int, string> sideDishesDict)
   {
-    int? day = Utils.GetUserInt("Insert the day of the month: ");
-    int? month = Utils.GetUserInt("Insert the month number: ");
+    int day = Utils.GetUserInt("Insert the day of the month: ");
+    int month = Utils.GetUserInt("Insert the month number: ");
     int currentYear = DateTime.Today.Year;
-    DateTime date = new DateTime(currentYear, month.Value, day.Value);
+    DateTime date = new DateTime(currentYear, month, day);
 
     List<string> options = new List<string>();
     options.Add("Yes");
@@ -115,6 +115,10 @@ public class PlannedDay
     set { _planingCancelled = value; }
   }
 
+  /// <summary>
+  /// Set a List<Meal> instance to use dependency injection
+  /// </summary>
+  /// <param name="meals">A List<Meal> containing all the user Meals</param>
   public void SetMealsData(List<Meal> meals)
   {
     _mealsData = meals;
@@ -155,10 +159,10 @@ public class PlannedDay
     if (selectedEditOption == "Change the date")
     {
       Console.WriteLine();
-      int? day = Utils.GetUserInt("Please, enter the day number: ");
-      int? month = Utils.GetUserInt("Please, enter the month number: ");
+      int day = Utils.GetUserInt("Please, enter the day number: ");
+      int month = Utils.GetUserInt("Please, enter the month number: ");
       int currentYear = DateTime.Today.Year;
-      DateTime date = new DateTime(currentYear, month.Value, day.Value);
+      DateTime date = new DateTime(currentYear, month, day);
 
       this.Date = date;
 
