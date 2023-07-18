@@ -4,17 +4,16 @@ using System.Text.Json.Serialization;
 public class PlannedDay
 {
   private int _id;
-  private static int _lastId = 0;
   private DateTime _date;
   private List<int> _mealsID = new List<int>();
   private bool _isCompleted;
   private bool _isSkipped;
   private bool _planingCancelled = false;
+  private List<Meal> _mealsData;
 
   [JsonConstructor]
   public PlannedDay()
   {
-    _lastId++;
   }
 
   /// <summary>
@@ -24,10 +23,10 @@ public class PlannedDay
   /// <param name="sideDishesDict">Dictionary containing the Side Dishes ID and Name</param>
   public PlannedDay(Dictionary<int, string> mainMealsDict, Dictionary<int, string> sideDishesDict)
   {
-    int day = Utils.GetUserInt("Insert the day of the month: ");
-    int month = Utils.GetUserInt("Insert the month number: ");
+    int? day = Utils.GetUserInt("Insert the day of the month: ");
+    int? month = Utils.GetUserInt("Insert the month number: ");
     int currentYear = DateTime.Today.Year;
-    DateTime date = new DateTime(currentYear, month, day);
+    DateTime date = new DateTime(currentYear, month.Value, day.Value);
 
     List<string> options = new List<string>();
     options.Add("Yes");
@@ -63,7 +62,6 @@ public class PlannedDay
       _mealsID.Add(selectedSideDishId.Value);
     }
 
-    _id = GetNextId();
     _date = date;
     _isCompleted = false;
     _isSkipped = false;
@@ -117,6 +115,11 @@ public class PlannedDay
     set { _planingCancelled = value; }
   }
 
+  public void SetMealsData(List<Meal> meals)
+  {
+    _mealsData = meals;
+  }
+
   /// <summary>
   /// Verify if the meal includes a Side Dish
   /// </summary>
@@ -152,14 +155,16 @@ public class PlannedDay
     if (selectedEditOption == "Change the date")
     {
       Console.WriteLine();
-      int day = Utils.GetUserInt("Please, enter the day number: ");
-      int month = Utils.GetUserInt("Please, enter the month number: ");
+      int? day = Utils.GetUserInt("Please, enter the day number: ");
+      int? month = Utils.GetUserInt("Please, enter the month number: ");
       int currentYear = DateTime.Today.Year;
-      DateTime date = new DateTime(currentYear, month, day);
+      DateTime date = new DateTime(currentYear, month.Value, day.Value);
 
       this.Date = date;
 
+      Console.ForegroundColor = ConsoleColor.Red;
       Utils.TextAnimation($"\n(!) Date changed to {date.ToShortDateString()}\n");
+      Console.ResetColor();
     }
     else if (selectedEditOption == "Change Meal")
     {
@@ -173,7 +178,10 @@ public class PlannedDay
       }
 
       this.MealIDs[0] = selectedMealId.Value;
+
+      Console.ForegroundColor = ConsoleColor.Red;
       Utils.TextAnimation($"\n(!) Meal changed to {userMeals[selectedMealId.Value]}\n");
+      Console.ResetColor();
     }
     else if (selectedEditOption == "Change/Add Side Dish")
     {
@@ -198,7 +206,9 @@ public class PlannedDay
 
       // ToDo: What if mealsIDs is zero?
 
+      Console.ForegroundColor = ConsoleColor.Red;
       Utils.TextAnimation($"\n(!) Side dish changed to {userSideDishes[selectedSideDishId.Value]}\n");
+      Console.ResetColor();
     }
     else if (selectedEditOption == null)
     {
@@ -221,12 +231,28 @@ public class PlannedDay
     }
   }
 
-  /// <summary>
-  /// Get the next available id for a planned day
-  /// </summary>
-  /// <returns></returns>
-  private static int GetNextId()
+  public List<string> GetPlannedDayDataList()
   {
-    return ++_lastId;
+    var plannedDayDataList = new List<string>();
+
+    var mainMeal = _mealsData.Find(meal => meal.Id == MealIDs[0]);
+    string mealName = mainMeal.Name;
+
+    string sideDishName = "";
+    if (MealIDs.Count > 1)
+    {
+      var sideDish = _mealsData.Find(meal => meal.Id == MealIDs[1]);
+      sideDishName = sideDish.Name;
+    }
+
+    string completed = IsCompleted ? "X": "";
+
+    plannedDayDataList.Add(Id.ToString());
+    plannedDayDataList.Add(Date.ToShortDateString());
+    plannedDayDataList.Add(mealName);
+    plannedDayDataList.Add(sideDishName);
+    plannedDayDataList.Add(completed);
+
+    return plannedDayDataList;
   }
 }

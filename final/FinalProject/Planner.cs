@@ -18,7 +18,7 @@ public class Planner
   // Use JsonPropertyName to define a key name for the Json file
 
   [JsonPropertyName("user-plan")]
-  public List<PlannedDay> Meal
+  public List<PlannedDay> Plan
   {
     get { return _userPlan; }
     set { _userPlan = value; }
@@ -37,7 +37,7 @@ public class Planner
   }
 
   /// <summary>
-  /// Display the next planned meals in a table format
+  /// Display all the planned meals in a table format
   /// </summary>
   /// <param name="userMeals">A dictionary containing an updated list of the user Meals with the Meal Id and Meal Name</param>
   public ConsoleTable DisplayPlanTable()
@@ -50,6 +50,7 @@ public class Planner
     headers.Add("Date");
     headers.Add("Main");
     headers.Add("Side Dish");
+    headers.Add("Completed");
     var table = new ConsoleTable(headers.ToArray());
 
     // Get the current planner data as a List of List<string> where the inner List<string> represents a planned day
@@ -67,6 +68,40 @@ public class Planner
     return table;
   }
 
+  /// <summary>
+  /// Display only the NOT completed planned meals in a table format
+  /// </summary>
+  /// <param name="userMeals">A dictionary containing an updated list of the user Meals with the Meal Id and Meal Name</param>
+  public ConsoleTable DisplayPlanToCompleteTable()
+  {
+    var userMeals = _mealManager.GenerateMealsDictionary();
+
+    // Generate headers for the table
+    var headers = new List<string>();
+    headers.Add("Id");
+    headers.Add("Date");
+    headers.Add("Main");
+    headers.Add("Side Dish");
+    headers.Add("Completed");
+    var table = new ConsoleTable(headers.ToArray());
+
+    // Iterate over current user plan to add each planned day as a new table row
+    foreach (PlannedDay plannedDay in _userPlan)
+    {
+      if (!plannedDay.IsCompleted)
+      {
+        List<string> plannedDayData = plannedDay.GetPlannedDayDataList();
+        table.AddRow(plannedDayData.ToArray());
+      }
+    }
+
+    // Display the table
+    table.Write(Format.Minimal);
+
+    return table;
+  }
+
+
   public void EditPlan()
   {
     DisplayPlanTable();
@@ -77,7 +112,7 @@ public class Planner
     // Display the cursor
     Console.CursorVisible = true;
 
-    int planToChangeId = Utils.GetUserInt("Please, enter the ID of the day you want to change and press Enter: ");
+    int? planToChangeId = Utils.GetUserInt("Please, enter the ID of the day you want to change: ");
 
     for (int i = 0; i < _userPlan.Count; i++)
     {
@@ -97,6 +132,26 @@ public class Planner
     OrderPlanByDate();
   }
 
+  public void MarkPlanCompleted()
+  {
+    DisplayPlanToCompleteTable();
+    // Display the cursor
+    Console.CursorVisible = true;
+
+    int? planToCompleteId = Utils.GetUserInt("\n> Please, enter the ID of the day you want to mark completed: ");
+
+    for (int i = 0; i < _userPlan.Count; i++)
+    {
+      if (_userPlan[i].Id == planToCompleteId)
+      {
+        _userPlan[i].IsCompleted = true;
+        Console.ForegroundColor = ConsoleColor.Red;
+        Utils.TextAnimation($"\n(!) Congratulations for completing your {_userPlan[i].Date.ToShortDateString()} meal plan!\n");
+        Console.ResetColor();
+      }
+    }
+  }
+
   public void RemoveDay()
   {
     DisplayPlanTable();
@@ -107,7 +162,7 @@ public class Planner
     // Display the cursor
     Console.CursorVisible = true;
 
-    int planToRemoveId = Utils.GetUserInt("Please, enter the ID of the day you want to remove and press Enter: ");
+    int? planToRemoveId = Utils.GetUserInt("Please, enter the ID of the day you want to remove: ");
 
     PlannedDay plannedDay = _userPlan.FirstOrDefault(day => day.Id == planToRemoveId);
 
@@ -141,6 +196,7 @@ public class Planner
       string date = plannedDay.Date.ToShortDateString();
       string mealName = "";
       string sideDishName = "";
+      string completed = plannedDay.IsCompleted ? "X": "";
 
       // Get the meal id from the current iteration of a planned day
       int? mealId = plannedDay.MealIDs[0];
@@ -164,6 +220,7 @@ public class Planner
       plannedDayAsList.Add(date);
       plannedDayAsList.Add(mealName);
       plannedDayAsList.Add(sideDishName);
+      plannedDayAsList.Add(completed);
 
       // Add the List into the general plan List
       plannedDays.Add(plannedDayAsList);
@@ -183,6 +240,7 @@ public class Planner
 
     if (!plannedDay.IsPlanningCancelled)
     {
+      plannedDay.Id = GetNewPlannedDayId();
       _userPlan.Add(plannedDay);
     }
     else
@@ -199,6 +257,21 @@ public class Planner
     orderedPlan = _userPlan.OrderBy(plannedDay => plannedDay.Date).ToList();
 
     _userPlan = orderedPlan;
+  }
 
+  public int GetNewPlannedDayId()
+  {
+    int newId = 0;
+
+    if (_userPlan.Count > 0)
+    {
+      newId = _userPlan.Max(plannedDay => plannedDay.Id) + 1;
+    }
+    else
+    {
+      newId = 1;
+    }
+
+    return newId;
   }
 }

@@ -14,7 +14,7 @@ public class Ingredient
 
   public Ingredient()
   {
-
+    
   }
 
   // Declare getters and setters to allow private members serialization
@@ -94,37 +94,6 @@ public class Ingredient
     string name = textInfo.ToTitleCase(_name);
     Utils.TextAnimation($"{name} ({_type}) \n");
   }
-
-  // public string Serialize()
-  // {
-  //   var options = new JsonSerializerOptions
-  //   {
-  //     // Add indentation to the json data
-  //     WriteIndented = true
-  //   };
-
-  //   // Serialize the current Ingredient instance
-  //   string jsonString = JsonSerializer.Serialize(this, options);
-  //   Console.WriteLine($"INGREDIENT JSON: \n {jsonString}");
-
-  //   // Option 1: Write the data in a file (Currently, this overrides the file)
-  //   // File.WriteAllText("ingredient.json", jsonString);
-
-  //   // Option 2: Return the JSONString
-  //   return jsonString;
-  // }
-
-  // public void Deserialize()
-  // {
-  //   // Read the data (Currently, this is only one Ingredient)
-  //   string jsonString = File.ReadAllText("ingredient.json");
-
-  //   var options = new JsonSerializerOptions();
-  //   options.Converters.Add(new JsonStringEnumConverter());
-
-  //   Ingredient deserializedIngredient = JsonSerializer.Deserialize<Ingredient>(jsonString, options);
-
-  // }
 
   private static int GetNextId()
   {

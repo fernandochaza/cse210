@@ -10,6 +10,7 @@ public class Meal
   private string _name;
   private MealType _type;
   private List<int> _ingredientsID = new List<int>();
+  private List<Ingredient> _ingredientsData;
 
   public Meal()
   {
@@ -60,6 +61,11 @@ public class Meal
     Side_Dish
   }
 
+  public void SetIngredientsData(List<Ingredient> ingredients)
+  {
+    _ingredientsData = ingredients;
+  }
+
   /// <summary>
   /// Instantiate a Meal object, populate its data from the user input and return it
   /// </summary>
@@ -102,7 +108,7 @@ public class Meal
   }
 
   /// <summary>
-  /// Display the Meal Name
+  /// Display the capitalized Meal Name
   /// </summary>
   public void Display()
   {
@@ -112,20 +118,89 @@ public class Meal
     Utils.TextAnimation($"{mealName}\n");
   }
 
-  public ConsoleTable DisplayMealIngredientsAsTable(Dictionary<int, string> ingredientsDatabaseDict)
+  private static int GetNextId()
+  {
+    return ++_lastId;
+  }
+
+  internal void EditMealIngredients(Dictionary<int, string> ingredientsDatabaseDict)
+  {
+    var editIngredientOptions = new List<string>();
+    editIngredientOptions.Add("Add");
+    editIngredientOptions.Add("Remove");
+
+    string selectedEditIngredientOption;
+    do
+    {
+      string mealIngredientsPrompt = $"{Name} Ingredients";
+
+      ConsoleTable mealIngredientsTable = DisplayMealIngredientsAsTable();
+      selectedEditIngredientOption = Menu.GetSelectedOption(prompt: mealIngredientsPrompt, options: editIngredientOptions, displayTableTop: mealIngredientsTable);
+
+      if (selectedEditIngredientOption == "Add")
+      {
+        Console.Clear();
+
+        Console.CursorVisible = true;
+        Utils.TextAnimation("\nPlease, enter the name of the ingredient you want to Add: ");
+        string searchedIngredient = Console.ReadLine().ToLower();
+        Console.CursorVisible = false;
+
+        List<Ingredient> ingredientsFound = FindIngredientByName(searchedIngredient);
+
+        int? selectedIngredientId = null;
+        if (ingredientsFound.Count > 0)
+        {
+          var ingredientOptions = new Dictionary<int, string>();
+          foreach (Ingredient ingredient in ingredientsFound)
+          {
+            ingredientOptions[ingredient.Id] = ingredient.Name;
+          }
+
+          selectedIngredientId = Utils.GetSelectedKeyFromDict(prompt: "Select the ingredient you want to add", idAndNameDict: ingredientOptions);
+          IngredientsID.Add(selectedIngredientId.Value);
+        }
+
+        Console.ForegroundColor = ConsoleColor.Red;
+        Utils.TextAnimation($"\n(!) {ingredientsDatabaseDict[selectedIngredientId.Value]} was added...");
+        Console.ResetColor();
+        Utils.MessageToContinueAndClear();
+
+      }
+      else if (selectedEditIngredientOption == "Remove")
+      {
+        Console.Clear();
+        Utils.TextAnimation($"{Name} Ingredients:\n");
+        DisplayMealIngredientsAsTable();
+
+        int? ingredientToRemoveId = Utils.GetUserInt("\nPlease, enter the ID of the ingredient you want to remove and press Enter: ");
+        IngredientsID.Remove(ingredientToRemoveId.Value);
+
+        Console.ForegroundColor = ConsoleColor.Red;
+        Utils.TextAnimation($"\n(!) {ingredientsDatabaseDict[ingredientToRemoveId.Value]} was removed...");
+        Console.ResetColor();
+        Utils.MessageToContinueAndClear();
+      }
+
+    } while (selectedEditIngredientOption != null);
+  }
+
+  public ConsoleTable DisplayMealIngredientsAsTable()
   {
     var tableHeaders = new List<string>();
     tableHeaders.Add("Id");
     tableHeaders.Add("Name");
+
     ConsoleTable mealIngredientsTable = new ConsoleTable(tableHeaders.ToArray());
 
     var ingredientsList = new List<List<string>>();
 
-    foreach (int ingredientId in _ingredientsID)
+    foreach (int ingredientId in IngredientsID)
     {
       var ingredientData = new List<string>();
 
-      string ingredientName = ingredientsDatabaseDict[ingredientId];
+      Ingredient ingredient = _ingredientsData.FirstOrDefault(ingredient => ingredient.Id == ingredientId);
+      string ingredientName = ingredient.Name;
 
       ingredientData.Add(ingredientId.ToString());
       ingredientData.Add(ingredientName);
@@ -142,57 +217,10 @@ public class Meal
     return mealIngredientsTable;
   }
 
-  public void EditIngredients(Dictionary<int, string> ingredientsDatabaseDict)
+  public List<Ingredient> FindIngredientByName(string searchString)
   {
-
-    var editIngredientOptions = new List<string>();
-    editIngredientOptions.Add("Add");
-    editIngredientOptions.Add("Remove");
-
-    string selectedEditIngredientOption;
-    do
-    {
-      ConsoleTable mealIngredientsTable = DisplayMealIngredientsAsTable(ingredientsDatabaseDict);
-      selectedEditIngredientOption = Menu.GetSelectedOption(prompt: "", options: editIngredientOptions, displayTableTop: mealIngredientsTable);
-
-      if (selectedEditIngredientOption == "Add")
-      {
-        Console.Clear();
-
-        // Todo: Display all the ingredients with their ID
-
-        int ingredientToAddId = Utils.GetUserInt("\nPlease, enter the ID of the ingredient you want to Add and press Enter: ");
-        _ingredientsID.Add(ingredientToAddId);
-
-        Console.ForegroundColor = ConsoleColor.Red;
-        Utils.TextAnimation($"\n(!) {ingredientsDatabaseDict[ingredientToAddId]} was added...");
-        Console.ResetColor();
-        Utils.MessageToContinueAndClear();
-
-      }
-      else if (selectedEditIngredientOption == "Remove")
-      {
-        Console.Clear();
-        Utils.TextAnimation($"{Name} Ingredients:\n");
-        DisplayMealIngredientsAsTable(ingredientsDatabaseDict);
-
-        int ingredientToRemoveId = Utils.GetUserInt("\nPlease, enter the ID of the ingredient you want to remove and press Enter: ");
-        _ingredientsID.Remove(ingredientToRemoveId);
-
-        Console.ForegroundColor = ConsoleColor.Red;
-        Utils.TextAnimation($"\n(!) {ingredientsDatabaseDict[ingredientToRemoveId]} was removed...");
-        Console.ResetColor();
-        Utils.MessageToContinueAndClear();
-      }
-
-    } while (selectedEditIngredientOption != null);
-
-
-
-  }
-
-  private static int GetNextId()
-  {
-    return ++_lastId;
+    string lowerSearchString = searchString.ToLower();
+    List<Ingredient> ingredientSearched = _ingredientsData.FindAll(ingredient => ingredient.Name.ToLower().Contains(searchString));
+    return ingredientSearched;
   }
 }

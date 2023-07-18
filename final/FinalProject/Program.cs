@@ -20,6 +20,17 @@ class Program
 
     // Use dependency injection for better data management
     plannerData.SetMealManager(mealsData);
+    mealsData.SetPlanner(plannerData);
+    
+    foreach (Meal meal in mealsData.Meals)
+    {
+      meal.SetIngredientsData(mealsData.Ingredients);
+    }
+
+    foreach (PlannedDay plannedDay in plannerData.Plan)
+    {
+      plannedDay.SetMealsData(mealsData.Meals);
+    }
 
     // Display welcome
     Menu.DisplayWelcome();
@@ -30,7 +41,7 @@ class Program
     mainOptions.Add("Plan a meal");
     mainOptions.Add("Edit my plan");
     mainOptions.Add("My Meals Database");
-    mainOptions.Add("My Ingredients Database");
+    mainOptions.Add("Generate Grocery List");
     mainOptions.Add("Exit");
 
     string selectedOption;
@@ -67,14 +78,15 @@ class Program
           {
             Console.Clear();
 
-            plannerData.DisplayPlanTable();
+            
 
             var plannerOptions = new List<string>();
             plannerOptions.Add("Change a planned day");
             plannerOptions.Add("Remove a planned day");
+            plannerOptions.Add("Mark Completed");
 
             // I need to pass the Planner table to the GetSelectedOption Method
-            // because the method cleans que console. Not the best practice but for
+            // because the method cleans que console. Is not the best practice but for
             // now is the faster solution to allow the user to see the plan above the options
             var planTable = plannerData.DisplayPlanTable();
 
@@ -104,6 +116,14 @@ class Program
               plannerData.RemoveDay();
               userProfile.SaveUserData();
             }
+            else if (selectedPlannerOption == "Mark Completed")
+            {
+              Console.Clear();
+
+              plannerData.MarkPlanCompleted();
+              userProfile.SaveUserData();
+              Utils.MessageToContinueAndClear();
+            }
 
           } while (selectedPlannerOption != null);
 
@@ -126,20 +146,29 @@ class Program
             {
               Console.Clear();
               mealsData.DisplayMainMealsList();
+
+              Utils.MessageToContinueAndClear();
             }
             else if (selectedMealDatabaseOption == "Side Dishes")
             {
               Console.Clear();
               mealsData.DisplaySideDishesList();
-            }
-            else if (selectedMealDatabaseOption == "Main Meal Ingredients")
-            {
-              mealsData.VerifyIngredients();
 
               Utils.MessageToContinueAndClear();
             }
+            else if (selectedMealDatabaseOption == "Main Meal Ingredients")
+            {
+              Dictionary<int, string> mealsToCheck = mealsData.GenerateMainMealsDictionary();
+              mealsData.VerifyIngredients(mealsToCheck);
+              userProfile.SaveUserData();
 
-            Utils.MessageToContinueAndClear();
+            }
+            else if (selectedMealDatabaseOption == "Side Dish Ingredients")
+            {
+              Dictionary<int, string> mealsToCheck = mealsData.GenerateSideDishDictionary();
+              mealsData.VerifyIngredients(mealsToCheck);
+              userProfile.SaveUserData();
+            }
           } while (selectedMealDatabaseOption != null);
 
           break;
@@ -160,8 +189,5 @@ class Program
 
 
 // ------ PENDING ------- //
-// Add a message to inform keyboard usage
-// Make Esc the default key to go back
-// Arrow up and down navigation
 // Validate month and date inputs
 // Check methods VISIBILITY (encapsulate)

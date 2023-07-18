@@ -6,6 +6,7 @@ public class MealManager
 {
   private List<Ingredient> _ingredients = new List<Ingredient>();
   private List<Meal> _meals = new List<Meal>();
+  private Planner _planner;
 
   // Declare getters and setters to allow private members serialization
   // Use JsonPropertyName to define a key name for the Json file
@@ -22,6 +23,11 @@ public class MealManager
   {
     get { return _meals; }
     set { _meals = value; }
+  }
+  
+  public void SetPlanner(Planner planner)
+  {
+    _planner = planner;
   }
 
   public void AddMeal(Meal meal)
@@ -122,46 +128,66 @@ public class MealManager
     }
   }
 
-  /// <summary>
-  /// Displays a list of all the user ingredients in the format "Name (type)"
-  /// </summary>
-  public void DisplayIngredientsList()
-  {
-    Console.WriteLine("\n");
-    foreach (Ingredient ingredient in _ingredients)
-    {
-      ingredient.Display();
-    }
-  }
+  // public ConsoleTable DisplayMealAsTable(Meal meal)
+  // {
+  //   // Generate headers for the table
+  //   var headers = new List<string>();
+  //   headers.Add("Meal");
+  //   headers.Add("Type");
+  //   headers.Add("Ingredients");
+  //   var table = new ConsoleTable(headers.ToArray());
 
-  public ConsoleTable DisplayMealAsTable(Meal meal)
-  {
-    // Generate headers for the table
-    var headers = new List<string>();
-    headers.Add("Meal");
-    headers.Add("Type");
-    headers.Add("Ingredients");
-    var table = new ConsoleTable(headers.ToArray());
+  //   var mealData = new List<string>();
+  //   string mealName = meal.Name;
+  //   string mealType = meal.Type.ToString();
+  //   string ingredients = GetMealIngredientsString(meal);
 
-    var mealData = new List<string>();
-    string mealName = meal.Name;
-    string mealType = meal.Type.ToString();
-    string ingredients = GetMealIngredientsString(meal);
+  //   mealData.Add(mealName);
+  //   mealData.Add(mealType);
+  //   mealData.Add(ingredients);
 
-    mealData.Add(mealName);
-    mealData.Add(mealType);
-    mealData.Add(ingredients);
+  //   table.AddRow(mealData.ToArray());
 
-    table.AddRow(mealData.ToArray());
+  //   table.Write(Format.Minimal);
 
-    table.Write(Format.Minimal);
+  //   Utils.MessageToContinueAndClear();
 
-    Utils.MessageToContinueAndClear();
+  //   return table;
+  // }
 
-    return table;
-  }
+  // public ConsoleTable DisplayMealIngredientsAsTable(Meal meal)
+  // {
+  //   var ingredientsDatabaseDict = GenerateIngredientsDictionary();
 
-  public string GetMealIngredientsString(Meal meal)
+  //   var tableHeaders = new List<string>();
+  //   tableHeaders.Add("Id");
+  //   tableHeaders.Add("Name");
+  //   ConsoleTable mealIngredientsTable = new ConsoleTable(tableHeaders.ToArray());
+
+  //   var ingredientsList = new List<List<string>>();
+
+  //   foreach (int ingredientId in meal.IngredientsID)
+  //   {
+  //     var ingredientData = new List<string>();
+
+  //     string ingredientName = ingredientsDatabaseDict[ingredientId];
+
+  //     ingredientData.Add(ingredientId.ToString());
+  //     ingredientData.Add(ingredientName);
+  //     ingredientsList.Add(ingredientData);
+  //   }
+
+  //   foreach (List<string> ingredient in ingredientsList)
+  //   {
+  //     mealIngredientsTable.AddRow(ingredient.ToArray());
+  //   }
+
+  //   mealIngredientsTable.Write();
+
+  //   return mealIngredientsTable;
+  // }
+
+  private string GetMealIngredientsString(Meal meal)
   {
     string ingredientsString = "";
 
@@ -183,7 +209,7 @@ public class MealManager
     return ingredientsString;
   }
 
-  public ConsoleTable GetMealIngredientsTable(Meal meal)
+  private ConsoleTable GetMealIngredientsTable(Meal meal)
   {
     var headers = new List<string>();
     headers.Add("Meal");
@@ -204,76 +230,42 @@ public class MealManager
     return table;
   }
 
-
-  public void VerifyIngredients()
+  public void VerifyIngredients(Dictionary<int, string> mealsToCheckDict)
   {
     int? selectedMealId;
-    Dictionary<int, string> mainMealsDict = GenerateMainMealsDictionary();
 
     // Ask the user to select a Meal from a dict to get the Id
-    selectedMealId = Utils.GetSelectedKeyFromDict(prompt: "Select a Meal to verify the ingredients: ", idAndNameDict: mainMealsDict);
+    selectedMealId = Utils.GetSelectedKeyFromDict(prompt: "Select a Meal to verify the ingredients: ", idAndNameDict: mealsToCheckDict);
+
+    if (selectedMealId == null)
+    {
+      return;
+    }
 
     // Get the instance of the Meal to verify
     Meal selectedMeal = Meals.Find(meal => meal.Id == selectedMealId);
 
     Console.WriteLine();
 
-    // Get selected option
     string selectedIngredientOption;
     do
     {
       // Display edit options
       var ingredientsOptions = new List<string>();
       ingredientsOptions.Add("Edit Ingredients");
-      ingredientsOptions.Add("Go Back");
 
       // Meal table to display inside the option selector
       ConsoleTable mealTable = GetMealIngredientsTable(selectedMeal);
 
+      // Get the selected option
       selectedIngredientOption = Menu.GetSelectedOption(prompt: "", ingredientsOptions, displayTableTop: mealTable);
 
       if (selectedIngredientOption == "Edit Ingredients")
       {
         Dictionary<int, string> ingredientsDatabaseDict = GenerateIngredientsDictionary();
-        selectedMeal.EditIngredients(ingredientsDatabaseDict);
+        selectedMeal.EditMealIngredients(ingredientsDatabaseDict);
       }
     } while (selectedIngredientOption != null);
-  }
-
-  /// <summary>
-  /// Get an ingredient given its ingredient ID from the user database
-  /// </summary>
-  /// <param name="ingredientId">The ingredient ID from the database</param>
-  /// <returns>Returns an Ingredient instance or NULL if the are no matching ID</returns>
-  public Ingredient GetIngredientById(int ingredientId)
-  {
-    foreach (Ingredient ingredient in _ingredients)
-    {
-      if (ingredient.Id == ingredientId)
-      {
-        return ingredient;
-      }
-    }
-
-    return null;
-  }
-
-  /// <summary>
-  /// Get a Meal given its meal ID from the user database
-  /// </summary>
-  /// <param name="mealId">The meal ID from the database</param>
-  /// <returns>Returns a Meal instance or NULL if the are no matching IDs</returns>
-  public Meal GetMealById(int mealId)
-  {
-    foreach (Meal meal in _meals)
-    {
-      if (meal.Id == mealId)
-      {
-        return meal;
-      }
-    }
-
-    return null;
   }
 
   private List<Meal> GetMainMealsList()
@@ -292,22 +284,6 @@ public class MealManager
     sideDishes = _meals.Where(meal => meal.Type == Meal.MealType.Side_Dish).ToList();
 
     return sideDishes;
-  }
-
-  /// <summary>
-  /// Returns a List of string in the format "(Type) Meal Name" with all the meals in the user database
-  /// </summary>
-  /// <returns>A list of strings</returns>
-  public List<string> GetMealsList()
-  {
-    var meals = new List<string>();
-    foreach (Meal meal in _meals)
-    {
-      string stringMeal = $"({meal.Type}) {meal.Name}";
-      meals.Add(stringMeal);
-    }
-
-    return meals;
   }
 
   public Dictionary<int, string> GenerateMealsDictionary()
@@ -352,7 +328,7 @@ public class MealManager
     return sideDishDict;
   }
 
-  public Dictionary<int, string> GenerateIngredientsDictionary()
+  private Dictionary<int, string> GenerateIngredientsDictionary()
   {
     var ingredientsDict = new Dictionary<int, string>();
     foreach (Ingredient ingredient in _ingredients)
@@ -364,4 +340,9 @@ public class MealManager
     return ingredientsDict;
   }
 
+  public List<Ingredient> FindIngredientByName(string searchString)
+  {
+    List<Ingredient> ingredientSearched = _ingredients.FindAll(ingredient => ingredient.Name.Contains(searchString));
+    return ingredientSearched;
+  }
 }

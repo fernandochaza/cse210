@@ -28,7 +28,7 @@ public static class Menu
   public static void DisplayWelcome()
   {
     Utils.TextAnimation("--------------------------------------\n\n");
-    Utils.TextAnimation("---- WELCOME TO MEAL PLANNING APP ----\n\n");
+    Utils.TextAnimation("---------- MEAL PLANNING APP ---------\n\n");
     Utils.TextAnimation("--------------------------------------\n\n");
 
 
