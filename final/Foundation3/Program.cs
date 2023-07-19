@@ -2,8 +2,23 @@ using System;
 
 class Program
 {
-    static void Main(string[] args)
+  static void Main(string[] args)
+  {
+
+    
+    DateTime? date = null;
+    do
     {
-        Console.WriteLine("Hello Foundation3 World!");
-    }
+      date = Utils.GetDate();
+
+    } while (date == null);
+
+    DateTime? time = null;
+
+    do
+    {
+      time = Utils.GetTime(date.Value);
+
+    } while (time == null);
+  }
 }
