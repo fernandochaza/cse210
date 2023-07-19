@@ -15,6 +15,15 @@ public class Address
     _postalCode = postalCode;
   }
 
+  public Address()
+  {
+    _street = Utils.GetUserString("Enter the street: ");
+    _city = Utils.GetUserString("Enter the city: ");
+    _state = Utils.GetUserString("Enter the state: ");
+    _country = Utils.GetUserString("Enter the country: ");
+    _postalCode = Utils.GetUserString("Enter the postal code: ");
+  }
+
   public void DisplayAddress()
   {
     Console.WriteLine($"- {_street}");

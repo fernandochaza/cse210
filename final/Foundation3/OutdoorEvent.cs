@@ -2,7 +2,13 @@ public class OutdoorEvent : Event
 {
   private string _weather;
 
-  public OutdoorEvent(string type, string title, string description, DateTime date, Address address, string weather)
+  public OutdoorEvent()
+  {
+    _type = "Reception";
+    _weather = Utils.GetUserString("Enter the weather conditions: ");
+  }
+
+  public OutdoorEvent(string title, string description, DateTime date, Address address, string weather)
     : base(title, description, date, address)
   {
     _type = "Outdoor";

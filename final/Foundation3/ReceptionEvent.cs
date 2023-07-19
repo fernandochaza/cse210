@@ -2,7 +2,13 @@ public class ReceptionEvent : Event
 {
   private string _registrationEmail;
 
-  public ReceptionEvent(string type, string title, string description, DateTime date, Address address, string email)
+  public ReceptionEvent()
+  {
+    _type = "Reception";
+    _registrationEmail = Utils.GetUserString("Enter the registration email: ");
+  }
+
+  public ReceptionEvent(string title, string description, DateTime date, Address address, string email)
     : base(title, description, date, address)
   {
     _type = "Reception";

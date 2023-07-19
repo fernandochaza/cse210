@@ -7,9 +7,6 @@ public static class Utils
   /// <returns>A validated integer</returns>
   public static int GetUserInt(string prompt)
   {
-    // Display the cursor
-    Console.CursorVisible = true;
-
     string userInput;
     int validInteger = 0;
     bool isValidNumber = false;
@@ -33,10 +30,19 @@ public static class Utils
       }
     }
 
-    // Hide the cursor again
-    Console.CursorVisible = false;
-
     return validInteger;
+  }
+
+  public static string GetUserString(string prompt)
+  {
+    string userInput;
+
+    // Display the given prompt
+    Utils.DisplayMessage(prompt);
+
+    userInput = Console.ReadLine();
+
+    return userInput;
   }
 
   /// <summary>
@@ -92,7 +98,6 @@ public static class Utils
 
   public static DateTime? GetDate()
   {
-    Console.CursorVisible = true;
     int month, day, year;
     bool isValidInput = false;
 
@@ -111,7 +116,6 @@ public static class Utils
         {
           DateTime date = new DateTime(year, month, day);
           isValidInput = true;
-          Console.CursorVisible = false;
           return date;
         }
         catch (ArgumentOutOfRangeException)

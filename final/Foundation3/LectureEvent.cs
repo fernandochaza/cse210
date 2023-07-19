@@ -3,8 +3,15 @@ public class LectureEvent : Event
   private string _speaker;
   private int _capacity;
 
-  public LectureEvent(string type, string title, string description, DateTime date, Address address, string speaker, int capacity)
-      : base(title, description, date, address)
+  public LectureEvent()
+  {
+    _type = "Lecture";
+    _speaker = Utils.GetUserString("Enter the speaker's name: ");
+    _capacity = Utils.GetUserInt("Enter the event capacity: ");
+  }
+
+  public LectureEvent(string title, string description, DateTime date, Address address, string speaker, int capacity)
+    : base(title, description, date, address)
   {
     _type = "Lecture";
     _speaker = speaker;
