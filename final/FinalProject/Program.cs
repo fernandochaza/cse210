@@ -115,6 +115,8 @@ class Program
 
               plannerData.RemovePlannedDay();
               userProfile.SaveUserData();
+              Utils.DisplayMessage("\n(!) The selected planned day was successfully removed...\n", type: "info", speed: 1);
+              Utils.MessageToContinueAndClear();
             }
             else if (selectedPlannerOption == "Mark Completed")
             {
@@ -244,7 +246,7 @@ class Program
 
           break;
 
-        case "Generate Grocery List":
+        case "Generate Grocery List\n":
 
           plannerData.GenerateGroceryList();
           Utils.MessageToContinueAndClear();

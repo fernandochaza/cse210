@@ -415,6 +415,11 @@
         "ingredient-id": 83,
         "ingredient-name": "Pasta",
         "ingredient-type": 0
+      },
+      {
+        "ingredient-id": 84,
+        "ingredient-name": "Meat",
+        "ingredient-type": 0
       }
     ],
     "user-meals": [
@@ -790,14 +795,14 @@
           3,
           6
         ],
-        "completed": false
+        "completed": true
       },
       {
         "planned-day-id": 10,
         "date": "2023-07-20T00:00:00",
         "meals-id": [
           1,
-          8
+          6
         ],
         "completed": false
       },
@@ -816,33 +821,6 @@
         "meals-id": [
           9,
           23
-        ],
-        "completed": false
-      },
-      {
-        "planned-day-id": 13,
-        "date": "2023-07-23T00:00:00",
-        "meals-id": [
-          1,
-          2
-        ],
-        "completed": false
-      },
-      {
-        "planned-day-id": 17,
-        "date": "2023-08-20T00:00:00",
-        "meals-id": [
-          1,
-          2
-        ],
-        "completed": false
-      },
-      {
-        "planned-day-id": 18,
-        "date": "2023-09-20T00:00:00",
-        "meals-id": [
-          20,
-          24
         ],
         "completed": false
       }

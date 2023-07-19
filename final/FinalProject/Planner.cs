@@ -196,10 +196,7 @@ public class Planner
     PlannedDay plannedDayToRemove = _userPlan.Find(plannedDay => plannedDay.Id == planToRemoveId);
 
     _userPlan.Remove(plannedDayToRemove);
-    Utils.DisplayMessage("\n(!) The selected planned day was successfully removed...\n", type: "info", speed: 1);
     plannedDayToRemove.DisplayPlannedDay(mealsDict: userMeals);
-
-    Utils.MessageToContinueAndClear();
   }
 
   /// <summary>

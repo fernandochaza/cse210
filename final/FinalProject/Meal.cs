@@ -150,8 +150,8 @@ public class Meal
       if (selectedEditIngredientOption == "Add")
       {
         Console.Clear();
-
         Console.CursorVisible = true;
+        
         Utils.DisplayMessage("\nPlease, enter the name of the ingredient you want to Add: ");
         string searchedIngredient = Console.ReadLine();
         Console.CursorVisible = false;
@@ -176,6 +176,14 @@ public class Meal
             return;
           }
           IngredientsID.Add(selectedIngredientId.Value);
+        }
+        else
+        {
+          IsMealCreationCanceled = true;
+          Utils.DisplayMessage("\n(!) Ingredient not found. Please, go to the ingredients Database to add it...\n", type: "warning");
+          Utils.DisplayMessage("(!) The meal creation was canceled...\n\n", type: "warning");
+          Utils.MessageToContinueAndClear();
+          return;
         }
 
         Console.ForegroundColor = ConsoleColor.Red;
